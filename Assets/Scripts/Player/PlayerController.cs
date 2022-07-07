@@ -22,6 +22,14 @@ public class PlayerController : MonoBehaviour
         VerificaMovimento();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.CompareTag("Ball"))
+        {
+            //pegar bola
+        }
+    }
+
     private void VerificaMovimento()
     {
         //capturando A,D
@@ -95,5 +103,14 @@ public class PlayerController : MonoBehaviour
             capsuleCollider.enabled = false;
         }
     }
+
+    //pode ser útil para verificar se alguma animação está rodando
+    //public IEnumerator CheckAnimationCompleted(string CurrentAnim, Action Oncomplete)
+    //{
+    //    while (!animator.GetCurrentAnimatorStateInfo(0).IsName(CurrentAnim))
+    //        yield return null;
+    //    if (Oncomplete != null)
+    //        Oncomplete();
+    //}
 
 }
