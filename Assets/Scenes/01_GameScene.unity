@@ -524,7 +524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1833946143}
   YOffset: 1.5
-  Sensibility: 600
+  Sensibility: 500
   RotationLimit: 45
 --- !u!4 &962759652
 Transform:
