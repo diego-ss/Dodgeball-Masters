@@ -4,10 +4,15 @@ public class PlayerController : MonoBehaviour
 {
     public float speed;
     private float runSpeed;
+
     private Animator animator;
     private CapsuleCollider capsuleCollider;
     private SphereCollider sphereCollider;
 
+    public bool canHold = true;
+    public Bola ballReference;
+    public float throwForce;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,13 +25,39 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         VerificaMovimento();
+        VerificaArremesso();
+    }
+
+    private void VerificaArremesso()
+    {
+        //arremessa com o botão esquerdo do mouse
+        if (Input.GetMouseButton(0) && ballReference != null)
+        {
+            ballReference.Arremessar(throwForce);
+            //disponibilizando para pegar novas bolas
+            canHold = true;
+            ballReference = null;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        //verificando se é uma bola
         if (other.transform.CompareTag("Ball"))
         {
-            //pegar bola
+            var ball = other.GetComponent<Bola>();
+
+            //verificando se pode pegar
+            if (canHold && ball.canHold)
+            {
+                //componente de script
+                ballReference = ball;
+                //colocando a bola como filha de um elemento
+                other.transform.parent = this.transform.Find("BallReference");
+                ball.Capturar();
+                canHold = false;
+            }
+
         }
     }
 
