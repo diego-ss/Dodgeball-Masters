@@ -20,6 +20,8 @@ public class Alvo : MonoBehaviour
 
             if (ballScript.canDamage)
                 animator.SetTrigger("die");
+
+            ballScript.canHold = true;
         }
     }
 }

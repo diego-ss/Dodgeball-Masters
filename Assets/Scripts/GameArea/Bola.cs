@@ -24,12 +24,10 @@ public class Bola : MonoBehaviour
 
     }
 
-    public void Arremessar(float force)
+    public void Arremessar(float force, Vector3 direction)
     {
         //remove o parentesco
         transform.SetParent(null);
-        //direção do mouse
-        var direction = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
         //retorna as configurações do rigidbody e collider
         rb.isKinematic = false;
         GetComponent<SphereCollider>().enabled = true;

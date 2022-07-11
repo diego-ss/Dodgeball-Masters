@@ -102,6 +102,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5360683131785772904}
   - component: {fileID: 5615497917579445399}
+  - component: {fileID: 1487535710}
+  - component: {fileID: 1487535711}
+  - component: {fileID: 1688491696428025107}
+  - component: {fileID: 1487535709}
   m_Layer: 0
   m_Name: training_dummy
   m_TagString: Untagged
@@ -144,6 +148,59 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &1487535710
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4697017240656324050}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.21078919
+  m_Height: 1.2329772
+  m_Direction: 1
+  m_Center: {x: 0.020999968, y: 1.3044773, z: 0.06978927}
+--- !u!136 &1487535711
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4697017240656324050}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.12018594
+  m_Height: 1.6920837
+  m_Direction: 0
+  m_Center: {x: -0.025756836, y: 1.353688, z: 0.02039674}
+--- !u!65 &1688491696428025107
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4697017240656324050}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.499498, y: 0.6230078, z: 0.2175128}
+  m_Center: {x: -0.6132323, y: 1.2822747, z: 0.17957166}
+--- !u!114 &1487535709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4697017240656324050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7637157018387474aaaa0a58b3440743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6774080502169825540
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +278,6 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 3
-  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

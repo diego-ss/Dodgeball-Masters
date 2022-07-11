@@ -33,7 +33,9 @@ public class PlayerController : MonoBehaviour
         //arremessa com o botão esquerdo do mouse
         if (Input.GetMouseButton(0) && ballReference != null)
         {
-            ballReference.Arremessar(throwForce);
+            //direção do mouse
+            var direction = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
+            ballReference.Arremessar(throwForce, direction);
             //disponibilizando para pegar novas bolas
             canHold = true;
             ballReference = null;
