@@ -3,6 +3,8 @@
 public class Bola : MonoBehaviour
 {
     public bool canHold = true;
+    public bool canDamage = false;
+
     private Rigidbody rb;
 
     private void Start()
@@ -18,6 +20,7 @@ public class Bola : MonoBehaviour
         rb.isKinematic = true;
         //desativa o collider
         GetComponent<SphereCollider>().enabled = false;
+        canDamage = true;
 
     }
 
@@ -41,6 +44,9 @@ public class Bola : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.CompareTag("BarreiraQuadra"))
+        {
             canHold = true;
+            canDamage = false;
+        }
     }
 }
