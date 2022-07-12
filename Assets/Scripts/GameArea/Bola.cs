@@ -32,14 +32,14 @@ public class Bola : MonoBehaviour
             transform.position = playerHand.transform.position;
     }
 
-    public void Arremessar(float force, Vector3 direction)
+    public void Arremessar(Vector3 forceVector)
     {
         playerHand = null;
         //retorna as configurações do rigidbody e collider
         rb.isKinematic = false;
         GetComponent<SphereCollider>().enabled = true;
         //inputa força na bola
-        rb.AddForce(direction * force, ForceMode.Impulse);
+        rb.AddForce(forceVector, ForceMode.Impulse);
         //desativando a possibilidade de coleta
         canHold = false;
 

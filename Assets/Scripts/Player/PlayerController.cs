@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
         animator = transform.GetComponent<Animator>();
         capsuleCollider = transform.GetComponent<CapsuleCollider>();
         sphereCollider = transform.GetComponent<SphereCollider>();
-        rightHand = GameObject.Find("jointItemR");
+        rightHand = GameObject.Find("ballReference");
     }
 
     // Update is called once per frame
@@ -37,7 +37,11 @@ public class PlayerController : MonoBehaviour
         {
             //direção do mouse
             var direction = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
-            ballReference.Arremessar(throwForce, direction);
+            var y = direction.y * 2f;
+            direction = transform.forward;
+            direction.y = y;
+
+            ballReference.Arremessar(direction * throwForce);
             //disponibilizando para pegar novas bolas
             canHold = true;
             ballReference = null;
@@ -51,7 +55,7 @@ public class PlayerController : MonoBehaviour
         {
             var ball = other.GetComponent<Bola>();
 
-            //verificando se pode pegar
+            //verificando se pode pegara
             if (canHold && ball.canHold)
             {
                 //componente de script
