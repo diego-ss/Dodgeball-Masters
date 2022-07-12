@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private CapsuleCollider capsuleCollider;
     private SphereCollider sphereCollider;
+    private GameObject rightHand;
 
     public bool canHold = true;
     public Bola ballReference;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
         animator = transform.GetComponent<Animator>();
         capsuleCollider = transform.GetComponent<CapsuleCollider>();
         sphereCollider = transform.GetComponent<SphereCollider>();
+        rightHand = GameObject.Find("jointItemR");
     }
 
     // Update is called once per frame
@@ -54,9 +56,7 @@ public class PlayerController : MonoBehaviour
             {
                 //componente de script
                 ballReference = ball;
-                //colocando a bola como filha de um elemento
-                other.transform.parent = this.transform.Find("BallReference");
-                ball.Capturar();
+                ball.Capturar(rightHand);
                 canHold = false;
             }
 
