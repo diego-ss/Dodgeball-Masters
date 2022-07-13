@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        offset = transform.position - player.transform.position;
     }
 
     // Update is called once per frame
@@ -26,11 +27,11 @@ public class CameraController : MonoBehaviour
         rotY += mouseY * Sensibility * Time.deltaTime;
 
         rotX = Mathf.Clamp(rotX, -RotationLimit, RotationLimit);
-        transform.rotation = Quaternion.Euler(rotX, rotY, 0);
+        //transform.rotation = Quaternion.Euler(rotX, rotY, 0);
     }
 
     private void LateUpdate()
     {
-        transform.position = player.transform.position + player.transform.up * YOffset;
+        transform.position = offset + player.transform.position + player.transform.up * YOffset;
     }
 }
