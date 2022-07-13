@@ -958,7 +958,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1438546959266459337}
   - component: {fileID: 4540229000190281644}
-  m_Layer: 0
+  - component: {fileID: 1833946146}
+  - component: {fileID: 1833946147}
+  - component: {fileID: 1833946148}
+  - component: {fileID: 1833946149}
+  m_Layer: 10
   m_Name: HumanMale_Character_FREE
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1001,6 +1005,65 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!54 &1833946146
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782702501690864755}
+  serializedVersion: 2
+  m_Mass: 5
+  m_Drag: 0.83
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 1
+--- !u!136 &1833946147
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782702501690864755}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.27102178
+  m_Height: 1.9377787
+  m_Direction: 1
+  m_Center: {x: 0.013673663, y: 0.9670013, z: -2.7440189e-11}
+--- !u!135 &1833946148
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782702501690864755}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.599663
+  m_Center: {x: 0, y: 0.60186684, z: 0}
+--- !u!114 &1833946149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782702501690864755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e215161bd7b947843a626eb97ac93bdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 4.33
+  canHold: 1
+  ballReference: {fileID: 0}
+  throwForce: 2
 --- !u!1 &1789272960074739661
 GameObject:
   m_ObjectHideFlags: 0
