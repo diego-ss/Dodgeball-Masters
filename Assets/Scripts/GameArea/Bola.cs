@@ -7,23 +7,25 @@ public class Bola : MonoBehaviour
 
     private Rigidbody rb;
     private GameObject playerHand;
+    private GameObject whoThrows;
 
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    public void Capturar(GameObject playerHand)
+    public void Capturar(GameObject playerHand, GameObject owner)
     {
         //reseta a localposition para ficar junto ao elemento pai
         transform.localPosition = Vector3.zero;
+        this.whoThrows = owner;
         this.playerHand = playerHand;
         //seta o rigidbody como kinematic para evitar gravidade
         rb.isKinematic = true;
         //desativa o collider
         GetComponent<SphereCollider>().enabled = false;
         canDamage = true;
-
+        
     }
 
     private void Update()

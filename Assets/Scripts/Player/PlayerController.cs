@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
             {
                 //componente de script
                 ballReference = ball;
-                ball.Capturar(rightHand);
+                ball.Capturar(rightHand, gameObject);
                 canHold = false;
             }
 
