@@ -46,6 +46,7 @@ public class Bola : MonoBehaviour
         canHold = false;
 
         //TODO - Eliminar a bola? E se sair das bordas?
+        //TODO - e as bolas que os canhões atiram?
     }
 
     private void OnCollisionEnter(Collision collision)

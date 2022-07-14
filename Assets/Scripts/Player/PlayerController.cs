@@ -2,17 +2,18 @@
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Parâmetros")]
     public float speed;
+    public float throwForce;
     private float runSpeed;
+    private bool canHold = true;
 
     private Animator animator;
     private CapsuleCollider capsuleCollider;
     private SphereCollider sphereCollider;
     private GameObject rightHand;
 
-    public bool canHold = true;
-    public Bola ballReference;
-    public float throwForce;
+    private Bola ballReference;
     
     // Start is called before the first frame update
     void Start()
