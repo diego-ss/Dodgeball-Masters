@@ -351,9 +351,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2246130142739945529}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Armor
-  m_TagString: Untagged
+  m_TagString: Cannon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -479,9 +479,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2246130142901836843}
   - component: {fileID: -8233779102788023407}
+  - component: {fileID: 596357989688719389}
   m_Layer: 2
   m_Name: BallCannon
-  m_TagString: Untagged
+  m_TagString: Cannon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -517,8 +518,22 @@ MonoBehaviour:
   ballPrefab: {fileID: 2627246734242367784, guid: b1a016e3e0acab04a843860bd2c5af4c,
     type: 3}
   rotateSpeed: 0.25
-  maxRotateAngle: 80
+  maxRotateAngle: 30
   shootForce: 3
+  timeToShootAgain: 3
+--- !u!65 &596357989688719389
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246130142901836842}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2151315, y: 1.1233406, z: 1.2936096}
+  m_Center: {x: 0.107565865, y: 0.5439539, z: -0.015749216}
 --- !u!1 &2246130143272765366
 GameObject:
   m_ObjectHideFlags: 0

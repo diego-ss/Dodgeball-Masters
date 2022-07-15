@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour
     [Header("Parâmetros")]
     public float speed;
     public float throwForce;
+    public int lifes;
+
     private float runSpeed;
     private bool canHold = true;
 
@@ -18,10 +20,12 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //capturando componentes
         animator = transform.GetComponent<Animator>();
         capsuleCollider = transform.GetComponent<CapsuleCollider>();
         sphereCollider = transform.GetComponent<SphereCollider>();
         rightHand = GameObject.Find("ballReference");
+        lifes = 5;
     }
 
     // Update is called once per frame
@@ -68,6 +72,32 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        // verificando se uma bola colidiu
+        if (collision.transform.CompareTag("Ball")) {
+            
+            var ball = collision.transform.GetComponent<Bola>();
+
+            //verificando se a bola pode causar dano e se não foi o próprio jogador que atirou
+            if (ball.canDamage && ball.whoThrows.gameObject != this.gameObject)
+            {
+                if(lifes > 0)
+                {
+                    lifes--;
+                    animator.Rebind();
+                    animator.SetTrigger("atingido");
+                }
+                else
+                {
+                    animator.SetTrigger("morte");
+                }
+
+            }
+
+        }
+    }
+
     private void VerificaMovimento()
     {
         //capturando A,D
@@ -78,7 +108,7 @@ public class PlayerController : MonoBehaviour
 
         var direcao = new Vector3(inputX, 0, inputZ);
 
-        if(inputX != 0 || inputZ != 0)
+        if((inputX != 0 || inputZ != 0) && !animator.GetCurrentAnimatorStateInfo(0).IsName("GetHit") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
         {
             var camRot = Camera.main.transform.rotation;
             camRot.x = 0;
@@ -122,7 +152,7 @@ public class PlayerController : MonoBehaviour
         var inputControl = Input.GetKeyDown(KeyCode.LeftControl);
 
         //rolagem
-        if (inputControl)
+        if (inputControl && (!animator.GetCurrentAnimatorStateInfo(0).IsName("RollForward")))
         {
             animator.SetTrigger("rolar");
             transform.Translate(0, 0, speed * 1.2f * Time.deltaTime);

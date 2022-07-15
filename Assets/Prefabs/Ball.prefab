@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2627246734242367796}
   - component: {fileID: 2627246734242367799}
   - component: {fileID: 2627246734242367798}
-  - component: {fileID: 778030142433189276}
   - component: {fileID: 2627246734242367797}
   - component: {fileID: 1735079510062815428}
+  - component: {fileID: 862753902104557707}
   m_Layer: 9
   m_Name: Ball
   m_TagString: Ball
@@ -96,19 +96,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &778030142433189276
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2627246734242367784}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2627246734242367797
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -139,3 +126,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canHold: 1
   canDamage: 0
+  whoThrows: {fileID: 0}
+--- !u!135 &862753902104557707
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2627246734242367784}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

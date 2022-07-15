@@ -11,8 +11,10 @@ public class Canhao : MonoBehaviour
     public float rotateSpeed;
     [Range(0, 90)]
     public float maxRotateAngle;
-    [Range(0.1f, 3.0f)]
+    [Range(0.1f, 5.0f)]
     public float shootForce;
+    [Range(3f, 10f)]
+    public float timeToShootAgain;
 
     private GameObject ballOrigin;
     private Transform cannonArmor;
@@ -46,7 +48,7 @@ public class Canhao : MonoBehaviour
          * Caso o canhão alcance um dos limites, a velocidade é invertida
          */
         var rotY = Mathf.Ceil(cannonArmor.rotation.eulerAngles.y);
-        if ((rotY <= (Mathf.Ceil(maxRotateAngle + Mathf.Abs(rotateSpeed))) && rotY >= (Mathf.Ceil(maxRotateAngle))) || (rotY >= (360f - maxRotateAngle) && rotY <= 360f - maxRotateAngle + Mathf.Abs(rotateSpeed)))
+        if ((rotY <= (Mathf.Ceil(maxRotateAngle + Mathf.Abs(rotateSpeed))) && rotY >= maxRotateAngle) || (rotY <= (360f - maxRotateAngle) && rotY >= (360f - maxRotateAngle - Mathf.Abs(rotateSpeed))))
             rotateSpeed *= -1;
 
         cannonArmor.Rotate(new Vector3(0, rotateSpeed, 0));
@@ -55,7 +57,7 @@ public class Canhao : MonoBehaviour
         LayerMask layerMask = 1 << LayerMask.NameToLayer("Player");
 
         //espera três segundos para carregar o canhão caso ele não tenha bola
-        if (ballToThrow == 0 && Time.timeSinceLevelLoad - lastShotTime > 3)
+        if (ballToThrow == 0 && Time.timeSinceLevelLoad - lastShotTime > timeToShootAgain)
             CarregarCanhao();
 
         //desenhando o raio de contato com os colliders
