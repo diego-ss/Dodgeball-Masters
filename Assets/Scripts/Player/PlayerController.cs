@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
         rightHand = GameObject.Find("ballReference");
 
         stamina = 100;
-        staminaDecay = 0.20f;
+        staminaDecay = 0.18f;
 
         staminaFillColor = staminaFill.color;
         healthFillColor = healthFill.color;
