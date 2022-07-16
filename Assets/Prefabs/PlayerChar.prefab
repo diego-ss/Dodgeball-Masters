@@ -5562,7 +5562,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4.33
   throwForce: 2
+  stamina: 100
+  staminaDecay: 2
   lifes: 0
+  staminaFill: {fileID: 0}
 --- !u!1 &8609407522183264509
 GameObject:
   m_ObjectHideFlags: 0
