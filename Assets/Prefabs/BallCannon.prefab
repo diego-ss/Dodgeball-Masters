@@ -517,8 +517,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballPrefab: {fileID: 2627246734242367784, guid: b1a016e3e0acab04a843860bd2c5af4c,
     type: 3}
-  rotateSpeed: 0.25
-  maxRotateAngle: 30
+  rotateSpeed: 0.3
+  maxRotateAngle: 45
   shootForce: 3
   timeToShootAgain: 3
 --- !u!65 &596357989688719389
