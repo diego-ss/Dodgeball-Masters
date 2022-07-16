@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ball
   - BarreiraQuadra
+  - Cannon
   layers:
   - Default
   - TransparentFX
@@ -15,9 +16,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - PlayerBlock
+  - Ball
+  - Player
   - 
   - 
   - 
