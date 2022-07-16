@@ -6,18 +6,22 @@ public class PlayerController : MonoBehaviour
     [Header("Parâmetros")]
     public float speed;
     public float throwForce;
-    public int lifes;
-
 
     [Header("Referências")]
     public Image staminaFill;
+    public Image healthFill;
 
-    private float runSpeed;
     private bool canHold = true;
+    private bool reloadingStamina;
+
+    private const float totalHealth = 5f;
+    private float health;
+    private float runSpeed;
     private float stamina;
     private float staminaDecay;
-    private float rollStaminaCost;
-    private bool reloadingStamina;
+    private const float rollStaminaCost = 25f;
+    private Color staminaFillColor;
+    private Color healthFillColor;
 
     private Animator animator;
     private CapsuleCollider capsuleCollider;
@@ -35,20 +39,32 @@ public class PlayerController : MonoBehaviour
         sphereCollider = transform.GetComponent<SphereCollider>();
         rightHand = GameObject.Find("ballReference");
 
-        lifes = 5;
         stamina = 100;
-        staminaDecay = 0.4f;
-        rollStaminaCost = 25;
+        staminaDecay = 0.20f;
+
+        staminaFillColor = staminaFill.color;
+        healthFillColor = healthFill.color;
+        health = totalHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
-        VerificaMovimento();
-        VerificaArremesso();
+        if (GameManager.Instance.isPlaying)
+        {
+            VerificaMovimento();
+            VerificaArremesso();
+        }
+
     }
 
     private void LateUpdate()
+    {
+        AtualizarStamina();
+        AtualizarHealth();
+    }
+
+    private void AtualizarStamina()
     {
         // se a stamina chega a zero, não deixa correr até que recarregue pelo menos 15
         if (stamina == 0)
@@ -60,7 +76,23 @@ public class PlayerController : MonoBehaviour
         // ajustando o UI da imagem conforme a stamina
         stamina += Time.deltaTime * 10;
         stamina = Mathf.Clamp(stamina, 0, 100);
-        staminaFill.fillAmount = stamina / 100.0f; 
+        staminaFill.fillAmount = stamina / 100.0f;
+
+        if (stamina <= 15)
+            staminaFill.color = Color.red;
+        else
+            staminaFill.color = staminaFillColor;
+    }
+
+    private void AtualizarHealth()
+    {
+        // ajustando o UI da imagem conforme a saúde
+        healthFill.fillAmount = health/totalHealth;
+
+        if (health <= 1)
+            healthFill.color = Color.red;
+        else
+            healthFill.color = healthFillColor;
     }
 
     private void VerificaArremesso()
@@ -110,18 +142,23 @@ public class PlayerController : MonoBehaviour
             //verificando se a bola pode causar dano e se não foi o próprio jogador que atirou
             if (ball.canDamage && ball.whoThrows.gameObject != this.gameObject)
             {
-                if(lifes > 0)
+                health--;
+
+                if (health > 0)
                 {
-                    lifes--;
                     //limpa as animações em execução
                     animator.Rebind();
                     animator.SetTrigger("atingido");
                 }
                 else
                 {
+                    //desativa colliders e ativa animação de morte
                     animator.SetTrigger("morte");
+                    sphereCollider.enabled = false;
+                    capsuleCollider.enabled = false;
+                    //termina o jogo
+                    GameManager.Instance.isPlaying = false;
                 }
-
             }
 
         }

@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Parâmetros")]
-    public int roundTime;
+    [Header("Gameplay Geral")]
+    public bool isPlaying = true;
+    public bool victory;
+
+    [Header("Gameplay Treino")]
+    public int trainingRoundTime = 60;
 
     static private GameManager instance;
 

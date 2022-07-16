@@ -5560,12 +5560,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e215161bd7b947843a626eb97ac93bdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4.33
+  speed: 4.3
   throwForce: 2
-  stamina: 100
-  staminaDecay: 2
-  lifes: 0
   staminaFill: {fileID: 0}
+  healthFill: {fileID: 0}
+  staminaDecay: 0.15
 --- !u!1 &8609407522183264509
 GameObject:
   m_ObjectHideFlags: 0
