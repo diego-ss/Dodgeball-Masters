@@ -520,7 +520,7 @@ MonoBehaviour:
   rotateSpeed: 40
   maxRotateAngle: 45
   shootForce: 3
-  timeToShootAgain: 3.5
+  timeToShootAgain: 4
 --- !u!65 &596357989688719389
 BoxCollider:
   m_ObjectHideFlags: 0

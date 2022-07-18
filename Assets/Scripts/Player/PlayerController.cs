@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private float health;
     private float runSpeed;
     private float stamina;
-    private float staminaDecay;
+    public float staminaDecay;
     private const float rollStaminaCost = 25f;
     private Color staminaFillColor;
     private Color healthFillColor;
@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour
         rightHand = GameObject.Find("ballReference");
 
         stamina = 100;
-        staminaDecay = 0.18f;
 
         staminaFillColor = staminaFill.color;
         healthFillColor = healthFill.color;
@@ -201,8 +200,8 @@ public class PlayerController : MonoBehaviour
         //corrida (acontece mesmo andando, por isso o translate está aqui
         if (inputShift && stamina > 0 && !reloadingStamina)
         {
-            // diminuindo stamina
-            stamina -= staminaDecay + Time.deltaTime;
+            //diminuindo stamina
+            stamina -= staminaDecay - Time.deltaTime;
             transform.Translate(0, 0, runSpeed * Time.deltaTime);
             animator.SetBool("correr", true);
         }
