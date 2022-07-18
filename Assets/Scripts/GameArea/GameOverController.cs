@@ -9,19 +9,20 @@ public class GameOverController : MonoBehaviour
 
     private void Start()
     {
-        if (!GameManager.Instance.isPlaying && !GameManager.Instance.victory)
+        if (!GameManager.Instance.victory)
             gameOverText.text = "Ah nao! Voce perdeu.";
-        else if (!GameManager.Instance.isPlaying)
-            gameOverText.text = "Vitoria!";
+        else
+            gameOverText.text = "Parabens, voce venceu!";
     }
 
-    public void ReiniciarTreino()
+    public void Reiniciar()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if(GameManager.Instance.modoJogo == Assets.Scripts.Enums.ModoJogo.TREINO)
+            SceneManager.LoadScene("01_GameScene", LoadSceneMode.Single);
     }
 
     public void MenuPrincipal()
     {
-        SceneManager.LoadScene(0, LoadSceneMode.Single);
+        SceneManager.LoadScene("00_Menu", LoadSceneMode.Single);
     }
 }

@@ -9,12 +9,11 @@ public class Canhao : MonoBehaviour
     [Header("Parâmetros")]
     [Range(-100f, 100f)]
     public float rotateSpeed;
-    [Range(0, 90)]
-    public float maxRotateAngle;
     [Range(0.1f, 5.0f)]
     public float shootForce;
     [Range(3f, 10f)]
     public float timeToShootAgain;
+    public float maxRotateAngle;
 
     private GameObject ballOrigin;
     private Transform cannonArmor;
@@ -43,6 +42,7 @@ public class Canhao : MonoBehaviour
         lineRenderer.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply")); ;
 
         //direção aleatória
+        maxRotateAngle = Random.Range(35, 60);
         rotateSpeed *= Random.value > 0.5 ? 1 : -1;
     }
 
