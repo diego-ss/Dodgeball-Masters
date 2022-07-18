@@ -7,7 +7,7 @@ public class Canhao : MonoBehaviour
     public GameObject ballPrefab;
 
     [Header("Parâmetros")]
-    [Range(-1.5f, 1.5f)]
+    [Range(-100f, 100f)]
     public float rotateSpeed;
     [Range(0, 90)]
     public float maxRotateAngle;
@@ -35,8 +35,12 @@ public class Canhao : MonoBehaviour
 
         //linha de referência ao raycast
         lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.startWidth = 0.1f;
-        lineRenderer.endWidth = 0.1f;
+        lineRenderer.startWidth = 0.01f;
+        lineRenderer.endWidth = 0.01f;
+        lineRenderer.startColor = Color.red;
+        lineRenderer.endColor = Color.red;
+        //material Default-Line
+        lineRenderer.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply")); ;
 
         //direção aleatória
         rotateSpeed *= Random.value > 0.5 ? 1 : -1;
@@ -44,35 +48,40 @@ public class Canhao : MonoBehaviour
 
     private void Update()
     {
-        /* Limitando a rotação do canhão de acordo com o parâmetro estabelecido
-         * Caso o canhão alcance um dos limites, a velocidade é invertida
-         */
-        var rotY = Mathf.Ceil(cannonArmor.rotation.eulerAngles.y);
-        if ((rotY <= (Mathf.Ceil(maxRotateAngle + Mathf.Abs(rotateSpeed))) && rotY >= maxRotateAngle) || (rotY <= (360f - maxRotateAngle) && rotY >= (360f - maxRotateAngle - Mathf.Abs(rotateSpeed))))
-            rotateSpeed *= -1;
-
-        cannonArmor.Rotate(new Vector3(0, rotateSpeed, 0));
-
-        RaycastHit hitInfo;
-        LayerMask layerMask = 1 << LayerMask.NameToLayer("Player");
-
-        //espera três segundos para carregar o canhão caso ele não tenha bola
-        if (ballToThrow == 0 && Time.timeSinceLevelLoad - lastShotTime > timeToShootAgain)
-            CarregarCanhao();
-
-        //desenhando o raio de contato com os colliders
-        if(Physics.Raycast(new Ray(ballOrigin.transform.position, ballOrigin.transform.forward), out hitInfo, Mathf.Infinity)){
-            lineRenderer.SetPosition(0, ballOrigin.transform.position);
-            lineRenderer.SetPosition(1, ballOrigin.transform.position + ballOrigin.transform.forward * hitInfo.distance);
-        }
-
-        //caso tenha bola e o player seja atingido pelo raio, atira a bola
-        if (ballToThrow > 0 && Physics.Raycast(new Ray(ballOrigin.transform.position, ballOrigin.transform.forward), out hitInfo, Mathf.Infinity, layerMask))
+        if (GameManager.Instance.isPlaying)
         {
-            //marcação do instante último tiro 
-            lastShotTime = Time.timeSinceLevelLoad;
-            AtirarBola(hitInfo);
+            /* Limitando a rotação do canhão de acordo com o parâmetro estabelecido
+             * Caso o canhão alcance um dos limites, a velocidade é invertida
+             */
+            var rotY = Mathf.Ceil(cannonArmor.rotation.eulerAngles.y);
+            if ((rotY <= (Mathf.Ceil(maxRotateAngle + Mathf.Abs(rotateSpeed))) && rotY >= maxRotateAngle) || (rotY <= (360f - maxRotateAngle) && rotY >= (360f - maxRotateAngle - Mathf.Abs(rotateSpeed))))
+                rotateSpeed *= -1;
+
+            cannonArmor.Rotate(new Vector3(0, rotateSpeed * Time.deltaTime, 0));
+
+            RaycastHit hitInfo;
+            LayerMask layerMask = 1 << LayerMask.NameToLayer("Player");
+
+            //espera três segundos para carregar o canhão caso ele não tenha bola
+            if (ballToThrow == 0 && Time.timeSinceLevelLoad - lastShotTime > timeToShootAgain)
+                CarregarCanhao();
+
+            //desenhando o raio de contato com os colliders
+            if (Physics.Raycast(new Ray(ballOrigin.transform.position, ballOrigin.transform.forward), out hitInfo, Mathf.Infinity))
+            {
+                lineRenderer.SetPosition(0, ballOrigin.transform.position);
+                lineRenderer.SetPosition(1, ballOrigin.transform.position + ballOrigin.transform.forward * hitInfo.distance);
+            }
+
+            //caso tenha bola e o player seja atingido pelo raio, atira a bola
+            if (ballToThrow > 0 && Physics.Raycast(new Ray(ballOrigin.transform.position, ballOrigin.transform.forward), out hitInfo, Mathf.Infinity, layerMask))
+            {
+                //marcação do instante último tiro 
+                lastShotTime = Time.timeSinceLevelLoad;
+                AtirarBola(hitInfo);
+            }
         }
+
     }
 
     /// <summary>

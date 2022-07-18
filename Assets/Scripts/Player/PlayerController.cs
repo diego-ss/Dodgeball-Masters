@@ -1,14 +1,27 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Parâmetros")]
     public float speed;
     public float throwForce;
-    public int lifes;
 
-    private float runSpeed;
+    [Header("Referências")]
+    public Image staminaFill;
+    public Image healthFill;
+
     private bool canHold = true;
+    private bool reloadingStamina;
+
+    private const float totalHealth = 5f;
+    private float health;
+    private float runSpeed;
+    private float stamina;
+    public float staminaDecay;
+    private const float rollStaminaCost = 25f;
+    private Color staminaFillColor;
+    private Color healthFillColor;
 
     private Animator animator;
     private CapsuleCollider capsuleCollider;
@@ -25,14 +38,60 @@ public class PlayerController : MonoBehaviour
         capsuleCollider = transform.GetComponent<CapsuleCollider>();
         sphereCollider = transform.GetComponent<SphereCollider>();
         rightHand = GameObject.Find("ballReference");
-        lifes = 5;
+
+        stamina = 100;
+
+        staminaFillColor = staminaFill.color;
+        healthFillColor = healthFill.color;
+        health = totalHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
-        VerificaMovimento();
-        VerificaArremesso();
+        if (GameManager.Instance.isPlaying)
+        {
+            VerificaMovimento();
+            VerificaArremesso();
+        }
+
+    }
+
+    private void LateUpdate()
+    {
+        AtualizarStamina();
+        AtualizarHealth();
+    }
+
+    private void AtualizarStamina()
+    {
+        // se a stamina chega a zero, não deixa correr até que recarregue pelo menos 15
+        if (stamina == 0)
+            reloadingStamina = true;
+
+        if (stamina > 15)
+            reloadingStamina = false;
+
+        // ajustando o UI da imagem conforme a stamina
+        stamina += Time.deltaTime * 10;
+        stamina = Mathf.Clamp(stamina, 0, 100);
+        staminaFill.fillAmount = stamina / 100.0f;
+
+        if (stamina <= 15)
+            staminaFill.color = Color.red;
+        else
+            staminaFill.color = staminaFillColor;
+    }
+
+    private void AtualizarHealth()
+    {
+        // ajustando o UI da imagem conforme a saúde
+        healthFill.fillAmount = health/totalHealth;
+
+        if (health <= 1)
+            healthFill.color = Color.red;
+        else
+            healthFill.color = healthFillColor;
     }
 
     private void VerificaArremesso()
@@ -82,17 +141,23 @@ public class PlayerController : MonoBehaviour
             //verificando se a bola pode causar dano e se não foi o próprio jogador que atirou
             if (ball.canDamage && ball.whoThrows.gameObject != this.gameObject)
             {
-                if(lifes > 0)
+                health--;
+
+                if (health > 0)
                 {
-                    lifes--;
+                    //limpa as animações em execução
                     animator.Rebind();
                     animator.SetTrigger("atingido");
                 }
                 else
                 {
+                    //desativa colliders e ativa animação de morte
                     animator.SetTrigger("morte");
+                    sphereCollider.enabled = false;
+                    capsuleCollider.enabled = false;
+                    //termina o jogo
+                    GameManager.Instance.isPlaying = false;
                 }
-
             }
 
         }
@@ -104,7 +169,6 @@ public class PlayerController : MonoBehaviour
         var inputX = Input.GetAxis("Horizontal");
         //capturando W,S
         var inputZ = Input.GetAxis("Vertical");
-
 
         var direcao = new Vector3(inputX, 0, inputZ);
 
@@ -134,8 +198,10 @@ public class PlayerController : MonoBehaviour
         var inputShift = Input.GetKey(KeyCode.LeftShift);
 
         //corrida (acontece mesmo andando, por isso o translate está aqui
-        if (inputShift)
+        if (inputShift && stamina > 0 && !reloadingStamina)
         {
+            //diminuindo stamina
+            stamina -= staminaDecay - Time.deltaTime;
             transform.Translate(0, 0, runSpeed * Time.deltaTime);
             animator.SetBool("correr", true);
         }
@@ -152,10 +218,11 @@ public class PlayerController : MonoBehaviour
         var inputControl = Input.GetKeyDown(KeyCode.LeftControl);
 
         //rolagem
-        if (inputControl && (!animator.GetCurrentAnimatorStateInfo(0).IsName("RollForward")))
+        if (stamina >= rollStaminaCost && inputControl && (!animator.GetCurrentAnimatorStateInfo(0).IsName("RollForward")))
         {
             animator.SetTrigger("rolar");
             transform.Translate(0, 0, speed * 1.2f * Time.deltaTime);
+            stamina -= rollStaminaCost;
         }
 
         //desativando ou ativando os colliders de acordo com a necessidade
