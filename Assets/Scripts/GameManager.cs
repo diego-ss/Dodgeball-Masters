@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Scripts.Enums;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     [Header("Gameplay Geral")]
+    public ModoJogo modoJogo;
     public bool isPlaying = true;
     public bool victory;
 
