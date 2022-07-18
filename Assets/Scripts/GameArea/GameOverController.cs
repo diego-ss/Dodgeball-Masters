@@ -19,4 +19,9 @@ public class GameOverController : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public void MenuPrincipal()
+    {
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
+    }
 }
