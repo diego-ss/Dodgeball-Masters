@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class ArcadeController : MonoBehaviour
 {
 
+    public GameObject ball;
     private List<GameObject> enemies; 
 
     // Start is called before the first frame update
@@ -13,6 +13,7 @@ public class ArcadeController : MonoBehaviour
     {
         GameManager.Instance.isPlaying = true;
         enemies = GameObject.FindGameObjectsWithTag("IAEnemy").ToList();
+        ball = GameObject.FindGameObjectsWithTag("Ball").First();
     }
 
     // Update is called once per frame
@@ -21,7 +22,7 @@ public class ArcadeController : MonoBehaviour
         
     }
 
-    public void OrientarInimigos(Transform bola)
+    public void OrientarInimigos(Transform bola, bool ballIsOnEnemyGround)
     {
         //dizendo ao inimigo se ele pode ou não perseguir a bola.
         //só vai atrás da bola o inimigo mais próximo
@@ -30,7 +31,11 @@ public class ArcadeController : MonoBehaviour
             x.GetComponent<EnemyController>().canCatchBall = false;
             }
         );
-        var nextedEnemy = enemies.OrderBy(x=>x.GetComponent<EnemyController>().ballDistance).First();
-        nextedEnemy.GetComponent<EnemyController>().canCatchBall = true;
+
+        if (ballIsOnEnemyGround)
+        {
+            var closest = enemies.OrderBy(x => x.GetComponent<EnemyController>().ballDistance).First();
+            closest.GetComponent<EnemyController>().canCatchBall = true;
+        }
     }
 }

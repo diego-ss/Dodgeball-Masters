@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyGround : MonoBehaviour
+public class PlayerGround : MonoBehaviour
 {
     private ArcadeController arcadeController;
 
@@ -15,14 +15,14 @@ public class EnemyGround : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ball"))
         {
-            arcadeController.OrientarInimigos(other.transform, true);
+            arcadeController.OrientarInimigos(other.transform, false);
         }
     }
 }

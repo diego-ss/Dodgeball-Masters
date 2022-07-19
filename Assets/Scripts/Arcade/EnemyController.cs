@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour
     [Header("Referências")]
     public Image staminaFill;
     public Image healthFill;
+    public GameObject arcadeController;
 
     private bool canHold = true;
     private bool reloadingStamina;
@@ -27,6 +28,8 @@ public class EnemyController : MonoBehaviour
     private const float rollStaminaCost = 25f;
     private Color staminaFillColor;
     private Color healthFillColor;
+    private Vector3 velocidadeBase;
+    private Vector3 lookAtActual;
 
     private Animator animator;
     private CapsuleCollider capsuleCollider;
@@ -42,6 +45,8 @@ public class EnemyController : MonoBehaviour
         animator = transform.GetComponent<Animator>();
         capsuleCollider = transform.GetComponent<CapsuleCollider>();
         sphereCollider = transform.GetComponent<SphereCollider>();
+        arcadeController = GameObject.Find("ArcadeController");
+
         rightHand = gameObject.transform
             .Find("Armature")
             .Find("Root_M")
@@ -58,15 +63,68 @@ public class EnemyController : MonoBehaviour
 
         stamina = 100;
         health = totalHealth;
+        velocidadeBase = new Vector3(0, 0, 0.005f);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (canCatchBall)
+        if (canCatchBall && ballReference == null)
         {
             //movimenta até a bola
+            var bola = arcadeController.GetComponent<ArcadeController>().ball;
+            SeguirBola(bola);
+        }
+        else
+        {
+            //posições aleatórias
+            if(Mathf.Abs(Vector3.Distance(transform.position, lookAtActual)) < 2)
+                lookAtActual = new Vector3(Random.Range(-11.0f, -2.0f), 0.016f, Random.Range(-7.0f, 7.0f));
+
+            transform.LookAt(lookAtActual);
+        }
+
+        AndarOuCorrer();
+    }
+
+    private void SeguirBola(GameObject bola)
+    {
+        var refPosition = bola.transform.position;
+        //zerando y para o personagem não subir
+        refPosition.y = 0;
+        transform.LookAt(refPosition);
+    }
+
+    private void AndarOuCorrer()
+    {
+        if (velocidadeBase != Vector3.zero && !animator.GetCurrentAnimatorStateInfo(0).IsName("GetHit") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
+        {
+            animator.SetBool("andarFrente", true);
+            runSpeed = 1.3f * speed;
+
+            //correndo aleatoriamente
+            var running = true;
+
+
+
+            //corrida (acontece mesmo andando, por isso o translate está aqui
+            if (running && stamina > 0 && !reloadingStamina)
+            {
+                //diminuindo stamina
+                stamina -= (staminaDecay * Time.deltaTime);
+                animator.SetBool("correr", true);
+                transform.Translate(velocidadeBase * runSpeed);
+            }
+            else
+            {
+                animator.SetBool("correr", false);
+                transform.Translate(velocidadeBase * speed);
+            }
+        }
+        else
+        {
+            animator.SetBool("andarFrente", false);
         }
     }
 
