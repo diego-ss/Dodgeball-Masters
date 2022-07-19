@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/01_GameScene.unity
+    path: Assets/Scenes/00_Menu.unity
+    guid: c13a8ed21b13c50449f3b6eb7c29fa84
+  - enabled: 1
+    path: Assets/Scenes/01_QuadraTreino.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/03_GameOver.unity
+    guid: 833fdb748f11aaa43a29f00029940771
   m_configObjects: {}

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Scripts.Enums;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,9 +6,12 @@ public class GameManager : MonoBehaviour
     [Header("Gameplay Geral")]
     public bool isPlaying = true;
     public bool victory;
+    public ModoJogo modoJogo;
 
     [Header("Gameplay Treino")]
     public int trainingRoundTime = 60;
+    public int trainingTotalTargets = 7; // fixo
+    public int trainingScore = 0;
 
     static private GameManager instance;
 
