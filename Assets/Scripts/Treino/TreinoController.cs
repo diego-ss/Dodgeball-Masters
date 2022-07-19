@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameAreaController : MonoBehaviour
+public class TreinoController : MonoBehaviour
 {
     [Header("Parâmetros")]
     public float trainingTotalTime;
@@ -53,7 +53,7 @@ public class GameAreaController : MonoBehaviour
             else
                 GameManager.Instance.victory = false;
 
-            StartCoroutine(CarregarGameOver(3));
+            StartCoroutine(CarregarGameOver(2));
         }
 
         objetivoAlvosText.text = "ALVOS DESTRUÍDOS: " + GameManager.Instance.trainingScore + "/" + GameManager.Instance.trainingTotalTargets;

@@ -917,10 +917,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f89a755ab0702448a0cd1cad42a1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modoJogo: 0
   isPlaying: 1
   victory: 0
-  trainingRoundTime: 50
+  modoJogo: 0
+  trainingRoundTime: 45
+  trainingTotalTargets: 7
+  trainingScore: 0
 --- !u!4 &1132527115
 Transform:
   m_ObjectHideFlags: 0
@@ -1041,7 +1043,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 0.91764706}
+  m_Color: {r: 0.1882353, g: 0.1882353, b: 0.1882353, a: 0.91764706}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
