@@ -1426,11 +1426,6 @@ PrefabInstance:
       propertyPath: staminaFill
       value: 
       objectReference: {fileID: 1310005505}
-    - target: {fileID: 8047374807986576149, guid: 4b2f8b980763ed945b3cb1ec19a1cf1a,
-        type: 3}
-      propertyPath: staminaDecay
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 8580319065393046339, guid: 4b2f8b980763ed945b3cb1ec19a1cf1a,
         type: 3}
       propertyPath: m_Name
