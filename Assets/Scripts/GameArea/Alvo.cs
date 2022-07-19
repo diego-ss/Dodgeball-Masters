@@ -3,6 +3,7 @@
 public class Alvo : MonoBehaviour
 {
     private Animator animator;
+    private bool died;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +20,14 @@ public class Alvo : MonoBehaviour
 
             //se a bola pode atingir, ativa animação de morte
             if (ballScript.canDamage)
+            {
                 animator.SetTrigger("die");
+
+                if(!died)
+                    GameManager.Instance.trainingScore++;
+
+                died = true;
+            }
 
             ballScript.canHold = true;
         }

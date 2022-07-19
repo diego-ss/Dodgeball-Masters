@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Gameplay Treino")]
     public int trainingRoundTime = 60;
+    public int trainingTotalTargets = 7; // fixo
+    public int trainingScore = 0;
 
     static private GameManager instance;
 

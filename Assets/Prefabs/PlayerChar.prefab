@@ -5564,7 +5564,7 @@ MonoBehaviour:
   throwForce: 2
   staminaFill: {fileID: 0}
   healthFill: {fileID: 0}
-  staminaDecay: 0.3
+  staminaDecay: 40
 --- !u!1 &8609407522183264509
 GameObject:
   m_ObjectHideFlags: 0

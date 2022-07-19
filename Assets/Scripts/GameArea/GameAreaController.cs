@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameAreaController : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class GameAreaController : MonoBehaviour
 
     [Header("Referências")]
     public TMP_Text gameTimeText;
+    public Text objetivoAlvosText;
+    public Text objetivoTempoText;
 
     private float trainingRemainingGameTime;
 
@@ -19,12 +22,17 @@ public class GameAreaController : MonoBehaviour
         GameManager.Instance.isPlaying = true;
         trainingTotalTime = GameManager.Instance.trainingRoundTime;
         trainingRemainingGameTime = trainingTotalTime;
+
+        objetivoTempoText.text = "SOBREVIVER POR " + trainingTotalTime + " SEGUNDOS";
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        //contabilizando quantos alvos foram derrubados
+        var finalScore = GameManager.Instance.trainingScore - GameManager.Instance.trainingTotalTargets;
+
         if (GameManager.Instance.isPlaying)
         {
             trainingRemainingGameTime = Mathf.Clamp(trainingRemainingGameTime - Time.deltaTime, 0, Mathf.Infinity);
@@ -35,15 +43,24 @@ public class GameAreaController : MonoBehaviour
         }
         else
         {
-            //TODO - REGRAS DE VITÓRIA
-            //ALVOS DERRUBADOS...
-            if (trainingRemainingGameTime > 0)
+
+            //caso todos os alvos tenham sido derrubados e o tempo esgotou, o jogador vence
+            if (trainingRemainingGameTime == 0 && finalScore == 0)
+            {
                 GameManager.Instance.victory = true;
+                objetivoTempoText.color = Color.green;
+            }
             else
                 GameManager.Instance.victory = false;
 
             StartCoroutine(CarregarGameOver(3));
         }
+
+        objetivoAlvosText.text = "ALVOS DESTRUÍDOS: " + GameManager.Instance.trainingScore + "/" + GameManager.Instance.trainingTotalTargets;
+
+        if (finalScore == 0)
+            objetivoAlvosText.color = Color.green;
+
     }
 
     IEnumerator CarregarGameOver(int seconds)

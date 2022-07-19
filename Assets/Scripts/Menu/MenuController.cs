@@ -18,6 +18,7 @@ public class MenuController : MonoBehaviour
     public void ModoDeTreino()
     {
         GameManager.Instance.modoJogo = Assets.Scripts.Enums.ModoJogo.TREINO;
+        GameManager.Instance.trainingScore = 0;
         SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 

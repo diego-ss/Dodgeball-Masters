@@ -201,7 +201,7 @@ public class PlayerController : MonoBehaviour
         if (inputShift && stamina > 0 && !reloadingStamina)
         {
             //diminuindo stamina
-            stamina -= staminaDecay - Time.deltaTime;
+            stamina -= (staminaDecay * Time.deltaTime);
             transform.Translate(0, 0, runSpeed * Time.deltaTime);
             animator.SetBool("correr", true);
         }
