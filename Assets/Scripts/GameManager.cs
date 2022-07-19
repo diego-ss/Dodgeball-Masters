@@ -4,9 +4,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [Header("Gameplay Geral")]
-    public ModoJogo modoJogo;
     public bool isPlaying = true;
     public bool victory;
+    public ModoJogo modoJogo;
 
     [Header("Gameplay Treino")]
     public int trainingRoundTime = 60;
