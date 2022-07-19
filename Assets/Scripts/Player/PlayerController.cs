@@ -37,7 +37,19 @@ public class PlayerController : MonoBehaviour
         animator = transform.GetComponent<Animator>();
         capsuleCollider = transform.GetComponent<CapsuleCollider>();
         sphereCollider = transform.GetComponent<SphereCollider>();
-        rightHand = GameObject.Find("ballReference");
+        rightHand = gameObject.transform
+            .Find("Armature")
+            .Find("Root_M")
+            .Find("Spine1_M")
+            .Find("Spine2_M")
+            .Find("Chest_M")
+            .Find("Scapula_R")
+            .Find("Shoulder_R")
+            .Find("Elbow_R")
+            .Find("Wrist_R")
+            .Find("jointItemR")
+            .Find("ballReference")
+            .gameObject;
 
         stamina = 100;
 
