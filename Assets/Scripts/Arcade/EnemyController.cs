@@ -13,9 +13,9 @@ public class EnemyController : MonoBehaviour
     public float throwForce;
 
     [Header("Referências")]
-    public Image staminaFill;
-    public Image healthFill;
-    public GameObject arcadeController;
+    private Image staminaFill;
+    private Image healthFill;
+    private GameObject arcadeController;
 
     private bool canHold = true;
     private bool isDead;
@@ -49,6 +49,8 @@ public class EnemyController : MonoBehaviour
         sphereCollider = transform.GetComponent<SphereCollider>();
         arcadeController = GameObject.Find("ArcadeController");
         playerRef = GameObject.Find("PlayerChar");
+        healthFill = transform.Find("Canvas").Find("healthImage").GetComponent<Image>();
+        healthFillColor = healthFill.color;
 
         rightHand = gameObject.transform
             .Find("Armature")
@@ -66,7 +68,7 @@ public class EnemyController : MonoBehaviour
 
         stamina = 100;
         health = totalHealth;
-        velocidadeBase = new Vector3(0, 0, 0.006f);
+        velocidadeBase = new Vector3(0, 0, 0.004f);
 
     }
 
@@ -101,6 +103,16 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        if (!isDead)
+        {
+            AtualizarStamina();
+            AtualizarHealth();
+        }
+
+    }
+
     private void SeguirBola(GameObject bola)
     {
         // pegando a posição da bola
@@ -115,6 +127,7 @@ public class EnemyController : MonoBehaviour
     {
         //direção forward do personagem
         var direction = transform.forward;
+        //TODO - testes com esse valor
         direction.y = 0.4f;
         ballReference.Arremessar(direction);
         //disponibilizando para pegar novas bolas
@@ -132,10 +145,8 @@ public class EnemyController : MonoBehaviour
             //correndo aleatoriamente
             var running = true;
 
-
-
             //corrida (acontece mesmo andando, por isso o translate está aqui
-            if (running && stamina > 0 && !reloadingStamina)
+            if (stamina >0 && !reloadingStamina)
             {
                 //diminuindo stamina
                 stamina -= (staminaDecay * Time.deltaTime);
@@ -154,19 +165,13 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
-        AtualizarStamina();
-        AtualizarHealth();
-    }
-
     private void AtualizarStamina()
     {
         // se a stamina chega a zero, não deixa correr até que recarregue pelo menos 15
         if (stamina == 0)
             reloadingStamina = true;
 
-        if (stamina > 15)
+        if (stamina == 100)
             reloadingStamina = false;
 
         // ajustando o UI da imagem conforme a stamina
@@ -182,13 +187,13 @@ public class EnemyController : MonoBehaviour
 
     private void AtualizarHealth()
     {
-        //// ajustando o UI da imagem conforme a saúde
-        //healthFill.fillAmount = health / totalHealth;
+        // ajustando o UI da imagem conforme a saúde
+        healthFill.fillAmount = health / totalHealth;
 
-        //if (health <= 1)
-        //    healthFill.color = Color.red;
-        //else
-        //    healthFill.color = healthFillColor;
+        if (health <= 1)
+            healthFill.color = Color.red;
+        else
+            healthFill.color = healthFillColor;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -198,7 +203,7 @@ public class EnemyController : MonoBehaviour
         {
             var ball = other.GetComponent<Bola>();
 
-            //verificando se pode pegara
+            //verificando se pode pegar
             if (canHold && ball.canHold)
             {
                 //componente de script

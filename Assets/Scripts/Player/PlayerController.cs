@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour
             var ball = collision.transform.GetComponent<Bola>();
 
             //verificando se a bola pode causar dano e se não foi o próprio jogador que atirou
-            if (ball.canDamage && ball.whoThrows.gameObject != this.gameObject)
+            if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject)
             {
                 health--;
 
