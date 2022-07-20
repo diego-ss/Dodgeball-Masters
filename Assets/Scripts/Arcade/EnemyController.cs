@@ -5,29 +5,29 @@ using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
-    public bool canCatchBall = false;
-    public float ballDistance;
-
     [Header("Parâmetros")]
     public float speed;
     public float throwForce;
+    public float staminaDecay;
+    public bool canCatchBall = false;
+    public float ballDistance;
 
     [Header("Referências")]
-    private Image staminaFill;
     private Image healthFill;
     private GameObject arcadeController;
+
+    [SerializeField]
+    private float health;
+    [SerializeField]
+    private float stamina;
 
     private bool canHold = true;
     private bool isDead;
     private bool reloadingStamina;
 
     private const float totalHealth = 5f;
-    private float health;
     private float runSpeed;
-    private float stamina;
-    public float staminaDecay;
     private const float rollStaminaCost = 25f;
-    private Color staminaFillColor;
     private Color healthFillColor;
     private Vector3 velocidadeBase;
     private Vector3 lookAtActual;
@@ -37,7 +37,6 @@ public class EnemyController : MonoBehaviour
     private CapsuleCollider capsuleCollider;
     private SphereCollider sphereCollider;
     private GameObject rightHand;
-
     private Bola ballReference;
 
     // Start is called before the first frame update
@@ -52,6 +51,7 @@ public class EnemyController : MonoBehaviour
         healthFill = transform.Find("Canvas").Find("healthImage").GetComponent<Image>();
         healthFillColor = healthFill.color;
 
+        //capturando posição da bola na mão
         rightHand = gameObject.transform
             .Find("Armature")
             .Find("Root_M")
@@ -66,10 +66,9 @@ public class EnemyController : MonoBehaviour
             .Find("ballReference")
             .gameObject;
 
-        stamina = 100;
+        stamina = Random.Range(0.0f, 100f);
         health = totalHealth;
-        velocidadeBase = new Vector3(0, 0, 0.006f);
-
+        velocidadeBase = new Vector3(0, 0, 0.008f);
     }
 
     // Update is called once per frame
@@ -77,6 +76,7 @@ public class EnemyController : MonoBehaviour
     {
         if (!isDead)
         {
+            //a barra de vida olha para o player
             healthFill.transform.parent.LookAt(playerRef.transform);
 
             if (canCatchBall && ballReference == null)
@@ -87,9 +87,12 @@ public class EnemyController : MonoBehaviour
             }
             else if (ballReference != null)
             {
+                //se tem a bola, olha para o jogador e vai na direção dele
                 transform.LookAt(playerRef.transform);
 
-                if (Mathf.Abs(Vector3.Distance(transform.position, playerRef.transform.position)) < 7)
+                //TODO - MUDAR ISSO
+                //AUMENTAR A DISTÂNCIA E COLOCAR UM LIMITADOR DE TEMPO ALEATÓRIO PARA QUE A BOLA SEJA ARREMESSADA
+                if (Mathf.Abs(Vector3.Distance(transform.position, playerRef.transform.position)) < 10)
                     Arremessar();
             }
             else
@@ -111,6 +114,37 @@ public class EnemyController : MonoBehaviour
         AtualizarHealth();  
     }
 
+    private void AtualizarStamina()
+    {
+        // se a stamina chega a zero, não deixa correr até que recarregue pelo menos 15
+        if (stamina == 0)
+            reloadingStamina = true;
+
+        if (stamina > 80)
+            reloadingStamina = false;
+
+        // ajustando o UI da imagem conforme a stamina
+        // adicionando uma perturbação no carregamento da stamina para que não seja constante
+        // tentativa de quebrar a sincronia nas corridas
+        if (Random.value > 0.4)
+        {
+            stamina += Time.deltaTime * 10;
+            stamina = Mathf.Clamp(stamina, 0, 100);
+        }
+    }
+
+    private void AtualizarHealth()
+    {
+        // ajustando o UI da imagem conforme a saúde
+        healthFill.fillAmount = health / totalHealth;
+
+        if (health <= 1)
+            healthFill.color = Color.red;
+        else
+            healthFill.color = healthFillColor;
+    }
+
+
     private void SeguirBola(GameObject bola)
     {
         // pegando a posição da bola
@@ -127,6 +161,8 @@ public class EnemyController : MonoBehaviour
         var direction = transform.forward;
         //TODO - testes com esse valor
         direction.y = 0.4f;
+        direction.z *= throwForce;
+        direction.x *= throwForce;
         ballReference.Arremessar(direction);
         //disponibilizando para pegar novas bolas
         canHold = true;
@@ -158,37 +194,6 @@ public class EnemyController : MonoBehaviour
         {
             animator.SetBool("andarFrente", false);
         }
-    }
-
-    private void AtualizarStamina()
-    {
-        // se a stamina chega a zero, não deixa correr até que recarregue pelo menos 15
-        if (stamina == 0)
-            reloadingStamina = true;
-
-        if (stamina == 100)
-            reloadingStamina = false;
-
-        // ajustando o UI da imagem conforme a stamina
-        stamina += Time.deltaTime * 10;
-        stamina = Mathf.Clamp(stamina, 0, 100);
-        //staminaFill.fillAmount = stamina / 100.0f;
-
-        //if (stamina <= 15)
-        //    staminaFill.color = Color.red;
-        //else
-        //    staminaFill.color = staminaFillColor;
-    }
-
-    private void AtualizarHealth()
-    {
-        // ajustando o UI da imagem conforme a saúde
-        healthFill.fillAmount = health / totalHealth;
-
-        if (health <= 1)
-            healthFill.color = Color.red;
-        else
-            healthFill.color = healthFillColor;
     }
 
     private void OnTriggerEnter(Collider other)

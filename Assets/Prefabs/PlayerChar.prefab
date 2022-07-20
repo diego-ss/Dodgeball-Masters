@@ -5562,6 +5562,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4.5
   throwForce: 2
+  health: 0
+  stamina: 0
   staminaFill: {fileID: 0}
   healthFill: {fileID: 0}
   staminaDecay: 40

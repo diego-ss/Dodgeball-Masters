@@ -7,17 +7,19 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float throwForce;
 
+    [SerializeField]
+    private float health;
+    [SerializeField]
+    private float stamina;
+
     [Header("Referências")]
     public Image staminaFill;
     public Image healthFill;
 
     private bool canHold = true;
     private bool reloadingStamina;
-
     private const float totalHealth = 5f;
-    private float health;
     private float runSpeed;
-    private float stamina;
     public float staminaDecay;
     private const float rollStaminaCost = 25f;
     private Color staminaFillColor;
@@ -111,13 +113,15 @@ public class PlayerController : MonoBehaviour
         //arremessa com o botão esquerdo do mouse
         if (Input.GetMouseButton(0) && ballReference != null)
         {
-            //direção do mouse
-            var direction = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
-            var y = direction.y * 2f;
-            direction = transform.forward;
-            direction.y = y;
+            ////direção do mouse
+            //var direction = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
+            //var y = direction.y * 2f;
+            var direction = transform.forward;
+            direction.z *= throwForce;
+            direction.x *= throwForce;
+            direction.y = 0.4f;
 
-            ballReference.Arremessar(direction * throwForce);
+            ballReference.Arremessar(direction);
             //disponibilizando para pegar novas bolas
             canHold = true;
             ballReference = null;

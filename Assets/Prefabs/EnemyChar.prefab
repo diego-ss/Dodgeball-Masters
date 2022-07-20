@@ -5894,11 +5894,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a7f41819070f8043ac34c17ebbff3e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 4.5
+  throwForce: 1.5
+  staminaDecay: 30
   canCatchBall: 0
   ballDistance: 0
-  speed: 4.5
-  throwForce: 2
-  staminaDecay: 40
+  health: 0
+  stamina: 0
 --- !u!1 &8889549108019713102
 GameObject:
   m_ObjectHideFlags: 0
