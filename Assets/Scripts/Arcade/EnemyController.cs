@@ -20,6 +20,8 @@ public class EnemyController : MonoBehaviour
     private float health;
     [SerializeField]
     private float stamina;
+    [SerializeField]
+    private Vector3 velocidadeBase;
 
     private bool canHold = true;
     private bool isDead;
@@ -29,7 +31,6 @@ public class EnemyController : MonoBehaviour
     private float runSpeed;
     private const float rollStaminaCost = 25f;
     private Color healthFillColor;
-    private Vector3 velocidadeBase;
     private Vector3 lookAtActual;
     private GameObject playerRef;
 
@@ -68,7 +69,7 @@ public class EnemyController : MonoBehaviour
 
         stamina = Random.Range(0.0f, 100f);
         health = totalHealth;
-        velocidadeBase = new Vector3(0, 0, 0.008f);
+        velocidadeBase = new Vector3(0, 0, 0.003f);
     }
 
     // Update is called once per frame

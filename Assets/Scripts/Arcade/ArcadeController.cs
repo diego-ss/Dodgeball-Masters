@@ -8,10 +8,10 @@ public class ArcadeController : MonoBehaviour
     public GameObject ball;
 
     [Header("Parâmetros")]
-    public float leftEnemyAreaLimit = -7.0f;
-    public float rightEnemyAreaLimit = 7.0f;
-    public float backEnemyAreaLimit = -11.0f;
-    public float frontEnemyAreaLimit = -2.0f;
+    public float leftEnemyAreaLimit;
+    public float rightEnemyAreaLimit;
+    public float backEnemyAreaLimit;
+    public float frontEnemyAreaLimit;
 
     [SerializeField]
     [Header("Inimigos")]
