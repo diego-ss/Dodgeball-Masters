@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
-    public bool canCatchBall;
+    public bool canCatchBall = false;
     public float ballDistance;
 
     [Header("Parâmetros")]
@@ -68,7 +68,7 @@ public class EnemyController : MonoBehaviour
 
         stamina = 100;
         health = totalHealth;
-        velocidadeBase = new Vector3(0, 0, 0.004f);
+        velocidadeBase = new Vector3(0, 0, 0.006f);
 
     }
 
@@ -77,6 +77,8 @@ public class EnemyController : MonoBehaviour
     {
         if (!isDead)
         {
+            healthFill.transform.parent.LookAt(playerRef.transform);
+
             if (canCatchBall && ballReference == null)
             {
                 //movimenta até a bola
@@ -93,7 +95,7 @@ public class EnemyController : MonoBehaviour
             else
             {
                 //posições aleatórias
-                if (Mathf.Abs(Vector3.Distance(transform.position, lookAtActual)) < 1.2f)
+                if (Mathf.Abs(Vector3.Distance(transform.position, lookAtActual)) < 1.2f || lookAtActual == Vector3.zero)
                     lookAtActual = new Vector3(Random.Range(-11.0f, -2.0f), 0.016f, Random.Range(-7.0f, 7.0f));
 
                 transform.LookAt(lookAtActual);
@@ -105,12 +107,8 @@ public class EnemyController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!isDead)
-        {
-            AtualizarStamina();
-            AtualizarHealth();
-        }
-
+        AtualizarStamina();
+        AtualizarHealth();  
     }
 
     private void SeguirBola(GameObject bola)
@@ -142,11 +140,8 @@ public class EnemyController : MonoBehaviour
             animator.SetBool("andarFrente", true);
             runSpeed = 1.3f * speed;
 
-            //correndo aleatoriamente
-            var running = true;
-
-            //corrida (acontece mesmo andando, por isso o translate está aqui
-            if (stamina >0 && !reloadingStamina)
+            //corre enquanto tem energia e não está recarregando
+            if (stamina > 0 && !reloadingStamina)
             {
                 //diminuindo stamina
                 stamina -= (staminaDecay * Time.deltaTime);
@@ -225,7 +220,7 @@ public class EnemyController : MonoBehaviour
             var ball = collision.transform.GetComponent<Bola>();
 
             //verificando se a bola pode causar dano e se não foi o próprio jogador que atirou
-            if (ball.canDamage && ball.whoThrows.gameObject != this.gameObject)
+            if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject)
             {
                 health--;
 
@@ -241,6 +236,8 @@ public class EnemyController : MonoBehaviour
                     animator.SetTrigger("morte");
                     sphereCollider.enabled = false;
                     capsuleCollider.enabled = false;
+                    //elimina as forças que exerciam influência no personagem
+                    GetComponent<Rigidbody>().velocity = Vector3.zero;
                     isDead = true;
                 }
             }
