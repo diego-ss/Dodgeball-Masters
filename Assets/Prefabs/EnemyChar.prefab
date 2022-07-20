@@ -5648,7 +5648,7 @@ MonoBehaviour:
   canCatchBall: 0
   ballDistance: 0
   speed: 4.5
-  throwForce: 0
+  throwForce: 2
   staminaFill: {fileID: 0}
   healthFill: {fileID: 0}
   arcadeController: {fileID: 0}

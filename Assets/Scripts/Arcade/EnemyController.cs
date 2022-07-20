@@ -18,6 +18,7 @@ public class EnemyController : MonoBehaviour
     public GameObject arcadeController;
 
     private bool canHold = true;
+    private bool isDead;
     private bool reloadingStamina;
 
     private const float totalHealth = 5f;
@@ -30,6 +31,7 @@ public class EnemyController : MonoBehaviour
     private Color healthFillColor;
     private Vector3 velocidadeBase;
     private Vector3 lookAtActual;
+    private GameObject playerRef;
 
     private Animator animator;
     private CapsuleCollider capsuleCollider;
@@ -46,6 +48,7 @@ public class EnemyController : MonoBehaviour
         capsuleCollider = transform.GetComponent<CapsuleCollider>();
         sphereCollider = transform.GetComponent<SphereCollider>();
         arcadeController = GameObject.Find("ArcadeController");
+        playerRef = GameObject.Find("PlayerChar");
 
         rightHand = gameObject.transform
             .Find("Armature")
@@ -63,37 +66,60 @@ public class EnemyController : MonoBehaviour
 
         stamina = 100;
         health = totalHealth;
-        velocidadeBase = new Vector3(0, 0, 0.005f);
+        velocidadeBase = new Vector3(0, 0, 0.006f);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (canCatchBall && ballReference == null)
+        if (!isDead)
         {
-            //movimenta até a bola
-            var bola = arcadeController.GetComponent<ArcadeController>().ball;
-            SeguirBola(bola);
-        }
-        else
-        {
-            //posições aleatórias
-            if(Mathf.Abs(Vector3.Distance(transform.position, lookAtActual)) < 2)
-                lookAtActual = new Vector3(Random.Range(-11.0f, -2.0f), 0.016f, Random.Range(-7.0f, 7.0f));
+            if (canCatchBall && ballReference == null)
+            {
+                //movimenta até a bola
+                var bola = arcadeController.GetComponent<ArcadeController>().ball;
+                SeguirBola(bola);
+            }
+            else if (ballReference != null)
+            {
+                transform.LookAt(playerRef.transform);
 
-            transform.LookAt(lookAtActual);
-        }
+                if (Mathf.Abs(Vector3.Distance(transform.position, playerRef.transform.position)) < 7)
+                    Arremessar();
+            }
+            else
+            {
+                //posições aleatórias
+                if (Mathf.Abs(Vector3.Distance(transform.position, lookAtActual)) < 1.2f)
+                    lookAtActual = new Vector3(Random.Range(-11.0f, -2.0f), 0.016f, Random.Range(-7.0f, 7.0f));
 
-        AndarOuCorrer();
+                transform.LookAt(lookAtActual);
+            }
+
+            AndarOuCorrer();
+        }
     }
 
     private void SeguirBola(GameObject bola)
     {
+        // pegando a posição da bola
         var refPosition = bola.transform.position;
         //zerando y para o personagem não subir
         refPosition.y = 0;
+        //olhando para a bola
         transform.LookAt(refPosition);
+    }
+
+    private void Arremessar()
+    {
+        //direção forward do personagem
+        var direction = transform.forward;
+        direction.y = 0.4f;
+        ballReference.Arremessar(direction);
+        //disponibilizando para pegar novas bolas
+        canHold = true;
+        ballReference = null;
     }
 
     private void AndarOuCorrer()
@@ -179,6 +205,7 @@ public class EnemyController : MonoBehaviour
                 ballReference = ball;
                 ball.Capturar(rightHand, gameObject);
                 canHold = false;
+                canCatchBall = false;
             }
 
         }
@@ -209,6 +236,7 @@ public class EnemyController : MonoBehaviour
                     animator.SetTrigger("morte");
                     sphereCollider.enabled = false;
                     capsuleCollider.enabled = false;
+                    isDead = true;
                 }
             }
 
