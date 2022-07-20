@@ -98,8 +98,14 @@ public class EnemyController : MonoBehaviour
             else
             {
                 //posições aleatórias
-                if (Mathf.Abs(Vector3.Distance(transform.position, lookAtActual)) < 1.2f || lookAtActual == Vector3.zero)
-                    lookAtActual = new Vector3(Random.Range(-11.0f, -2.0f), 0.016f, Random.Range(-7.0f, 7.0f));
+                if (Mathf.Abs(Vector3.Distance(transform.position, lookAtActual)) < 0.8f || lookAtActual == Vector3.zero)
+                {
+                    var arcadeComponent = arcadeController.GetComponent<ArcadeController>();
+                    var randomXLimit = Random.Range(arcadeComponent.backEnemyAreaLimit, arcadeComponent.frontEnemyAreaLimit);
+                    var randomZLimit = Random.Range(arcadeComponent.leftEnemyAreaLimit, arcadeComponent.rightEnemyAreaLimit);
+                    lookAtActual = new Vector3(randomXLimit, 0.016f, randomZLimit);
+
+                }
 
                 transform.LookAt(lookAtActual);
             }

@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class ArcadeController : MonoBehaviour
 {
-
+    [Header("Referências")]
     public GameObject ball;
+
+    [Header("Parâmetros")]
+    public float leftEnemyAreaLimit = -7.0f;
+    public float rightEnemyAreaLimit = 7.0f;
+    public float backEnemyAreaLimit = -11.0f;
+    public float frontEnemyAreaLimit = -2.0f;
+
+    [SerializeField]
+    [Header("Inimigos")]
     private List<GameObject> enemies; 
 
     // Start is called before the first frame update
