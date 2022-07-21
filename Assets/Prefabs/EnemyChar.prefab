@@ -5895,12 +5895,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4.5
-  throwForce: 1.5
+  throwForce: 2
   staminaDecay: 30
   canCatchBall: 0
   ballDistance: 0
   health: 0
   stamina: 0
+  velocidadeBase: {x: 0, y: 0, z: 0.004}
 --- !u!1 &8889549108019713102
 GameObject:
   m_ObjectHideFlags: 0

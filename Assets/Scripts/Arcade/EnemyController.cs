@@ -70,7 +70,6 @@ public class EnemyController : MonoBehaviour
 
         stamina = Random.Range(0.0f, 100f);
         health = totalHealth;
-        velocidadeBase = new Vector3(0, 0, 0.003f);
     }
 
     // Update is called once per frame
@@ -96,7 +95,7 @@ public class EnemyController : MonoBehaviour
                     timeTriggerThrow = Time.timeSinceLevelLoad;
 
                 //espera de 2 a 4 segundos desde o momento que pega a bola para arremessar
-                if(Time.timeSinceLevelLoad - timeTriggerThrow > Random.Range(2, 5))
+                if(Time.timeSinceLevelLoad - timeTriggerThrow > Random.Range(1, 3))
                     Arremessar();
             }
             else
