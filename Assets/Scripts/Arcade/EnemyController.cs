@@ -39,6 +39,7 @@ public class EnemyController : MonoBehaviour
     private SphereCollider sphereCollider;
     private GameObject rightHand;
     private Bola ballReference;
+    private float? timeTriggerThrow;
 
     // Start is called before the first frame update
     void Start()
@@ -90,10 +91,12 @@ public class EnemyController : MonoBehaviour
             {
                 //se tem a bola, olha para o jogador e vai na direção dele
                 transform.LookAt(playerRef.transform);
+                
+                if(timeTriggerThrow == null)
+                    timeTriggerThrow = Time.timeSinceLevelLoad;
 
-                //TODO - MUDAR ISSO
-                //AUMENTAR A DISTÂNCIA E COLOCAR UM LIMITADOR DE TEMPO ALEATÓRIO PARA QUE A BOLA SEJA ARREMESSADA
-                if (Mathf.Abs(Vector3.Distance(transform.position, playerRef.transform.position)) < 10)
+                //espera de 2 a 4 segundos desde o momento que pega a bola para arremessar
+                if(Time.timeSinceLevelLoad - timeTriggerThrow > Random.Range(2, 5))
                     Arremessar();
             }
             else
@@ -171,6 +174,7 @@ public class EnemyController : MonoBehaviour
         direction.z *= throwForce;
         direction.x *= throwForce;
         ballReference.Arremessar(direction);
+        timeTriggerThrow = null;
         //disponibilizando para pegar novas bolas
         canHold = true;
         ballReference = null;
