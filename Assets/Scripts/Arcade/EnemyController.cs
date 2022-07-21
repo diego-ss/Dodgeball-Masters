@@ -37,6 +37,7 @@ public class EnemyController : MonoBehaviour
     private Animator animator;
     private CapsuleCollider capsuleCollider;
     private SphereCollider sphereCollider;
+    private BoxCollider boxCollider;
     private GameObject rightHand;
     private Bola ballReference;
     private float? timeTriggerThrow;
@@ -48,6 +49,8 @@ public class EnemyController : MonoBehaviour
         animator = transform.GetComponent<Animator>();
         capsuleCollider = transform.GetComponent<CapsuleCollider>();
         sphereCollider = transform.GetComponent<SphereCollider>();
+        boxCollider = transform.GetComponent<BoxCollider>();
+
         arcadeController = GameObject.Find("ArcadeController");
         playerRef = GameObject.Find("PlayerChar");
         healthFill = transform.Find("Canvas").Find("healthImage").GetComponent<Image>();
@@ -120,7 +123,26 @@ public class EnemyController : MonoBehaviour
     private void LateUpdate()
     {
         AtualizarStamina();
-        AtualizarHealth();  
+        AtualizarHealth();
+        VerificarRolar();
+    }
+
+    private void VerificarRolar()
+    {
+        //desativando ou ativando os colliders de acordo com a necessidade
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("RollForward"))
+        {
+            sphereCollider.enabled = false;
+            boxCollider.enabled = true;
+            capsuleCollider.enabled = true;
+        }
+        else
+        {
+            //caso esteja rolando, ativa um collider menor
+            sphereCollider.enabled = true;
+            boxCollider.enabled = false;
+            capsuleCollider.enabled = false;
+        }
     }
 
     private void AtualizarStamina()
@@ -206,6 +228,17 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void Rolar()
+    {
+        //rolagem
+        if (stamina >= rollStaminaCost && (!animator.GetCurrentAnimatorStateInfo(0).IsName("RollForward")))
+        {
+            animator.SetTrigger("rolar");
+            transform.Translate(0, 0, speed * 1.2f * Time.deltaTime);
+            stamina -= rollStaminaCost;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         //verificando se é uma bola
@@ -213,16 +246,12 @@ public class EnemyController : MonoBehaviour
         {
             var ball = other.GetComponent<Bola>();
 
-            //verificando se pode pegar
-            if (canHold && ball.canHold)
+            //se a bola causa dano, tenta desviar
+            if (ball.canDamage && !ball.whoThrows != null && !ball.whoThrows.CompareTag("IAEnemy"))
             {
-                //componente de script
-                ballReference = ball;
-                ball.Capturar(rightHand, gameObject);
-                canHold = false;
-                canCatchBall = false;
+                if (Random.value > 0.3f)
+                    Rolar();
             }
-
         }
     }
 
@@ -255,6 +284,13 @@ public class EnemyController : MonoBehaviour
                     GetComponent<Rigidbody>().velocity = Vector3.zero;
                     isDead = true;
                 }
+            }
+            else if (canHold && ball.canHold)
+            {
+                //componente de script
+                ballReference = ball;
+                ball.Capturar(rightHand, gameObject);
+                canHold = false;
             }
 
         }

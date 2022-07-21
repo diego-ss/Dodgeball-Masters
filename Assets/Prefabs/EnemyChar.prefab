@@ -5794,6 +5794,7 @@ GameObject:
   - component: {fileID: 7129582311470630766}
   - component: {fileID: 7129582311470630767}
   - component: {fileID: 7129582311470630760}
+  - component: {fileID: 7689138070276354256}
   - component: {fileID: -180522570009608241}
   m_Layer: 10
   m_Name: EnemyChar
@@ -5882,6 +5883,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.52109003
   m_Center: {x: 0, y: 0.52329373, z: 0}
+--- !u!65 &7689138070276354256
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8812474835267075903}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.6740866, y: 4.1219435, z: 4.7793694}
+  m_Center: {x: 0.18885279, y: 2.0609717, z: 1.0816798}
 --- !u!114 &-180522570009608241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5895,13 +5909,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4.5
-  throwForce: 2
+  throwForce: 1.6
   staminaDecay: 30
   canCatchBall: 0
   ballDistance: 0
   health: 0
   stamina: 0
-  velocidadeBase: {x: 0, y: 0, z: 0.004}
+  velocidadeBase: {x: 0, y: 0, z: 0.003}
 --- !u!1 &8889549108019713102
 GameObject:
   m_ObjectHideFlags: 0

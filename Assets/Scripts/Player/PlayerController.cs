@@ -175,7 +175,13 @@ public class PlayerController : MonoBehaviour
                     GameManager.Instance.isPlaying = false;
                 }
             }
-
+            else if (canHold && ball.canHold)
+            {
+                //componente de script
+                ballReference = ball;
+                ball.Capturar(rightHand, gameObject);
+                canHold = false;
+            }
         }
     }
 
