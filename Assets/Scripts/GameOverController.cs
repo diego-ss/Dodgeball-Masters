@@ -18,7 +18,10 @@ public class GameOverController : MonoBehaviour
     public void Reiniciar()
     {
         if(GameManager.Instance.modoJogo == Assets.Scripts.Enums.ModoJogo.TREINO)
-            SceneManager.LoadScene("01_GameScene", LoadSceneMode.Single);
+            SceneManager.LoadScene("01_QuadraTreino", LoadSceneMode.Single);
+
+        if (GameManager.Instance.modoJogo == Assets.Scripts.Enums.ModoJogo.ARCADE)
+            SceneManager.LoadScene("02_QuadraArcade", LoadSceneMode.Single);
     }
 
     public void MenuPrincipal()

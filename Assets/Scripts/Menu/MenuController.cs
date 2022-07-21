@@ -22,6 +22,12 @@ public class MenuController : MonoBehaviour
         SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 
+    public void ModoArcade()
+    {
+        GameManager.Instance.modoJogo = Assets.Scripts.Enums.ModoJogo.ARCADE;
+        SceneManager.LoadScene(2, LoadSceneMode.Single);
+    }
+
     public void Sair()
     {
         Application.Quit();
