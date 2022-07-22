@@ -279,6 +279,7 @@ public class EnemyController : MonoBehaviour
                     animator.SetTrigger("morte");
                     sphereCollider.enabled = false;
                     capsuleCollider.enabled = false;
+                    boxCollider.enabled = false;
                     canHold = false;
                     //elimina as forças que exerciam influência no personagem
                     GetComponent<Rigidbody>().velocity = Vector3.zero;

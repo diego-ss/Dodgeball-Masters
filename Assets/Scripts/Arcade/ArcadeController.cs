@@ -60,8 +60,9 @@ public class ArcadeController : MonoBehaviour
 
         if (ballIsOnEnemyGround)
         {
-            var closest = enemies.OrderBy(x => x.GetComponent<EnemyController>().ballDistance).First();
-            closest.GetComponent<EnemyController>().canCatchBall = true;
+            var closest = enemies.Where(x=>!x.GetComponent<EnemyController>().isDead).OrderBy(x => x.GetComponent<EnemyController>().ballDistance).First();
+            if(closest != null)
+                closest.GetComponent<EnemyController>().canCatchBall = true;
         }
         else
             enemies.ForEach(x => x.GetComponent<EnemyController>().canCatchBall = false);
