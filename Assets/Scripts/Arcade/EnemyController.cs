@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     public float staminaDecay;
     public bool canCatchBall = false;
     public float ballDistance;
+    public bool isDead;
 
     [Header("Referências")]
     private Image healthFill;
@@ -22,7 +23,6 @@ public class EnemyController : MonoBehaviour
     private float stamina;
 
     private bool canHold = true;
-    private bool isDead;
     private bool reloadingStamina;
 
     private const float totalHealth = 5f;
@@ -279,6 +279,7 @@ public class EnemyController : MonoBehaviour
                     animator.SetTrigger("morte");
                     sphereCollider.enabled = false;
                     capsuleCollider.enabled = false;
+                    canHold = false;
                     //elimina as forças que exerciam influência no personagem
                     GetComponent<Rigidbody>().velocity = Vector3.zero;
                     isDead = true;

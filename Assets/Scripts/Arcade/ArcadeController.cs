@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ArcadeController : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class ArcadeController : MonoBehaviour
     public float rightEnemyAreaLimit;
     public float backEnemyAreaLimit;
     public float frontEnemyAreaLimit;
+    public float enemiesLeft;
 
     [SerializeField]
     [Header("Inimigos")]
@@ -28,6 +31,20 @@ public class ArcadeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        enemiesLeft = enemies.Where(x => !x.GetComponent<EnemyController>().isDead).Count();
+
+        if(enemiesLeft == 0)
+        {
+            GameManager.Instance.victory = true;
+            StartCoroutine(CarregarGameOver(2));
+        }
+
+        if (!GameManager.Instance.isPlaying)
+        {
+            GameManager.Instance.victory = false;
+            StartCoroutine(CarregarGameOver(2));
+        }
+
         
     }
 
@@ -48,5 +65,12 @@ public class ArcadeController : MonoBehaviour
         }
         else
             enemies.ForEach(x => x.GetComponent<EnemyController>().canCatchBall = false);
+    }
+
+    IEnumerator CarregarGameOver(int seconds)
+    {
+        yield return new WaitForSecondsRealtime(seconds);
+        GameManager.Instance.isPlaying = false;
+        SceneManager.LoadScene("03_GameOver");
     }
 }
