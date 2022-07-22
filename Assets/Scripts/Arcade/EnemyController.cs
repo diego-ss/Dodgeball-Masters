@@ -103,12 +103,13 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                //posições aleatórias
-                if (Mathf.Abs(Vector3.Distance(transform.position, lookAtActual)) < 0.8f || lookAtActual == Vector3.zero)
+                //posições aleatórias quando chega perto do ponto, o ponto é o centro ou a perturbação acontece
+                if ((Mathf.Abs(Vector3.Distance(transform.position, lookAtActual)) < 0.8f || lookAtActual == Vector3.zero) || Random.value > 0.995f)
                 {
                     var arcadeComponent = arcadeController.GetComponent<ArcadeController>();
                     var randomXLimit = Random.Range(arcadeComponent.backEnemyAreaLimit, arcadeComponent.frontEnemyAreaLimit);
                     var randomZLimit = Random.Range(arcadeComponent.leftEnemyAreaLimit, arcadeComponent.rightEnemyAreaLimit);
+
                     lookAtActual = new Vector3(randomXLimit, 0.016f, randomZLimit);
 
                 }
@@ -203,7 +204,7 @@ public class EnemyController : MonoBehaviour
 
     private void AndarOuCorrer()
     {
-        if (velocidadeBase != Vector3.zero && !animator.GetCurrentAnimatorStateInfo(0).IsName("GetHit") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("GetHit") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
         {
             animator.SetBool("andarFrente", true);
             runSpeed = 1.3f * speed;

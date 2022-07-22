@@ -5915,7 +5915,7 @@ MonoBehaviour:
   ballDistance: 0
   health: 0
   stamina: 0
-  velocidadeBase: {x: 0, y: 0, z: 0.003}
+  velocidadeBase: {x: 0, y: 0, z: 0.01}
 --- !u!1 &8889549108019713102
 GameObject:
   m_ObjectHideFlags: 0
