@@ -7,17 +7,19 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float throwForce;
 
+    [SerializeField]
+    private float health;
+    [SerializeField]
+    private float stamina;
+
     [Header("Referências")]
     public Image staminaFill;
     public Image healthFill;
 
     private bool canHold = true;
     private bool reloadingStamina;
-
     private const float totalHealth = 5f;
-    private float health;
     private float runSpeed;
-    private float stamina;
     public float staminaDecay;
     private const float rollStaminaCost = 25f;
     private Color staminaFillColor;
@@ -37,7 +39,19 @@ public class PlayerController : MonoBehaviour
         animator = transform.GetComponent<Animator>();
         capsuleCollider = transform.GetComponent<CapsuleCollider>();
         sphereCollider = transform.GetComponent<SphereCollider>();
-        rightHand = GameObject.Find("ballReference");
+        rightHand = gameObject.transform
+            .Find("Armature")
+            .Find("Root_M")
+            .Find("Spine1_M")
+            .Find("Spine2_M")
+            .Find("Chest_M")
+            .Find("Scapula_R")
+            .Find("Shoulder_R")
+            .Find("Elbow_R")
+            .Find("Wrist_R")
+            .Find("jointItemR")
+            .Find("ballReference")
+            .gameObject;
 
         stamina = 100;
 
@@ -99,13 +113,15 @@ public class PlayerController : MonoBehaviour
         //arremessa com o botão esquerdo do mouse
         if (Input.GetMouseButton(0) && ballReference != null)
         {
-            //direção do mouse
-            var direction = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
-            var y = direction.y * 2f;
-            direction = transform.forward;
-            direction.y = y;
+            ////direção do mouse
+            //var direction = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
+            //var y = direction.y * 2f;
+            var direction = transform.forward;
+            direction.z *= throwForce;
+            direction.x *= throwForce;
+            direction.y = 0.4f;
 
-            ballReference.Arremessar(direction * throwForce);
+            ballReference.Arremessar(direction);
             //disponibilizando para pegar novas bolas
             canHold = true;
             ballReference = null;
@@ -139,7 +155,7 @@ public class PlayerController : MonoBehaviour
             var ball = collision.transform.GetComponent<Bola>();
 
             //verificando se a bola pode causar dano e se não foi o próprio jogador que atirou
-            if (ball.canDamage && ball.whoThrows.gameObject != this.gameObject)
+            if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject)
             {
                 health--;
 
@@ -159,7 +175,13 @@ public class PlayerController : MonoBehaviour
                     GameManager.Instance.isPlaying = false;
                 }
             }
-
+            else if (canHold && ball.canHold)
+            {
+                //componente de script
+                ballReference = ball;
+                ball.Capturar(rightHand, gameObject);
+                canHold = false;
+            }
         }
     }
 
