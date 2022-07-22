@@ -189,10 +189,10 @@ public class EnemyController : MonoBehaviour
     {
         //direção forward do personagem
         var direction = transform.forward;
-        //TODO - testes com esse valor
+        var sortedForce = throwForce + Random.value * 1.5f; // fator de imprevisibilidade
         direction.y = 0.4f;
-        direction.z *= throwForce;
-        direction.x *= throwForce;
+        direction.z *= sortedForce;
+        direction.x *= sortedForce;
         ballReference.Arremessar(direction);
         timeTriggerThrow = null;
         //disponibilizando para pegar novas bolas
