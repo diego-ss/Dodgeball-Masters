@@ -20,8 +20,6 @@ public class EnemyController : MonoBehaviour
     private float health;
     [SerializeField]
     private float stamina;
-    [SerializeField]
-    private Vector3 velocidadeBase;
 
     private bool canHold = true;
     private bool isDead;
@@ -215,12 +213,12 @@ public class EnemyController : MonoBehaviour
                 //diminuindo stamina
                 stamina -= (staminaDecay * Time.deltaTime);
                 animator.SetBool("correr", true);
-                transform.Translate(velocidadeBase * runSpeed);
+                transform.Translate(0,0,runSpeed * Time.deltaTime);
             }
             else
             {
                 animator.SetBool("correr", false);
-                transform.Translate(velocidadeBase * speed);
+                transform.Translate(0,0,Time.deltaTime* speed);
             }
         }
         else
@@ -248,7 +246,7 @@ public class EnemyController : MonoBehaviour
             var ball = other.GetComponent<Bola>();
 
             //se a bola causa dano, tenta desviar
-            if (ball.canDamage && !ball.whoThrows != null && !ball.whoThrows.CompareTag("IAEnemy"))
+            if (ball.canDamage && ball.whoThrows != null && !ball.whoThrows.CompareTag("IAEnemy"))
             {
                 if (Random.value > 0.3f)
                     Rolar();

@@ -46,5 +46,7 @@ public class ArcadeController : MonoBehaviour
             var closest = enemies.OrderBy(x => x.GetComponent<EnemyController>().ballDistance).First();
             closest.GetComponent<EnemyController>().canCatchBall = true;
         }
+        else
+            enemies.ForEach(x => x.GetComponent<EnemyController>().canCatchBall = false);
     }
 }
