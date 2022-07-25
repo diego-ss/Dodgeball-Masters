@@ -8,6 +8,8 @@ public class ArcadeController : MonoBehaviour
 {
     [Header("Referências")]
     public GameObject ball;
+    public GameObject staminaBoostPrefab;
+    public GameObject gameArea;
 
     [Header("Parâmetros")]
     public float leftEnemyAreaLimit;
@@ -16,9 +18,16 @@ public class ArcadeController : MonoBehaviour
     public float frontEnemyAreaLimit;
     public float enemiesLeft;
 
+    public float playerBoostAreaLeftLimit;
+    public float playerBoostAreaRightLimit;
+    public float playerBoostAreaFrontLimit;
+    public float playerBoostAreaBackLimit;
+
     [SerializeField]
     [Header("Inimigos")]
-    private List<GameObject> enemies; 
+    private List<GameObject> enemies;
+
+    private float lastBoostEmissionTime = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +54,23 @@ public class ArcadeController : MonoBehaviour
             StartCoroutine(CarregarGameOver(2));
         }
 
+        if(Time.timeSinceLevelLoad - lastBoostEmissionTime > 10)
+        {
+            lastBoostEmissionTime = Time.timeSinceLevelLoad;
+
+            if (Random.value > 0.7)
+                GerarBoost();
+        }
         
+    }
+
+    private void GerarBoost()
+    {
+        var randomXLimit = Random.Range(playerBoostAreaBackLimit, playerBoostAreaFrontLimit);
+        var randomZLimit = Random.Range(playerBoostAreaLeftLimit, playerBoostAreaRightLimit);
+        var position = new Vector3(randomXLimit, 1.5f, randomZLimit);
+        var boost = Instantiate(staminaBoostPrefab, gameArea.transform);
+        boost.transform.position = position;
     }
 
     public void OrientarInimigos(Transform bola, bool ballIsOnEnemyGround)

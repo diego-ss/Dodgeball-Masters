@@ -1599,7 +1599,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1313800429
 GameObject:
@@ -2097,7 +2097,7 @@ PrefabInstance:
     - target: {fileID: 8960116063831587321, guid: 4b2f8b980763ed945b3cb1ec19a1cf1a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8960116063831587321, guid: 4b2f8b980763ed945b3cb1ec19a1cf1a,
         type: 3}
@@ -2708,11 +2708,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
+  staminaBoostPrefab: {fileID: 8004473096103538320, guid: 705236cab9885134ebe79d63c34b0c39,
+    type: 3}
+  gameArea: {fileID: 522486205}
   leftEnemyAreaLimit: -9.5
   rightEnemyAreaLimit: 9.5
   backEnemyAreaLimit: -13
   frontEnemyAreaLimit: -1
   enemiesLeft: 0
+  playerBoostAreaLeftLimit: -9.5
+  playerBoostAreaRightLimit: 9.5
+  playerBoostAreaFrontLimit: 13
+  playerBoostAreaBackLimit: 2
   enemies: []
 --- !u!4 &2061316869
 Transform:
