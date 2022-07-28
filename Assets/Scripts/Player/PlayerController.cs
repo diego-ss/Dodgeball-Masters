@@ -64,11 +64,14 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (GameManager.Instance.isPlaying)
-        {
             VerificaMovimento();
-            VerificaArremesso();
-        }
+    }
 
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (GameManager.Instance.isPlaying)
+            VerificaArremesso();
     }
 
     private void LateUpdate()

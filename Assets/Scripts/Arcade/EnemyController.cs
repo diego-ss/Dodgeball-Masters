@@ -91,13 +91,9 @@ public class EnemyController : MonoBehaviour
             {
                 //se tem a bola, olha para o jogador e vai na direção dele
                 transform.LookAt(playerRef.transform);
-                
-                if(timeTriggerThrow == null)
-                    timeTriggerThrow = Time.timeSinceLevelLoad;
 
-                //espera de 2 a 4 segundos desde o momento que pega a bola para arremessar
-                if(Time.timeSinceLevelLoad - timeTriggerThrow > Random.Range(1, 3))
-                    Arremessar();
+                if (timeTriggerThrow == null)
+                    timeTriggerThrow = Time.timeSinceLevelLoad;
             }
             else
             {
@@ -116,6 +112,17 @@ public class EnemyController : MonoBehaviour
             }
 
             AndarOuCorrer();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isDead)
+        {
+
+            //espera de 2 a 4 segundos desde o momento que pega a bola para arremessar
+            if (Time.timeSinceLevelLoad - timeTriggerThrow > Random.Range(1, 4))
+                Arremessar();
         }
     }
 
