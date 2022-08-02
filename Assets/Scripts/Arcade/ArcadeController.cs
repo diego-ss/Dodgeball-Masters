@@ -18,10 +18,10 @@ public class ArcadeController : MonoBehaviour
     public float frontEnemyAreaLimit;
     public float enemiesLeft;
 
-    public float playerBoostAreaLeftLimit;
-    public float playerBoostAreaRightLimit;
-    public float playerBoostAreaFrontLimit;
-    public float playerBoostAreaBackLimit;
+    public float playerLeftAreaLimit;
+    public float playerRightAreaLimit;
+    public float playerFrontAreaLimit;
+    public float playerBackAreaLimit;
 
     [SerializeField]
     [Header("Inimigos")]
@@ -66,8 +66,8 @@ public class ArcadeController : MonoBehaviour
 
     private void GerarBoost()
     {
-        var randomXLimit = Random.Range(playerBoostAreaBackLimit, playerBoostAreaFrontLimit);
-        var randomZLimit = Random.Range(playerBoostAreaLeftLimit, playerBoostAreaRightLimit);
+        var randomXLimit = Random.Range(playerBackAreaLimit, playerFrontAreaLimit);
+        var randomZLimit = Random.Range(playerLeftAreaLimit, playerRightAreaLimit);
         var position = new Vector3(randomXLimit, 1.5f, randomZLimit);
         var boost = Instantiate(staminaBoostPrefab, gameArea.transform);
         boost.transform.position = position;

@@ -117,9 +117,8 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isDead)
+        if (!isDead && ballReference != null)
         {
-
             //espera de 2 a 4 segundos desde o momento que pega a bola para arremessar
             if (Time.timeSinceLevelLoad - timeTriggerThrow > Random.Range(1, 4))
                 Arremessar();
