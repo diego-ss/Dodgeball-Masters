@@ -918,7 +918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f89a755ab0702448a0cd1cad42a1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlaying: 1
+  isPlaying: 0
   victory: 0
   modoJogo: 0
   trainingRoundTime: 45
