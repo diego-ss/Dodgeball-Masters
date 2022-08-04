@@ -15,9 +15,16 @@ public class Canhao : MonoBehaviour
     public float timeToShootAgain;
     public float maxRotateAngle;
 
+    [Header("Config. de aúdio")]
+    private AudioSource audioSource;
+    public AudioClip fireClip;
+    public AudioClip movementClip;
+    public AudioClip reloadingClip;
+
     private GameObject ballOrigin;
     private Transform cannonArmor;
     private LineRenderer lineRenderer;
+
     private Bola ballScript;
     private int ballToThrow;
     private float lastShotTime;
@@ -27,6 +34,8 @@ public class Canhao : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         //captura o objeto de referência para instanciar a bola
         ballOrigin = transform.Find("Armor").Find("Cannon").Find("BallOrigin").gameObject;
         //"mira" do canhão"
@@ -56,6 +65,12 @@ public class Canhao : MonoBehaviour
             var rotY = Mathf.Ceil(cannonArmor.rotation.eulerAngles.y);
             if ((rotY <= (Mathf.Ceil(maxRotateAngle + Mathf.Abs(rotateSpeed))) && rotY >= maxRotateAngle) || (rotY <= (360f - maxRotateAngle) && rotY >= (360f - maxRotateAngle - Mathf.Abs(rotateSpeed))))
                 rotateSpeed *= -1;
+
+            if(audioSource.clip != movementClip)
+            {
+                audioSource.clip = movementClip;
+                audioSource.Play();
+            }
 
             cannonArmor.Rotate(new Vector3(0, rotateSpeed * Time.deltaTime, 0));
 
@@ -96,6 +111,7 @@ public class Canhao : MonoBehaviour
         force.y += yPerturbation;
         force.Normalize();
         force *= shootForce;
+        audioSource.PlayOneShot(fireClip);
         ballScript.Arremessar(force);
         ballToThrow--;
     }
@@ -106,6 +122,7 @@ public class Canhao : MonoBehaviour
     private void CarregarCanhao()
     {
         //instanciando prefab da bola
+        audioSource.PlayOneShot(reloadingClip);
         var ball = Instantiate(ballPrefab, ballOrigin.transform.localPosition, ballOrigin.transform.rotation);
         ballScript = ball.GetComponent<Bola>();
         ballScript.Capturar(ballOrigin, gameObject);

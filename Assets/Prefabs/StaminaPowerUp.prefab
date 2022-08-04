@@ -4763,8 +4763,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8004473096103538335}
-  - component: {fileID: 6359858758816765028}
-  - component: {fileID: 1409403991007106554}
   - component: {fileID: 589500995}
   - component: {fileID: 589500996}
   m_Layer: 0
@@ -4790,32 +4788,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6359858758816765028
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8004473096103538320}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.4, y: 0.4, z: 0.4}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1409403991007106554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8004473096103538320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c333931f4f42a2459be7df1b43b44dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  powerUpEffect: {fileID: 11400000, guid: 6ae18f314a29b014abbfc5921fb6ab84, type: 2}
 --- !u!65 &589500995
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4842,6 +4814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpEffect: {fileID: 11400000, guid: 6ae18f314a29b014abbfc5921fb6ab84, type: 2}
+  catchedClip: {fileID: 8300000, guid: 68b2cced77d69854a8aaff998f09b070, type: 3}
 --- !u!1 &8004473096893100454
 GameObject:
   m_ObjectHideFlags: 0
