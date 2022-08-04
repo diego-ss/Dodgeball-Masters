@@ -6,11 +6,8 @@ public class PlayerController : MonoBehaviour
     [Header("Parâmetros")]
     public float speed;
     public float throwForce;
-
-    [SerializeField]
-    private float health;
-    [SerializeField]
-    private float stamina;
+    public float health;
+    public float stamina;
 
     [Header("Referências")]
     public Image staminaFill;
@@ -64,11 +61,14 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (GameManager.Instance.isPlaying)
-        {
             VerificaMovimento();
-            VerificaArremesso();
-        }
+    }
 
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (GameManager.Instance.isPlaying)
+            VerificaArremesso();
     }
 
     private void LateUpdate()

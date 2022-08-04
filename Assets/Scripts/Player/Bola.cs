@@ -4,6 +4,7 @@ public class Bola : MonoBehaviour
 {
     public bool canHold = true;
     public bool canDamage = false;
+    public bool throwed = false;
     public GameObject whoThrows;
 
     private Rigidbody rb;
@@ -26,10 +27,16 @@ public class Bola : MonoBehaviour
         GetComponent<SphereCollider>().enabled = false;        
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if(ballOrigin != null)
             transform.position = ballOrigin.transform.position;
+
+        if (throwed && Mathf.Abs(Vector3.Distance(transform.position, whoThrows.transform.position)) >= 0.5)
+        {
+            GetComponent<SphereCollider>().enabled = true;
+            throwed = false;
+        }
     }
 
     public void Arremessar(Vector3 forceVector)
@@ -40,8 +47,8 @@ public class Bola : MonoBehaviour
         ballOrigin = null;
         //retorna as configurações do rigidbody e collider
         rb.isKinematic = false;
-        GetComponent<SphereCollider>().enabled = true;
         //inputa força na bola
+        throwed = true;
         rb.AddForce(forceVector, ForceMode.Impulse);
 
         //TODO - Eliminar a bola? E se sair das bordas?
