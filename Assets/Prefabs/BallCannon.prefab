@@ -533,6 +533,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballPrefab: {fileID: 2627246734242367784, guid: b1a016e3e0acab04a843860bd2c5af4c,
     type: 3}
+  explosionPrefab: {fileID: 1341166649359358547, guid: 3489b4d547fb3ed4a8f21f2cea37dbf9,
+    type: 3}
   rotateSpeed: 40
   shootForce: 3
   timeToShootAgain: 3.5
