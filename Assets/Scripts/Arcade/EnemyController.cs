@@ -13,14 +13,20 @@ public class EnemyController : MonoBehaviour
     public float ballDistance;
     public bool isDead;
 
-    [Header("Referências")]
-    private Image healthFill;
-    private GameObject arcadeController;
-
     [SerializeField]
     private float health;
     [SerializeField]
     private float stamina;
+
+    [Header("Referências")]
+    private Image healthFill;
+    private GameObject arcadeController;
+
+    [Header("Config. de aúdio")]
+    [SerializeField]
+    private AudioSource audioSource;
+    public AudioClip gettingHitClip;
+    public AudioClip walkingClip;
 
     private bool canHold = true;
     private bool reloadingStamina;
@@ -48,6 +54,7 @@ public class EnemyController : MonoBehaviour
         capsuleCollider = transform.GetComponent<CapsuleCollider>();
         sphereCollider = transform.GetComponent<SphereCollider>();
         boxCollider = transform.GetComponent<BoxCollider>();
+        audioSource = transform.GetComponent<AudioSource>();
 
         arcadeController = GameObject.Find("ArcadeController");
         playerRef = GameObject.Find("PlayerChar");
@@ -80,6 +87,14 @@ public class EnemyController : MonoBehaviour
         {
             //a barra de vida olha para o player
             healthFill.transform.parent.LookAt(playerRef.transform);
+
+            // caso o som de andar não esteja ativo, ativa ele
+            if (audioSource.clip != walkingClip)
+            {
+                audioSource.clip = walkingClip;
+                audioSource.loop = true;
+                audioSource.Play();
+            }
 
             if (canCatchBall && ballReference == null)
             {
@@ -216,6 +231,10 @@ public class EnemyController : MonoBehaviour
             //corre enquanto tem energia e não está recarregando
             if (stamina > 0 && !reloadingStamina)
             {
+                // acelerando o audio clip para simular corrida
+                if (audioSource.clip == walkingClip)
+                    audioSource.pitch = 1.2f;
+
                 //diminuindo stamina
                 stamina -= (staminaDecay * Time.deltaTime);
                 animator.SetBool("correr", true);
@@ -223,6 +242,10 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
+                // acelerando o audio clip para simular corrida
+                if (audioSource.clip == walkingClip)
+                    audioSource.pitch = 1f;
+
                 animator.SetBool("correr", false);
                 transform.Translate(0,0,Time.deltaTime* speed);
             }
@@ -272,6 +295,7 @@ public class EnemyController : MonoBehaviour
             if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject)
             {
                 health--;
+                audioSource.PlayOneShot(gettingHitClip);
 
                 if (health > 0)
                 {

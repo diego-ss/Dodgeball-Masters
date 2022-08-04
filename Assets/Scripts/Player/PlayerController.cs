@@ -8,16 +8,22 @@ public class PlayerController : MonoBehaviour
     public float throwForce;
     public float health;
     public float stamina;
+    public float staminaDecay;
 
     [Header("Referências")]
     public Image staminaFill;
     public Image healthFill;
 
+    [Header("Config. de aúdio")]
+    [SerializeField]
+    private AudioSource audioSource;
+    public AudioClip gettingHitClip;
+    public AudioClip walkingClip;
+
     private bool canHold = true;
     private bool reloadingStamina;
     private const float totalHealth = 5f;
     private float runSpeed;
-    public float staminaDecay;
     private const float rollStaminaCost = 25f;
     private Color staminaFillColor;
     private Color healthFillColor;
@@ -36,6 +42,7 @@ public class PlayerController : MonoBehaviour
         animator = transform.GetComponent<Animator>();
         capsuleCollider = transform.GetComponent<CapsuleCollider>();
         sphereCollider = transform.GetComponent<SphereCollider>();
+        audioSource = transform.GetComponent<AudioSource>();
         rightHand = gameObject.transform
             .Find("Armature")
             .Find("Root_M")
@@ -158,6 +165,7 @@ public class PlayerController : MonoBehaviour
             if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject)
             {
                 health--;
+                audioSource.PlayOneShot(gettingHitClip);
 
                 if (health > 0)
                 {
@@ -196,6 +204,14 @@ public class PlayerController : MonoBehaviour
 
         if((inputX != 0 || inputZ != 0) && !animator.GetCurrentAnimatorStateInfo(0).IsName("GetHit") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
         {
+            // caso o som de andar não esteja ativo, ativa ele
+            if(audioSource.clip != walkingClip)
+            {
+                audioSource.clip = walkingClip;
+                audioSource.loop = true;
+                audioSource.Play();
+            }
+
             var camRot = Camera.main.transform.rotation;
             camRot.x = 0;
             camRot.z = 0;
@@ -208,6 +224,10 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            // se parou de andar, para o audioclip
+            if (audioSource.clip == walkingClip)
+                audioSource.clip = null;
+
             animator.SetBool("andarFrente", false);
         }
     }
@@ -222,6 +242,10 @@ public class PlayerController : MonoBehaviour
         //corrida (acontece mesmo andando, por isso o translate está aqui
         if (inputShift && stamina > 0 && !reloadingStamina)
         {
+            // acelerando o audio clip para simular corrida
+            if (audioSource.clip == walkingClip)
+                audioSource.pitch = 1.2f;
+
             //diminuindo stamina
             stamina -= (staminaDecay * Time.deltaTime);
             transform.Translate(0, 0, runSpeed * Time.deltaTime);
@@ -229,6 +253,10 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            // desacelerando o audio clip 
+            if (audioSource.clip == walkingClip)
+                audioSource.pitch = 1;
+
             animator.SetBool("correr", false);
             transform.Translate(0, 0, speed * Time.deltaTime);
         }

@@ -7,12 +7,18 @@ public class Bola : MonoBehaviour
     public bool throwed = false;
     public GameObject whoThrows;
 
+    [Header("AudioClips")]
+    public AudioClip ballHitClip;
+    public AudioClip ballCatchClip;
+
     private Rigidbody rb;
     private GameObject ballOrigin;
+    private AudioSource audioSource;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void Capturar(GameObject ballOrigin, GameObject owner)
@@ -24,7 +30,8 @@ public class Bola : MonoBehaviour
         //seta o rigidbody como kinematic para evitar gravidade
         rb.isKinematic = true;
         //desativa o collider
-        GetComponent<SphereCollider>().enabled = false;        
+        GetComponent<SphereCollider>().enabled = false;
+        audioSource.PlayOneShot(ballCatchClip);
     }
 
     private void LateUpdate()
@@ -63,6 +70,9 @@ public class Bola : MonoBehaviour
             canHold = true;
             canDamage = false;
             whoThrows = null;
+
+            audioSource.PlayOneShot(ballHitClip);
         }
+
     }
 }
