@@ -8,8 +8,8 @@ public class ArcadeController : MonoBehaviour
 {
     [Header("Referências")]
     public GameObject ball;
-    public GameObject staminaBoostPrefab;
     public GameObject gameArea;
+    public GameObject[] powerUpsPrefabs;
 
     [Header("Parâmetros")]
     public float leftEnemyAreaLimit;
@@ -54,22 +54,25 @@ public class ArcadeController : MonoBehaviour
             StartCoroutine(CarregarGameOver(2));
         }
 
-        if(Time.timeSinceLevelLoad - lastBoostEmissionTime > 10)
+        if(Time.timeSinceLevelLoad - lastBoostEmissionTime > Random.Range(10,20))
         {
             lastBoostEmissionTime = Time.timeSinceLevelLoad;
 
-            if (Random.value > 0.85)
-                GerarBoost();
+            if (Random.value > 0.8)
+                GerarPowerUp();
         }
         
     }
 
-    private void GerarBoost()
+    private void GerarPowerUp()
     {
+        // posição aleatória na área do player
         var randomXLimit = Random.Range(playerBackAreaLimit, playerFrontAreaLimit);
         var randomZLimit = Random.Range(playerLeftAreaLimit, playerRightAreaLimit);
+
+        // instanciando um powerup aleatório
         var position = new Vector3(randomXLimit, 1.5f, randomZLimit);
-        var boost = Instantiate(staminaBoostPrefab, gameArea.transform);
+        var boost = Instantiate(powerUpsPrefabs[Random.Range(0, powerUpsPrefabs.Length)], gameArea.transform);
         boost.transform.position = position;
     }
 

@@ -6,11 +6,8 @@ public class PlayerController : MonoBehaviour
     [Header("Parâmetros")]
     public float speed;
     public float throwForce;
-
-    [SerializeField]
-    private float health;
-    [SerializeField]
-    private float stamina;
+    public float health;
+    public float stamina;
 
     [Header("Referências")]
     public Image staminaFill;
