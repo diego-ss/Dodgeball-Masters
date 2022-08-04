@@ -27,6 +27,7 @@ public class EnemyController : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip gettingHitClip;
     public AudioClip walkingClip;
+    public AudioClip dyingClip;
 
     private bool canHold = true;
     private bool reloadingStamina;
@@ -305,6 +306,8 @@ public class EnemyController : MonoBehaviour
                 }
                 else
                 {
+                    audioSource.PlayOneShot(dyingClip);
+
                     //desativa colliders e ativa animação de morte
                     animator.SetTrigger("morte");
                     sphereCollider.enabled = false;

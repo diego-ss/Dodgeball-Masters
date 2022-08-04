@@ -51,7 +51,7 @@ public class ArcadeController : MonoBehaviour
         if (!GameManager.Instance.isPlaying)
         {
             GameManager.Instance.victory = false;
-            StartCoroutine(CarregarGameOver(2));
+            StartCoroutine(CarregarGameOver(4));
         }
 
         if(Time.timeSinceLevelLoad - lastBoostEmissionTime > Random.Range(10,20))

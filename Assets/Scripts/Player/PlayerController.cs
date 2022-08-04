@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip gettingHitClip;
     public AudioClip walkingClip;
+    public AudioClip dyingClip;
 
     private bool canHold = true;
     private bool reloadingStamina;
@@ -176,6 +177,8 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     //desativa colliders e ativa animação de morte
+                    audioSource.PlayOneShot(dyingClip);
+
                     animator.SetTrigger("morte");
                     sphereCollider.enabled = false;
                     capsuleCollider.enabled = false;

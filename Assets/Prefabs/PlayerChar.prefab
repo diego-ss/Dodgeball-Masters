@@ -5571,6 +5571,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   gettingHitClip: {fileID: 8300000, guid: f8eebfad72376834ea07f9aa7431ed08, type: 3}
   walkingClip: {fileID: 8300000, guid: 5e8e6e435e65fe146b588b8a9d2df461, type: 3}
+  dyingClip: {fileID: 8300000, guid: afe60b685858a96438df8345036922f8, type: 3}
 --- !u!82 &7114720681153337184
 AudioSource:
   m_ObjectHideFlags: 0
