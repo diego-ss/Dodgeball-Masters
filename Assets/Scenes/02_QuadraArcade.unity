@@ -2089,10 +2089,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 0}
-  powerUps:
-  - {fileID: 8004473096103538320, guid: 705236cab9885134ebe79d63c34b0c39, type: 3}
-  - {fileID: 1085271857136588037, guid: af158f81a4613164ebbe4369703658df, type: 3}
   gameArea: {fileID: 522486205}
+  powerUpsPrefabs:
+  - {fileID: 1085271857136588037, guid: af158f81a4613164ebbe4369703658df, type: 3}
+  - {fileID: 8004473096103538320, guid: 705236cab9885134ebe79d63c34b0c39, type: 3}
   leftEnemyAreaLimit: -9.5
   rightEnemyAreaLimit: 9.5
   backEnemyAreaLimit: -13
