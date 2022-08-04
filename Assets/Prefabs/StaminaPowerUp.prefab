@@ -4814,6 +4814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpEffect: {fileID: 11400000, guid: 6ae18f314a29b014abbfc5921fb6ab84, type: 2}
+  catchedClip: {fileID: 8300000, guid: 68b2cced77d69854a8aaff998f09b070, type: 3}
 --- !u!1 &8004473096893100454
 GameObject:
   m_ObjectHideFlags: 0

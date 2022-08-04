@@ -5921,6 +5921,7 @@ MonoBehaviour:
   gettingHitClip: {fileID: 8300000, guid: f8eebfad72376834ea07f9aa7431ed08, type: 3}
   walkingClip: {fileID: 8300000, guid: 5e8e6e435e65fe146b588b8a9d2df461, type: 3}
   dyingClip: {fileID: 8300000, guid: afe60b685858a96438df8345036922f8, type: 3}
+  rollClip: {fileID: 8300000, guid: a82249342f6597545a2b7f668bf46904, type: 3}
 --- !u!82 &2560395844625127953
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5942,7 +5943,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 10
-  MaxDistance: 30
+  MaxDistance: 35
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0

@@ -10,6 +10,7 @@ public class Bola : MonoBehaviour
     [Header("AudioClips")]
     public AudioClip ballHitClip;
     public AudioClip ballCatchClip;
+    public AudioClip ballThrowClip;
 
     private Rigidbody rb;
     private GameObject ballOrigin;
@@ -57,6 +58,7 @@ public class Bola : MonoBehaviour
         //inputa força na bola
         throwed = true;
         rb.AddForce(forceVector, ForceMode.Impulse);
+        audioSource.PlayOneShot(ballThrowClip);
 
         //TODO - Eliminar a bola? E se sair das bordas?
         //TODO - e as bolas que os canhões atiram?

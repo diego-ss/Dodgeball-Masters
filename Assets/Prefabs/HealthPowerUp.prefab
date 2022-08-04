@@ -60,6 +60,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpEffect: {fileID: 11400000, guid: f36b1838609b4934fbb2a4d31cbcd537, type: 2}
+  catchedClip: {fileID: 8300000, guid: 68b2cced77d69854a8aaff998f09b070, type: 3}
+  sceneEffectsAudioSource: {fileID: 0}
 --- !u!1 &1085271857376330344
 GameObject:
   m_ObjectHideFlags: 0

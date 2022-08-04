@@ -17,6 +17,9 @@ public class GameOverController : MonoBehaviour
 
     public void Reiniciar()
     {
+
+        GameManager.Instance.trainingScore = 0;
+
         if(GameManager.Instance.modoJogo == Assets.Scripts.Enums.ModoJogo.TREINO)
             SceneManager.LoadScene("01_QuadraTreino", LoadSceneMode.Single);
 

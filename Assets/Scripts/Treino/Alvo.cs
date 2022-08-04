@@ -4,11 +4,13 @@ public class Alvo : MonoBehaviour
 {
     private Animator animator;
     private bool died;
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         this.animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -21,6 +23,7 @@ public class Alvo : MonoBehaviour
             //se a bola pode atingir, ativa animação de morte
             if (ballScript.canDamage)
             {
+                audioSource.Play();
                 animator.SetTrigger("die");
 
                 if(!died)

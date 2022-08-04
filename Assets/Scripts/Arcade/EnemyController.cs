@@ -28,6 +28,8 @@ public class EnemyController : MonoBehaviour
     public AudioClip gettingHitClip;
     public AudioClip walkingClip;
     public AudioClip dyingClip;
+    public AudioClip rollClip;
+
 
     private bool canHold = true;
     private bool reloadingStamina;
@@ -262,6 +264,8 @@ public class EnemyController : MonoBehaviour
         //rolagem
         if (stamina >= rollStaminaCost && (!animator.GetCurrentAnimatorStateInfo(0).IsName("RollForward")))
         {
+            audioSource.PlayOneShot(rollClip);
+
             animator.SetTrigger("rolar");
             transform.Translate(0, 0, speed * 1.2f * Time.deltaTime);
             stamina -= rollStaminaCost;
