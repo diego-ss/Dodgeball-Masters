@@ -5566,6 +5566,8 @@ MonoBehaviour:
   health: 0
   stamina: 0
   staminaDecay: 30
+  cameraShakeDuration: 1
+  cameraShakeForce: 2
   staminaFill: {fileID: 0}
   healthFill: {fileID: 0}
   audioSource: {fileID: 0}

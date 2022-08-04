@@ -5,6 +5,7 @@ public class Canhao : MonoBehaviour
 {
     [Header("Referências")]
     public GameObject ballPrefab;
+    public ParticleSystem explosionPrefab;
 
     [Header("Parâmetros")]
     [Range(-100f, 100f)]
@@ -113,6 +114,7 @@ public class Canhao : MonoBehaviour
         force *= shootForce;
         audioSource.PlayOneShot(fireClip);
         ballScript.Arremessar(force);
+        GameObject.Instantiate(explosionPrefab, ballOrigin.transform);
         ballToThrow--;
     }
 

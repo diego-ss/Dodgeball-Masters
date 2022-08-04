@@ -33,6 +33,7 @@ public class Bola : MonoBehaviour
         //desativa o collider
         GetComponent<SphereCollider>().enabled = false;
         audioSource.PlayOneShot(ballCatchClip);
+        GetComponent<TrailRenderer>().enabled = false;
     }
 
     private void LateUpdate()
@@ -59,6 +60,8 @@ public class Bola : MonoBehaviour
         throwed = true;
         rb.AddForce(forceVector, ForceMode.Impulse);
         audioSource.PlayOneShot(ballThrowClip);
+        GetComponent<TrailRenderer>().enabled = true;
+
 
         //TODO - Eliminar a bola? E se sair das bordas?
         //TODO - e as bolas que os canhões atiram?

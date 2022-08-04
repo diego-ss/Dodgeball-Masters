@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public float health;
     public float stamina;
     public float staminaDecay;
+    public float cameraShakeDuration;
+    public float cameraShakeForce;
 
     [Header("Referências")]
     public Image staminaFill;
@@ -174,6 +177,7 @@ public class PlayerController : MonoBehaviour
                     //limpa as animações em execução
                     animator.Rebind();
                     animator.SetTrigger("atingido");
+                    Camera.main.DOShakeRotation(cameraShakeDuration, cameraShakeForce, fadeOut: true);
                 }
                 else
                 {
