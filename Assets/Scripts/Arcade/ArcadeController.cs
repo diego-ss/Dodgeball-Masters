@@ -58,7 +58,7 @@ public class ArcadeController : MonoBehaviour
         {
             lastBoostEmissionTime = Time.timeSinceLevelLoad;
 
-            if (Random.value > 0.8)
+            if (Random.value > 0.7)
                 GerarPowerUp();
         }
         
