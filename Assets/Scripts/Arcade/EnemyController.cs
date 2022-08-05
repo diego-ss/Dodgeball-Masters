@@ -13,6 +13,8 @@ public class EnemyController : MonoBehaviour
     public float ballDistance;
     public bool isDead;
 
+    public float totalHealth;
+
     [SerializeField]
     private float health;
     [SerializeField]
@@ -34,7 +36,6 @@ public class EnemyController : MonoBehaviour
     private bool canHold = true;
     private bool reloadingStamina;
 
-    private const float totalHealth = 5f;
     private float runSpeed;
     private const float rollStaminaCost = 25f;
     private Color healthFillColor;
@@ -60,27 +61,25 @@ public class EnemyController : MonoBehaviour
         audioSource = transform.GetComponent<AudioSource>();
 
         arcadeController = GameObject.Find("ArcadeController");
-        playerRef = GameObject.Find("PlayerChar");
+        playerRef = GameObject.FindGameObjectWithTag("Player");
         healthFill = transform.Find("Canvas").Find("healthImage").GetComponent<Image>();
         healthFillColor = healthFill.color;
 
-        //capturando posição da bola na mão
-        rightHand = gameObject.transform
-            .Find("Armature")
-            .Find("Root_M")
-            .Find("Spine1_M")
-            .Find("Spine2_M")
-            .Find("Chest_M")
-            .Find("Scapula_R")
-            .Find("Shoulder_R")
-            .Find("Elbow_R")
-            .Find("Wrist_R")
-            .Find("jointItemR")
-            .Find("ballReference")
-            .gameObject;
+        ProcurarReferenciaMao(transform);
 
         stamina = Random.Range(0.0f, 100f);
         health = totalHealth;
+    }
+
+    void ProcurarReferenciaMao(Transform parent)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == "ballReference")
+                rightHand = child.gameObject;
+            else
+                ProcurarReferenciaMao(child);
+        }
     }
 
     // Update is called once per frame
