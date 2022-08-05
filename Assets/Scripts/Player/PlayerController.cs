@@ -14,8 +14,8 @@ public class PlayerController : MonoBehaviour
     public float cameraShakeForce;
 
     [Header("Referências")]
-    public Image staminaFill;
-    public Image healthFill;
+    private Image staminaFill;
+    private Image healthFill;
 
     [Header("Config. de aúdio")]
     [SerializeField]
@@ -48,6 +48,8 @@ public class PlayerController : MonoBehaviour
         capsuleCollider = transform.GetComponent<CapsuleCollider>();
         sphereCollider = transform.GetComponent<SphereCollider>();
         audioSource = transform.GetComponent<AudioSource>();
+        staminaFill = transform.Find("Canvas").Find("staminaFill").GetComponent<Image>();
+        healthFill = transform.Find("Canvas").Find("healthFill").GetComponent<Image>();
 
         ProcurarReferenciaMao(gameObject.transform);
 
