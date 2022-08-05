@@ -48,25 +48,25 @@ public class PlayerController : MonoBehaviour
         capsuleCollider = transform.GetComponent<CapsuleCollider>();
         sphereCollider = transform.GetComponent<SphereCollider>();
         audioSource = transform.GetComponent<AudioSource>();
-        rightHand = gameObject.transform
-            .Find("Armature")
-            .Find("Root_M")
-            .Find("Spine1_M")
-            .Find("Spine2_M")
-            .Find("Chest_M")
-            .Find("Scapula_R")
-            .Find("Shoulder_R")
-            .Find("Elbow_R")
-            .Find("Wrist_R")
-            .Find("jointItemR")
-            .Find("ballReference")
-            .gameObject;
+
+        ProcurarReferenciaMao(gameObject.transform);
 
         stamina = 100;
 
         staminaFillColor = staminaFill.color;
         healthFillColor = healthFill.color;
         health = totalHealth;
+    }
+
+    void ProcurarReferenciaMao(Transform parent)
+    {
+        foreach(Transform child in parent)
+        {
+            if (child.name == "ballReference")
+                rightHand = child.gameObject;
+            else
+                ProcurarReferenciaMao(child);
+        }
     }
 
     // Update is called once per frame
