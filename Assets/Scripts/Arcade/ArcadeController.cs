@@ -35,6 +35,7 @@ public class ArcadeController : MonoBehaviour
         var player = GameObject.FindGameObjectWithTag("Player");
         player.transform.position = GameObject.Find("PlayerInitialPosition").transform.position;
         player.transform.rotation = Quaternion.Euler(0, -90, 0);
+        player.transform.Find("Canvas").gameObject.SetActive(true);
     }
 
     // Start is called before the first frame update
