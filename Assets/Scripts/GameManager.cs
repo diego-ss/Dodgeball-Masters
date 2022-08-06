@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
     public bool isPlaying = true;
     public bool victory;
     public ModoJogo modoJogo;
-    public GameObject playerCharacter;
 
     [Header("Gameplay Treino")]
     public int trainingRoundTime = 60;

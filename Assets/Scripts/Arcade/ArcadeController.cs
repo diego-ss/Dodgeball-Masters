@@ -29,6 +29,14 @@ public class ArcadeController : MonoBehaviour
 
     private float lastBoostEmissionTime = 0;
 
+    private void Awake()
+    {
+        //posicionando player
+        var player = GameObject.FindGameObjectWithTag("Player");
+        player.transform.position = GameObject.Find("PlayerInitialPosition").transform.position;
+        player.transform.rotation = Quaternion.Euler(0, -90, 0);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,7 +62,7 @@ public class ArcadeController : MonoBehaviour
             StartCoroutine(CarregarGameOver(4));
         }
 
-        if(Time.timeSinceLevelLoad - lastBoostEmissionTime > Random.Range(10,20))
+        if(Time.timeSinceLevelLoad - lastBoostEmissionTime > Random.Range(7,18))
         {
             lastBoostEmissionTime = Time.timeSinceLevelLoad;
 

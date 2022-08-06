@@ -4,19 +4,15 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
-    private static AudioSource sceneEffectsAudioSource;
-
     public PowerUpEffect powerUpEffect;
-    public AudioClip catchedClip;
 
+    private AudioSource audioSource;
     private float startLifeTime;
     
     private void Start()
     {
         startLifeTime = Time.timeSinceLevelLoad;
-
-        if (sceneEffectsAudioSource == null)
-            sceneEffectsAudioSource = GameObject.Find("EffectsAudioSource").GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -29,8 +25,8 @@ public class PowerUp : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            sceneEffectsAudioSource.PlayOneShot(catchedClip);
-            Destroy(gameObject);
+            audioSource.Play();
+            Destroy(gameObject, 0.2f);
             powerUpEffect.Aplicar(other.gameObject);
         }
 

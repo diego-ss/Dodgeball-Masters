@@ -3,7 +3,7 @@
 public class CameraController : MonoBehaviour
 {
     Vector3 offset;
-    public GameObject player;
+    private GameObject player;
     public float YOffset;
     public float Sensibility;
     public float RotationLimit;
@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        this.player = GameObject.FindGameObjectWithTag("Player");
         offset = transform.position - player.transform.position;
     }
 

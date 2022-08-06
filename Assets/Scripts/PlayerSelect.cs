@@ -72,7 +72,7 @@ public class PlayerSelect : MonoBehaviour
     public void Select()
     {
         //seta o player selecionado
-        GameManager.Instance.playerCharacter = selectedPlayer;
+        DontDestroyOnLoad(selectedPlayer);
         //carrega a cena arcade
         SceneManager.LoadScene("02_QuadraArcade", LoadSceneMode.Single);
         //ativa o canvas de vida e stamina

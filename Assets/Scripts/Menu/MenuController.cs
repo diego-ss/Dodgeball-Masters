@@ -30,13 +30,13 @@ public class MenuController : MonoBehaviour
     {
         GameManager.Instance.modoJogo = Assets.Scripts.Enums.ModoJogo.TREINO;
         GameManager.Instance.trainingScore = 0;
-        SceneManager.LoadScene(1, LoadSceneMode.Single);
+        SceneManager.LoadScene("01_QuadraTreino", LoadSceneMode.Single);
     }
 
     public void ModoArcade()
     {
         GameManager.Instance.modoJogo = Assets.Scripts.Enums.ModoJogo.ARCADE;
-        SceneManager.LoadScene(2, LoadSceneMode.Single);
+        SceneManager.LoadScene("04_SelecaoPersonagem", LoadSceneMode.Single);
     }
 
     public void Sair()
