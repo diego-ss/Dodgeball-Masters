@@ -41,7 +41,7 @@ public class Bola : MonoBehaviour
         if(ballOrigin != null)
             transform.position = ballOrigin.transform.position;
 
-        if (throwed && Mathf.Abs(Vector3.Distance(transform.position, whoThrows.transform.position)) >= 0.5)
+        if(whoThrows == null || throwed && Mathf.Abs(Vector3.Distance(transform.position, whoThrows.transform.position)) >= 0.5)
         {
             GetComponent<SphereCollider>().enabled = true;
             throwed = false;
