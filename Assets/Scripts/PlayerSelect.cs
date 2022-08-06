@@ -28,7 +28,6 @@ public class PlayerSelect : MonoBehaviour
     void Start()
     {
         index = 0;
-
         //desativa o canvas de vida e stamina
         players.ForEach(p => p.transform.Find("Canvas").gameObject.SetActive(false));
     }
@@ -59,7 +58,7 @@ public class PlayerSelect : MonoBehaviour
 
     public void Previous()
     {
-        index++;
+        index--;
 
         if (index < 0)
             index = players.Count - 1;

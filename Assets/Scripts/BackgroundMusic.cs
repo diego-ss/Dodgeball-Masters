@@ -5,13 +5,25 @@ using UnityEngine;
 
 public class BackgroundMusic : MonoBehaviour
 {
-    public static BackgroundMusic instance;
+    private static BackgroundMusic instance;
 
     [Header("Músicas de fundo")]
     public AudioClip[] audioClips;
     public AudioClip currentClip;
 
     private AudioSource audioSource;
+
+    static public BackgroundMusic Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new GameObject("BackgroundMusic").AddComponent<BackgroundMusic>();
+            }
+            return instance;
+        }
+    }
 
     private void Awake()
     {

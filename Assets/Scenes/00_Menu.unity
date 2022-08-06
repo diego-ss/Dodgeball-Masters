@@ -903,7 +903,7 @@ GameObject:
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -933,7 +933,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1132527113}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 124.22455, y: -4.0002623, z: 115.234375}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1377,6 +1377,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 89c22da0f27fe984cb532d1571430d16, type: 3}
   - {fileID: 8300000, guid: 9137fa36457a14348929bb9e8a1268cf, type: 3}
   - {fileID: 8300000, guid: 1a2d305404117d641a9eccaae9d4b0a1, type: 3}
+  - {fileID: 8300000, guid: 272655c5f72e7574ca875f0f5946cdee, type: 3}
   currentClip: {fileID: 0}
 --- !u!82 &1894307185
 AudioSource:
@@ -1482,7 +1483,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1894307183}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.3307066, y: -2.408053, z: 0.8946266}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
