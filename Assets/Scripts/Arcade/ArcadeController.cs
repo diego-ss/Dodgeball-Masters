@@ -32,20 +32,20 @@ public class ArcadeController : MonoBehaviour
 
     private void Awake()
     {
+        GameManager.Instance.isPlaying = true;
+
         //posicionando player
         player = GameObject.FindGameObjectWithTag("Player");
         player.transform.position = GameObject.Find("PlayerInitialPosition").transform.position;
         player.transform.rotation = Quaternion.Euler(0, -90, 0);
-        player.GetComponent<PlayerController>().Reset();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.Instance.isPlaying = true;
         enemies = GameObject.FindGameObjectsWithTag("IAEnemy").ToList();
         ball = GameObject.FindGameObjectsWithTag("Ball").First();
-
+        player.GetComponent<PlayerController>().Reset();
     }
 
     // Update is called once per frame
