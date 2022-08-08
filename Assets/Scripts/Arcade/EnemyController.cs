@@ -215,7 +215,8 @@ public class EnemyController : MonoBehaviour
         //direção forward do personagem
         var direction = transform.forward;
         var sortedForce = throwForce + Random.value * 1.5f; // fator de imprevisibilidade
-        direction.y = 0.4f;
+        //melhorar isso
+        direction.y = Random.Range(0.0f, 0.5f);
         direction.z *= sortedForce;
         direction.x *= sortedForce;
         ballReference.Arremessar(direction);
