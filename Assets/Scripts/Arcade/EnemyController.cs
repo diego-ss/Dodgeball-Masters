@@ -136,8 +136,10 @@ public class EnemyController : MonoBehaviour
     {
         if (!isDead && ballReference != null)
         {
+            var timeRef = Time.timeSinceLevelLoad - timeTriggerThrow;
+
             //espera de 2 a 4 segundos desde o momento que pega a bola para arremessar
-            if (Time.timeSinceLevelLoad - timeTriggerThrow > Random.Range(1, 4))
+            if ((Vector3.Distance(playerRef.transform.position, transform.position) < 1f && timeRef > 1f) || timeRef > Random.Range(1, 4))
                 Arremessar();
         }
     }
