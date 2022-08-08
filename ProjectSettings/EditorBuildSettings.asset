@@ -9,15 +9,18 @@ EditorBuildSettings:
     path: Assets/Scenes/00_Menu.unity
     guid: c13a8ed21b13c50449f3b6eb7c29fa84
   - enabled: 1
-    path: Assets/Scenes/04_SelecaoPersonagem.unity
+    path: Assets/Scenes/01_SelecaoPersonagem.unity
     guid: ca1dcdb9479194e449ffc82eb7c897a3
   - enabled: 1
-    path: Assets/Scenes/01_QuadraTreino.unity
+    path: Assets/Scenes/02_GameOver.unity
+    guid: 833fdb748f11aaa43a29f00029940771
+  - enabled: 1
+    path: Assets/Scenes/QuadraTreino.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/02_QuadraArcade.unity
+    path: Assets/Scenes/QuadraArcade_0.unity
     guid: 77cffe74abdfbce4181de1a0f1d1eeaa
   - enabled: 1
-    path: Assets/Scenes/03_GameOver.unity
-    guid: 833fdb748f11aaa43a29f00029940771
+    path: Assets/Scenes/QuadraArcade_1.unity
+    guid: aeb421c6c752af14799453fcb1adbd8b
   m_configObjects: {}
