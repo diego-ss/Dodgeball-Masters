@@ -74,8 +74,15 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (GameManager.Instance.isPlaying)
+        {
+            transform.Find("Canvas").gameObject.SetActive(true);
             VerificaMovimento();
+        } else
+        {
+            transform.Find("Canvas").gameObject.SetActive(false);
+        }
     }
 
     // Update is called once per frame

@@ -10,6 +10,7 @@ public class ArcadeController : MonoBehaviour
     public GameObject ball;
     public GameObject gameArea;
     public GameObject[] powerUpsPrefabs;
+    public GameObject player;
 
     [Header("Parâmetros")]
     public float leftEnemyAreaLimit;
@@ -32,10 +33,9 @@ public class ArcadeController : MonoBehaviour
     private void Awake()
     {
         //posicionando player
-        var player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         player.transform.position = GameObject.Find("PlayerInitialPosition").transform.position;
         player.transform.rotation = Quaternion.Euler(0, -90, 0);
-        player.transform.Find("Canvas").gameObject.SetActive(true);
     }
 
     // Start is called before the first frame update
@@ -55,6 +55,7 @@ public class ArcadeController : MonoBehaviour
         {
             GameManager.Instance.victory = true;
             StartCoroutine(CarregarGameOver(2));
+
         }
 
         if (!GameManager.Instance.isPlaying)
@@ -63,7 +64,7 @@ public class ArcadeController : MonoBehaviour
             StartCoroutine(CarregarGameOver(4));
         }
 
-        if(Time.timeSinceLevelLoad - lastBoostEmissionTime > Random.Range(7,18))
+        if (Time.timeSinceLevelLoad - lastBoostEmissionTime > Random.Range(7,18))
         {
             lastBoostEmissionTime = Time.timeSinceLevelLoad;
 
