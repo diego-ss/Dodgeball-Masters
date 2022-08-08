@@ -60,6 +60,17 @@ public class PlayerController : MonoBehaviour
         health = totalHealth;
     }
 
+    public void Reset()
+    {
+        transform.Find("Canvas").gameObject.SetActive(true);
+        health = totalHealth;
+        stamina = 100;
+
+        animator.Play("Idle");
+        sphereCollider.enabled = true;
+        capsuleCollider.enabled = true;
+    }
+
     void ProcurarReferenciaMao(Transform parent)
     {
         foreach(Transform child in parent)
@@ -74,15 +85,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (GameManager.Instance.isPlaying)
-        {
-            transform.Find("Canvas").gameObject.SetActive(true);
-            VerificaMovimento();
-        } else
-        {
-            transform.Find("Canvas").gameObject.SetActive(false);
-        }
+        VerificaMovimento();
     }
 
     // Update is called once per frame

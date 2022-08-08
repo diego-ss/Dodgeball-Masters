@@ -36,6 +36,7 @@ public class ArcadeController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         player.transform.position = GameObject.Find("PlayerInitialPosition").transform.position;
         player.transform.rotation = Quaternion.Euler(0, -90, 0);
+        player.GetComponent<PlayerController>().Reset();
     }
 
     // Start is called before the first frame update
@@ -110,6 +111,7 @@ public class ArcadeController : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(seconds);
         GameManager.Instance.isPlaying = false;
-        SceneManager.LoadScene("03_GameOver");
+        Destroy(player);
+        SceneManager.LoadScene("02_GameOver");
     }
 }

@@ -1,11 +1,17 @@
-﻿using TMPro;
+﻿using Assets.Scripts.Enums;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameOverController : MonoBehaviour
 {
     [Header("Referências")]
     public TMP_Text gameOverText;
+    public Button continueButton; 
+    public Button restartButton;
+
+    private ModoJogo modoJogo;
 
     private void Start()
     {
@@ -13,18 +19,31 @@ public class GameOverController : MonoBehaviour
             gameOverText.text = "Ah nao! Voce perdeu.";
         else
             gameOverText.text = "Parabens, voce venceu!";
+
+        modoJogo = GameManager.Instance.modoJogo;
+
+        if(modoJogo == ModoJogo.ARCADE)
+        {
+            if(GameManager.Instance.victory)
+                continueButton.gameObject.SetActive(true);
+
+            restartButton.gameObject.SetActive(false);
+        }
+
     }
 
     public void Reiniciar()
     {
-
         GameManager.Instance.trainingScore = 0;
 
-        if(GameManager.Instance.modoJogo == Assets.Scripts.Enums.ModoJogo.TREINO)
-            SceneManager.LoadScene("01_QuadraTreino", LoadSceneMode.Single);
+        if(modoJogo == Assets.Scripts.Enums.ModoJogo.TREINO)
+            SceneManager.LoadScene("QuadraTreino", LoadSceneMode.Single);
+    }
 
-        if (GameManager.Instance.modoJogo == Assets.Scripts.Enums.ModoJogo.ARCADE)
-            SceneManager.LoadScene("02_QuadraArcade", LoadSceneMode.Single);
+    public void Continuar()
+    {
+        GameManager.Instance.level++;
+        SceneManager.LoadScene("QuadraArcade_" + GameManager.Instance.level, LoadSceneMode.Single);
     }
 
     public void MenuPrincipal()

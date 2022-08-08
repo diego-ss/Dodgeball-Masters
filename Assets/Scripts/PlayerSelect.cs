@@ -73,6 +73,6 @@ public class PlayerSelect : MonoBehaviour
         //seta o player selecionado
         DontDestroyOnLoad(selectedPlayer);
         //carrega a cena arcade
-        SceneManager.LoadScene("02_QuadraArcade", LoadSceneMode.Single);
+        SceneManager.LoadScene("QuadraArcade_0", LoadSceneMode.Single);
     }
 }
