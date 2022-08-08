@@ -12167,8 +12167,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258583989}
-  m_LocalRotation: {x: -0.06460714, y: 0.71741813, z: -0.06713631, w: -0.690384}
-  m_LocalPosition: {x: 13.058496, y: 3.9407263, z: -0.11697507}
+  m_LocalRotation: {x: -0.051398452, y: 0.6989241, z: -0.050061274, w: -0.71158785}
+  m_LocalPosition: {x: 15.910049, y: 3.7080073, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -98959,7 +98959,7 @@ MonoBehaviour:
   rightEnemyAreaLimit: 10.2
   backEnemyAreaLimit: -13
   frontEnemyAreaLimit: -1
-  enemiesLeft: 0
+  enemiesLeft: []
   playerLeftAreaLimit: -7.58
   playerRightAreaLimit: 10.2
   playerFrontAreaLimit: 1

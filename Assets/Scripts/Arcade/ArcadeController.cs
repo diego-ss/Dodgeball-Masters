@@ -17,7 +17,7 @@ public class ArcadeController : MonoBehaviour
     public float rightEnemyAreaLimit;
     public float backEnemyAreaLimit;
     public float frontEnemyAreaLimit;
-    public float enemiesLeft;
+    public List<GameObject> enemiesLeft;
 
     public float playerLeftAreaLimit;
     public float playerRightAreaLimit;
@@ -45,14 +45,15 @@ public class ArcadeController : MonoBehaviour
         GameManager.Instance.isPlaying = true;
         enemies = GameObject.FindGameObjectsWithTag("IAEnemy").ToList();
         ball = GameObject.FindGameObjectsWithTag("Ball").First();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        enemiesLeft = enemies.Where(x => !x.GetComponent<EnemyController>().isDead).Count();
+        enemiesLeft = enemies.Where(x => !x.GetComponent<EnemyController>().isDead).ToList();
 
-        if(enemiesLeft == 0)
+        if(enemiesLeft != null && enemiesLeft.Count() == 0)
         {
             GameManager.Instance.victory = true;
             StartCoroutine(CarregarGameOver(2));
@@ -99,9 +100,13 @@ public class ArcadeController : MonoBehaviour
 
         if (ballIsOnEnemyGround)
         {
-            var closest = enemies.Where(x=>!x.GetComponent<EnemyController>().isDead).OrderBy(x => x.GetComponent<EnemyController>().ballDistance).First();
-            if(closest != null)
-                closest.GetComponent<EnemyController>().canCatchBall = true;
+            var aliveEnemies = enemies.Where(x => !x.GetComponent<EnemyController>().isDead).ToList();
+            if(aliveEnemies != null && aliveEnemies.Count > 0)
+            {
+                var closest = aliveEnemies.OrderBy(x => x.GetComponent<EnemyController>().ballDistance).FirstOrDefault();
+                if (closest != null)
+                    closest.GetComponent<EnemyController>().canCatchBall = true;
+            }
         }
         else
             enemies.ForEach(x => x.GetComponent<EnemyController>().canCatchBall = false);
@@ -110,8 +115,10 @@ public class ArcadeController : MonoBehaviour
     IEnumerator CarregarGameOver(int seconds)
     {
         yield return new WaitForSecondsRealtime(seconds);
-        GameManager.Instance.isPlaying = false;
-        Destroy(player);
-        SceneManager.LoadScene("02_GameOver");
+        //GameManager.Instance.isPlaying = false;
+        if(GameManager.Instance.victory == false)
+            Destroy(player);
+
+        SceneManager.LoadScene("02_GameOver", LoadSceneMode.Single);
     }
 }

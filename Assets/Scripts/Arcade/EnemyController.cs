@@ -152,13 +152,13 @@ public class EnemyController : MonoBehaviour
     private void VerificarRolar()
     {
         //desativando ou ativando os colliders de acordo com a necessidade
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("RollForward"))
+        if (!isDead && !animator.GetCurrentAnimatorStateInfo(0).IsName("RollForward"))
         {
             sphereCollider.enabled = false;
             boxCollider.enabled = true;
             capsuleCollider.enabled = true;
         }
-        else
+        else if(!isDead)
         {
             //caso esteja rolando, ativa um collider menor
             sphereCollider.enabled = true;
