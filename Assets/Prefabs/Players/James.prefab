@@ -216,6 +216,7 @@ MonoBehaviour:
   staminaDecay: 30
   cameraShakeDuration: 1
   cameraShakeForce: 2
+  dancingAnimation: {fileID: 0}
   audioSource: {fileID: 0}
   gettingHitClip: {fileID: 8300000, guid: f8eebfad72376834ea07f9aa7431ed08, type: 3}
   walkingClip: {fileID: 8300000, guid: 5e8e6e435e65fe146b588b8a9d2df461, type: 3}
@@ -673,7 +674,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6516714051225585487
 RectTransform:
   m_ObjectHideFlags: 0
