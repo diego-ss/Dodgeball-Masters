@@ -39,6 +39,7 @@ public class MenuController : MonoBehaviour
     {
         //carregando tela de seleção de personagem
         GameManager.Instance.modoJogo = Assets.Scripts.Enums.ModoJogo.ARCADE;
+        GameManager.Instance.level = 0;
         SceneManager.LoadScene("01_SelecaoPersonagem", LoadSceneMode.Single);
     }
 

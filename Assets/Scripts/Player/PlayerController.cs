@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [Header("Referências")]
     private Image staminaFill;
     private Image healthFill;
+    public Animation dancingAnimation;
 
     [Header("Config. de aúdio")]
     [SerializeField]
