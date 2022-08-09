@@ -65,11 +65,14 @@ public class PlayerController : MonoBehaviour
     public void Reset()
     {
         transform.Find("Canvas").gameObject.SetActive(true);
+        canHold = true;
+        ballReference = null;
+
         health = totalHealth;
         stamina = 100;
 
         transform.GetComponent<Animator>().Play("Idle");
-        sphereCollider.enabled = true;
+        sphereCollider.enabled = false;
         capsuleCollider.enabled = true;
     }
 
@@ -87,7 +90,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        VerificaMovimento();
+        if(GameManager.Instance.isPlaying)
+            VerificaMovimento();
     }
 
     // Update is called once per frame
