@@ -8,7 +8,6 @@ public class GameOverController : MonoBehaviour
 {
     [Header("Referências")]
     public TMP_Text gameOverText;
-    public Button continueButton; 
     public Button restartButton;
 
     private ModoJogo modoJogo;
@@ -23,13 +22,7 @@ public class GameOverController : MonoBehaviour
         modoJogo = GameManager.Instance.modoJogo;
 
         if(modoJogo == ModoJogo.ARCADE)
-        {
-            if(GameManager.Instance.victory)
-                continueButton.gameObject.SetActive(true);
-
             restartButton.gameObject.SetActive(false);
-        }
-
     }
 
     public void Reiniciar()
@@ -38,12 +31,6 @@ public class GameOverController : MonoBehaviour
 
         if(modoJogo == Assets.Scripts.Enums.ModoJogo.TREINO)
             SceneManager.LoadScene("QuadraTreino", LoadSceneMode.Single);
-    }
-
-    public void Continuar()
-    {
-        GameManager.Instance.level++;
-        SceneManager.LoadScene("QuadraArcade_" + GameManager.Instance.level, LoadSceneMode.Single);
     }
 
     public void MenuPrincipal()

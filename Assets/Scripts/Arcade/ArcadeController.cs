@@ -56,7 +56,7 @@ public class ArcadeController : MonoBehaviour
         if(enemiesLeft != null && enemiesLeft.Count() == 0)
         {
             GameManager.Instance.victory = true;
-            StartCoroutine(CarregarGameOver(2));
+            StartCoroutine(CarregarProximoNivel(2));
 
         }
 
@@ -112,9 +112,16 @@ public class ArcadeController : MonoBehaviour
             enemies.ForEach(x => x.GetComponent<EnemyController>().canCatchBall = false);
     }
 
+    IEnumerator CarregarProximoNivel(int seconds)
+    {
+        yield return new WaitForSecondsRealtime(seconds);
+        SceneManager.LoadScene("03_ProximoNivel", LoadSceneMode.Single);
+    }
+
     IEnumerator CarregarGameOver(int seconds)
     {
         yield return new WaitForSecondsRealtime(seconds);
+
         //GameManager.Instance.isPlaying = false;
         if(GameManager.Instance.victory == false)
             Destroy(player);
