@@ -60,31 +60,18 @@ public class PlayerController : MonoBehaviour
         staminaFillColor = staminaFill.color;
         healthFillColor = healthFill.color;
         health = totalHealth;
-    }
-
-    public void Reset()
-    {
-        transform.Find("Canvas").gameObject.SetActive(true);
-        canHold = true;
-        ballReference = null;
-
-        health = totalHealth;
-        stamina = 100;
 
         transform.GetComponent<Animator>().Play("Idle");
         sphereCollider.enabled = false;
         capsuleCollider.enabled = true;
+
+        transform.Find("Canvas").gameObject.SetActive(true);
+
     }
 
-    void ProcurarReferenciaMao(Transform parent)
+    public void Reset()
     {
-        foreach(Transform child in parent)
-        {
-            if (child.name == "ballReference")
-                rightHand = child.gameObject;
-            else
-                ProcurarReferenciaMao(child);
-        }
+        Start();
     }
 
     // Update is called once per frame
@@ -106,58 +93,6 @@ public class PlayerController : MonoBehaviour
         AtualizarStamina();
         AtualizarHealth();
     }
-
-    private void AtualizarStamina()
-    {
-        // se a stamina chega a zero, não deixa correr até que recarregue pelo menos 15
-        if (stamina == 0)
-            reloadingStamina = true;
-
-        if (stamina > 15)
-            reloadingStamina = false;
-
-        // ajustando o UI da imagem conforme a stamina
-        stamina += Time.deltaTime * 10;
-        stamina = Mathf.Clamp(stamina, 0, 100);
-        staminaFill.fillAmount = stamina / 100.0f;
-
-        if (stamina <= 15)
-            staminaFill.color = Color.red;
-        else
-            staminaFill.color = staminaFillColor;
-    }
-
-    private void AtualizarHealth()
-    {
-        // ajustando o UI da imagem conforme a saúde
-        healthFill.fillAmount = health/totalHealth;
-
-        if (health <= 1)
-            healthFill.color = Color.red;
-        else
-            healthFill.color = healthFillColor;
-    }
-
-    private void VerificaArremesso()
-    {
-        //arremessa com o botão esquerdo do mouse
-        if (Input.GetMouseButton(0) && ballReference != null)
-        {
-            ////direção do mouse
-            //var direction = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
-            //var y = direction.y * 2f;
-            var direction = transform.forward;
-            direction.z *= throwForce;
-            direction.x *= throwForce;
-            direction.y = 0.4f;
-
-            ballReference.Arremessar(direction);
-            //disponibilizando para pegar novas bolas
-            canHold = true;
-            ballReference = null;
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         //verificando se é uma bola
@@ -180,15 +115,17 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // verificando se uma bola colidiu
-        if (collision.transform.CompareTag("Ball")) {
-            
+        if (collision.transform.CompareTag("Ball"))
+        {
+
             var ball = collision.transform.GetComponent<Bola>();
 
-            //verificando se a bola pode causar dano e se não foi o próprio jogador que atirou
+            //verificando se a bola pode causar dano e se não foi o próprio jogador que atirou e se o último dano foi a mais de 1 segundo
             if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject && Time.timeSinceLevelLoad - lastDamageTime > 1f)
             {
                 lastDamageTime = Time.timeSinceLevelLoad;
                 health--;
+                // aúdio do dano
                 audioSource.PlayOneShot(gettingHitClip);
 
                 if (health > 0)
@@ -196,16 +133,19 @@ public class PlayerController : MonoBehaviour
                     //limpa as animações em execução
                     animator.Rebind();
                     animator.SetTrigger("atingido");
+                    //balança a camera
                     Camera.main.DOShakeRotation(cameraShakeDuration, cameraShakeForce, fadeOut: true);
                 }
                 else
                 {
-                    //desativa colliders e ativa animação de morte
+                    // aúdio de morte
                     audioSource.PlayOneShot(dyingClip);
 
+                    //desativa colliders e ativa animação de morte
                     animator.SetTrigger("morte");
                     sphereCollider.enabled = false;
                     capsuleCollider.enabled = false;
+
                     //termina o jogo
                     GameManager.Instance.isPlaying = false;
                 }
@@ -220,6 +160,85 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Busca a referência do objeto ballReference, o qual aloja a bola quando capturada
+    /// </summary>
+    /// <param name="parent"></param>
+    void ProcurarReferenciaMao(Transform parent)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == "ballReference")
+                rightHand = child.gameObject;
+            else
+                ProcurarReferenciaMao(child);
+        }
+    }
+
+    /// <summary>
+    /// Atualiza a UI e os valores da Stamina
+    /// </summary>
+    private void AtualizarStamina()
+    {
+        // se a stamina chega a zero, não deixa correr até que recarregue pelo menos 15
+        if (stamina == 0)
+            reloadingStamina = true;
+
+        if (stamina > 15)
+            reloadingStamina = false;
+
+        // ajustando o UI da imagem conforme a stamina
+        stamina += Time.deltaTime * 10;
+        stamina = Mathf.Clamp(stamina, 0, 100);
+        staminaFill.fillAmount = stamina / 100.0f;
+
+        if (stamina <= 15)
+            staminaFill.color = Color.red;
+        else
+            staminaFill.color = staminaFillColor;
+    }
+
+    /// <summary>
+    /// Atualiza a UI da vida do player
+    /// </summary>
+    private void AtualizarHealth()
+    {
+        // ajustando o UI da imagem conforme a saúde
+        healthFill.fillAmount = health/totalHealth;
+
+        if (health <= 1)
+            healthFill.color = Color.red;
+        else
+            healthFill.color = healthFillColor;
+    }
+
+    /// <summary>
+    /// Verifica a possibilidade de arremessar a bola quando os botões forem precionados
+    /// </summary>
+    private void VerificaArremesso()
+    {
+        //arremessa com o botão fire ou espaço
+        if ((Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Space)) && ballReference != null)
+        {
+            ////direção do mouse
+            //var direction = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
+            //var y = direction.y * 2f;
+            var direction = transform.forward;
+            direction.z *= throwForce;
+            direction.x *= throwForce;
+            direction.y = 0.4f;
+
+            ballReference.Arremessar(direction);
+            //disponibilizando para pegar novas bolas
+            canHold = true;
+            ballReference = null;
+        }
+    }
+
+    /// <summary>
+    /// Analisa se as entradas para movimentar o personagem
+    /// </summary>
     private void VerificaMovimento()
     {
         //capturando A,D
@@ -259,6 +278,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Corre caso SHIFT seja pressionado
+    /// </summary>
     private void VerificaAndarOuCorrer()
     {
         runSpeed = 1.3f * speed;
@@ -289,6 +311,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Rolar caso CTRL seja pressionado
+    /// </summary>
     private void VerificaRolar()
     {
         //capturando control
@@ -317,14 +342,4 @@ public class PlayerController : MonoBehaviour
             capsuleCollider.enabled = false;
         }
     }
-
-    //pode ser útil para verificar se alguma animação está rodando
-    //public IEnumerator CheckAnimationCompleted(string CurrentAnim, Action Oncomplete)
-    //{
-    //    while (!animator.GetCurrentAnimatorStateInfo(0).IsName(CurrentAnim))
-    //        yield return null;
-    //    if (Oncomplete != null)
-    //        Oncomplete();
-    //}
-
 }

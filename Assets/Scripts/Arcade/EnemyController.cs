@@ -71,6 +71,10 @@ public class EnemyController : MonoBehaviour
         health = totalHealth;
     }
 
+    /// <summary>
+    /// busca a referência do objeto "ballReference"
+    /// </summary>
+    /// <param name="parent"></param>
     void ProcurarReferenciaMao(Transform parent)
     {
         foreach (Transform child in parent)
@@ -138,8 +142,8 @@ public class EnemyController : MonoBehaviour
         {
             var timeRef = Time.timeSinceLevelLoad - timeTriggerThrow;
 
-            //espera de 2 a 4 segundos desde o momento que pega a bola para arremessar
-            if ((Vector3.Distance(playerRef.transform.position, transform.position) < 1f && timeRef > 1f) || timeRef > Random.Range(1, 4))
+            //verifica a distância para o player ou espera de 2 a 4 segundos desde o momento que pega a bola para arremessar
+            if (((Mathf.Abs(Vector3.Distance(playerRef.transform.position, transform.position)) < 1f) && timeRef > 1f) || timeRef > Random.Range(1, 4))
                 Arremessar();
         }
     }
@@ -151,6 +155,9 @@ public class EnemyController : MonoBehaviour
         VerificarRolar();
     }
 
+    /// <summary>
+    /// desativa e ativa os colliders quando o inimigo rola
+    /// </summary>
     private void VerificarRolar()
     {
         //desativando ou ativando os colliders de acordo com a necessidade
@@ -169,6 +176,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// atualiza a stamina do inimigo
+    /// </summary>
     private void AtualizarStamina()
     {
         // se a stamina chega a zero, não deixa correr até que recarregue pelo menos 15
@@ -178,7 +188,6 @@ public class EnemyController : MonoBehaviour
         if (stamina > 80)
             reloadingStamina = false;
 
-        // ajustando o UI da imagem conforme a stamina
         // adicionando uma perturbação no carregamento da stamina para que não seja constante
         // tentativa de quebrar a sincronia nas corridas
         if (Random.value > 0.4)
@@ -188,6 +197,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// atualiza o UI e os dados da vida do inimigo
+    /// </summary>
     private void AtualizarHealth()
     {
         // ajustando o UI da imagem conforme a saúde
@@ -199,7 +211,10 @@ public class EnemyController : MonoBehaviour
             healthFill.color = healthFillColor;
     }
 
-
+    /// <summary>
+    /// olha para a bola e vai na direção de la
+    /// </summary>
+    /// <param name="bola"></param>
     private void SeguirBola(GameObject bola)
     {
         // pegando a posição da bola
@@ -210,6 +225,9 @@ public class EnemyController : MonoBehaviour
         transform.LookAt(refPosition);
     }
 
+    /// <summary>
+    /// arremessa a bola para frente
+    /// </summary>
     private void Arremessar()
     {
         //direção forward do personagem
@@ -226,6 +244,9 @@ public class EnemyController : MonoBehaviour
         ballReference = null;
     }
 
+    /// <summary>
+    /// aplica a lógica de movimentação do personagem
+    /// </summary>
     private void AndarOuCorrer()
     {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("GetHit") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Death"))
@@ -261,6 +282,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// aplica a animação de rolagem
+    /// </summary>
     private void Rolar()
     {
         //rolagem
@@ -284,7 +308,7 @@ public class EnemyController : MonoBehaviour
             //se a bola causa dano, tenta desviar
             if (ball.canDamage && ball.whoThrows != null && !ball.whoThrows.CompareTag("IAEnemy"))
             {
-                if (Random.value > 0.3f)
+                if (Random.value > 0.5f)
                     Rolar();
             }
         }

@@ -19,6 +19,7 @@ public class GridEffects : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        // manipulando o efeito sonoro das grades para diminuir o volume com o tempo
         var rb = collision.gameObject.GetComponent<Rigidbody>();
 
         if (rb != null)

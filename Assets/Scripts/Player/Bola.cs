@@ -22,6 +22,11 @@ public class Bola : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    /// <summary>
+    /// prende a bola a um determinado objeto
+    /// </summary>
+    /// <param name="ballOrigin"></param>
+    /// <param name="owner"></param>
     public void Capturar(GameObject ballOrigin, GameObject owner)
     {
         rb.velocity = Vector3.zero;
@@ -49,6 +54,10 @@ public class Bola : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// aplica a força informada na bola
+    /// </summary>
+    /// <param name="forceVector"></param>
     public void Arremessar(Vector3 forceVector)
     {
         //desativando a possibilidade de coleta
