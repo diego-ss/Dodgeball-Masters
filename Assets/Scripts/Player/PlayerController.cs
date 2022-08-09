@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip rollClip;
 
     private bool canHold = true;
+    private float lastDamageTime;
     private bool reloadingStamina;
     private const float totalHealth = 5f;
     private float runSpeed;
@@ -55,9 +56,21 @@ public class PlayerController : MonoBehaviour
 
         stamina = 100;
 
+        lastDamageTime = Time.timeSinceLevelLoad;
         staminaFillColor = staminaFill.color;
         healthFillColor = healthFill.color;
         health = totalHealth;
+    }
+
+    public void Reset()
+    {
+        transform.Find("Canvas").gameObject.SetActive(true);
+        health = totalHealth;
+        stamina = 100;
+
+        transform.GetComponent<Animator>().Play("Idle");
+        sphereCollider.enabled = true;
+        capsuleCollider.enabled = true;
     }
 
     void ProcurarReferenciaMao(Transform parent)
@@ -74,8 +87,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.isPlaying)
-            VerificaMovimento();
+        VerificaMovimento();
     }
 
     // Update is called once per frame
@@ -169,8 +181,9 @@ public class PlayerController : MonoBehaviour
             var ball = collision.transform.GetComponent<Bola>();
 
             //verificando se a bola pode causar dano e se não foi o próprio jogador que atirou
-            if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject)
+            if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject && Time.timeSinceLevelLoad - lastDamageTime > 1f)
             {
+                lastDamageTime = Time.timeSinceLevelLoad;
                 health--;
                 audioSource.PlayOneShot(gettingHitClip);
 

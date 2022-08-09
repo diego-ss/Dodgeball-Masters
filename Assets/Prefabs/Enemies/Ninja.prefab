@@ -2494,13 +2494,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a7f41819070f8043ac34c17ebbff3e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5.2
+  speed: 5
   throwForce: 1.7
   staminaDecay: 30
   canCatchBall: 0
   ballDistance: 0
   isDead: 0
-  totalHealth: 5
+  totalHealth: 3
   health: 0
   stamina: 0
   audioSource: {fileID: 0}

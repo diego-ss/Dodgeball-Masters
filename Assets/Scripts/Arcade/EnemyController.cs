@@ -136,8 +136,10 @@ public class EnemyController : MonoBehaviour
     {
         if (!isDead && ballReference != null)
         {
+            var timeRef = Time.timeSinceLevelLoad - timeTriggerThrow;
+
             //espera de 2 a 4 segundos desde o momento que pega a bola para arremessar
-            if (Time.timeSinceLevelLoad - timeTriggerThrow > Random.Range(1, 4))
+            if ((Vector3.Distance(playerRef.transform.position, transform.position) < 1f && timeRef > 1f) || timeRef > Random.Range(1, 4))
                 Arremessar();
         }
     }
@@ -152,13 +154,13 @@ public class EnemyController : MonoBehaviour
     private void VerificarRolar()
     {
         //desativando ou ativando os colliders de acordo com a necessidade
-        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("RollForward"))
+        if (!isDead && !animator.GetCurrentAnimatorStateInfo(0).IsName("RollForward"))
         {
             sphereCollider.enabled = false;
             boxCollider.enabled = true;
             capsuleCollider.enabled = true;
         }
-        else
+        else if(!isDead)
         {
             //caso esteja rolando, ativa um collider menor
             sphereCollider.enabled = true;
@@ -213,7 +215,8 @@ public class EnemyController : MonoBehaviour
         //direção forward do personagem
         var direction = transform.forward;
         var sortedForce = throwForce + Random.value * 1.5f; // fator de imprevisibilidade
-        direction.y = 0.4f;
+        //melhorar isso
+        direction.y = Random.Range(0.0f, 0.5f);
         direction.z *= sortedForce;
         direction.x *= sortedForce;
         ballReference.Arremessar(direction);

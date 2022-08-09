@@ -66,6 +66,6 @@ public class TreinoController : MonoBehaviour
     IEnumerator CarregarGameOver(int seconds)
     {
         yield return new WaitForSecondsRealtime(seconds);
-        SceneManager.LoadScene("03_GameOver");
+        SceneManager.LoadScene("02_GameOver");
     }
 }

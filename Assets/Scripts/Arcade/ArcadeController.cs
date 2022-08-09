@@ -10,13 +10,14 @@ public class ArcadeController : MonoBehaviour
     public GameObject ball;
     public GameObject gameArea;
     public GameObject[] powerUpsPrefabs;
+    public GameObject player;
 
     [Header("Parâmetros")]
     public float leftEnemyAreaLimit;
     public float rightEnemyAreaLimit;
     public float backEnemyAreaLimit;
     public float frontEnemyAreaLimit;
-    public float enemiesLeft;
+    public List<GameObject> enemiesLeft;
 
     public float playerLeftAreaLimit;
     public float playerRightAreaLimit;
@@ -31,30 +32,32 @@ public class ArcadeController : MonoBehaviour
 
     private void Awake()
     {
+        GameManager.Instance.isPlaying = true;
+
         //posicionando player
-        var player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         player.transform.position = GameObject.Find("PlayerInitialPosition").transform.position;
         player.transform.rotation = Quaternion.Euler(0, -90, 0);
-        player.transform.Find("Canvas").gameObject.SetActive(true);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.Instance.isPlaying = true;
         enemies = GameObject.FindGameObjectsWithTag("IAEnemy").ToList();
         ball = GameObject.FindGameObjectsWithTag("Ball").First();
+        player.GetComponent<PlayerController>().Reset();
     }
 
     // Update is called once per frame
     void Update()
     {
-        enemiesLeft = enemies.Where(x => !x.GetComponent<EnemyController>().isDead).Count();
+        enemiesLeft = enemies.Where(x => !x.GetComponent<EnemyController>().isDead).ToList();
 
-        if(enemiesLeft == 0)
+        if(enemiesLeft != null && enemiesLeft.Count() == 0)
         {
             GameManager.Instance.victory = true;
             StartCoroutine(CarregarGameOver(2));
+
         }
 
         if (!GameManager.Instance.isPlaying)
@@ -63,7 +66,7 @@ public class ArcadeController : MonoBehaviour
             StartCoroutine(CarregarGameOver(4));
         }
 
-        if(Time.timeSinceLevelLoad - lastBoostEmissionTime > Random.Range(7,18))
+        if (Time.timeSinceLevelLoad - lastBoostEmissionTime > Random.Range(7,18))
         {
             lastBoostEmissionTime = Time.timeSinceLevelLoad;
 
@@ -97,9 +100,13 @@ public class ArcadeController : MonoBehaviour
 
         if (ballIsOnEnemyGround)
         {
-            var closest = enemies.Where(x=>!x.GetComponent<EnemyController>().isDead).OrderBy(x => x.GetComponent<EnemyController>().ballDistance).First();
-            if(closest != null)
-                closest.GetComponent<EnemyController>().canCatchBall = true;
+            var aliveEnemies = enemies.Where(x => !x.GetComponent<EnemyController>().isDead).ToList();
+            if(aliveEnemies != null && aliveEnemies.Count > 0)
+            {
+                var closest = aliveEnemies.OrderBy(x => x.GetComponent<EnemyController>().ballDistance).FirstOrDefault();
+                if (closest != null)
+                    closest.GetComponent<EnemyController>().canCatchBall = true;
+            }
         }
         else
             enemies.ForEach(x => x.GetComponent<EnemyController>().canCatchBall = false);
@@ -108,7 +115,10 @@ public class ArcadeController : MonoBehaviour
     IEnumerator CarregarGameOver(int seconds)
     {
         yield return new WaitForSecondsRealtime(seconds);
-        GameManager.Instance.isPlaying = false;
-        SceneManager.LoadScene("03_GameOver");
+        //GameManager.Instance.isPlaying = false;
+        if(GameManager.Instance.victory == false)
+            Destroy(player);
+
+        SceneManager.LoadScene("02_GameOver", LoadSceneMode.Single);
     }
 }

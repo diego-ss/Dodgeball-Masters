@@ -16,6 +16,9 @@ public class PlayerSelect : MonoBehaviour
     public GameObject previousPlayerPosition;
     //posição do próximo personagem
     public GameObject nextPlayerPosition;
+    public AudioSource soundEffects;
+    public AudioClip nextPreviousSound;
+    public AudioClip selectedSound;
 
     private GameObject selectedPlayer;
     private GameObject nextPlayer;
@@ -54,6 +57,7 @@ public class PlayerSelect : MonoBehaviour
         Destroy(selectedPlayer);
         Destroy(previousPlayer);
         Destroy(nextPlayer);
+        soundEffects.PlayOneShot(nextPreviousSound);
     }
 
     public void Previous()
@@ -66,13 +70,16 @@ public class PlayerSelect : MonoBehaviour
         Destroy(selectedPlayer);
         Destroy(previousPlayer);
         Destroy(nextPlayer);
+        soundEffects.PlayOneShot(nextPreviousSound);
     }
 
     public void Select()
     {
+        soundEffects.PlayOneShot(selectedSound);
+
         //seta o player selecionado
         DontDestroyOnLoad(selectedPlayer);
         //carrega a cena arcade
-        SceneManager.LoadScene("02_QuadraArcade", LoadSceneMode.Single);
+        SceneManager.LoadScene("QuadraArcade_0", LoadSceneMode.Single);
     }
 }

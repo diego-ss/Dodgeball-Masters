@@ -24,6 +24,7 @@ public class Bola : MonoBehaviour
 
     public void Capturar(GameObject ballOrigin, GameObject owner)
     {
+        rb.velocity = Vector3.zero;
         //reseta a localposition para ficar junto ao elemento pai
         transform.localPosition = Vector3.zero;
         this.whoThrows = owner;
