@@ -15,6 +15,8 @@ public class NextLevelController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = true;
+
         player = GameObject.FindGameObjectWithTag("Player");
         player.transform.position = playerPosition.position;
         player.transform.rotation = playerPosition.rotation;

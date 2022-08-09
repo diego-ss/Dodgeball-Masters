@@ -14,6 +14,8 @@ public class GameOverController : MonoBehaviour
 
     private void Start()
     {
+        Cursor.visible = true;
+
         if (!GameManager.Instance.victory)
             gameOverText.text = "Ah nao! Voce perdeu.";
         else

@@ -65,14 +65,17 @@ public class PlayerController : MonoBehaviour
         transform.GetComponent<Animator>().Play("Idle");
         sphereCollider.enabled = false;
         capsuleCollider.enabled = true;
-
-        transform.Find("Canvas").gameObject.SetActive(true);
-
     }
 
     public void Reset()
     {
-        Start();
+        health = totalHealth;
+
+        transform.GetComponent<Animator>().Play("Idle");
+        sphereCollider.enabled = false;
+        capsuleCollider.enabled = true;
+
+        transform.Find("Canvas").gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -220,7 +223,7 @@ public class PlayerController : MonoBehaviour
     private void VerificaArremesso()
     {
         //arremessa com o botão fire ou espaço
-        if ((Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Space)) && ballReference != null)
+        if (Input.GetKeyDown(KeyCode.Space) && ballReference != null)
         {
             ////direção do mouse
             //var direction = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
@@ -231,6 +234,15 @@ public class PlayerController : MonoBehaviour
             direction.y = 0.4f;
 
             ballReference.Arremessar(direction);
+            //disponibilizando para pegar novas bolas
+            canHold = true;
+            ballReference = null;
+        }
+        if (Input.GetMouseButton(0) && ballReference != null)
+        {
+            var aimDirection = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
+            aimDirection.y += (rightHand.transform.position.y * 0.2f);
+            ballReference.Arremessar(aimDirection * throwForce);
             //disponibilizando para pegar novas bolas
             canHold = true;
             ballReference = null;
