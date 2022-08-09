@@ -20,6 +20,7 @@ public class PlayerGround : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //avisando que a bola caiu na área do player
         if (other.CompareTag("Ball"))
         {
             arcadeController.OrientarInimigos(other.transform, false);

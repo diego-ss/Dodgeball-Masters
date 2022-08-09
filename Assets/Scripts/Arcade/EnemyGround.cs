@@ -20,6 +20,7 @@ public class EnemyGround : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        //avisando que a bola caiu na área dos inimigos
         if (other.CompareTag("Ball"))
         {
             arcadeController.OrientarInimigos(other.transform, true);

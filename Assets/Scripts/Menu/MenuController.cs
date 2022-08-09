@@ -19,6 +19,7 @@ public class MenuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // alterando cores do título
         if(Time.timeSinceLevelLoad - refTime > 0.7f)
         {
             titulo.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
@@ -28,6 +29,7 @@ public class MenuController : MonoBehaviour
 
     public void ModoDeTreino()
     {
+        //carregando modo de treino
         GameManager.Instance.modoJogo = Assets.Scripts.Enums.ModoJogo.TREINO;
         GameManager.Instance.trainingScore = 0;
         SceneManager.LoadScene("QuadraTreino", LoadSceneMode.Single);
@@ -35,6 +37,7 @@ public class MenuController : MonoBehaviour
 
     public void ModoArcade()
     {
+        //carregando tela de seleção de personagem
         GameManager.Instance.modoJogo = Assets.Scripts.Enums.ModoJogo.ARCADE;
         SceneManager.LoadScene("01_SelecaoPersonagem", LoadSceneMode.Single);
     }

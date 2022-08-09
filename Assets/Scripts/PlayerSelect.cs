@@ -54,6 +54,7 @@ public class PlayerSelect : MonoBehaviour
         if (index >= players.Count)
             index = 0;
 
+        //limpando os players
         Destroy(selectedPlayer);
         Destroy(previousPlayer);
         Destroy(nextPlayer);
@@ -67,6 +68,7 @@ public class PlayerSelect : MonoBehaviour
         if (index < 0)
             index = players.Count - 1;
 
+        //limpando os players
         Destroy(selectedPlayer);
         Destroy(previousPlayer);
         Destroy(nextPlayer);
