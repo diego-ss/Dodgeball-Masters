@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviour
     public float speed;
     public float throwForce;
     public float staminaDecay;
-    public bool canCatchBall = false;
+    public GameObject ballToFollow;
     public float ballDistance;
     public bool isDead;
 
@@ -35,6 +35,7 @@ public class EnemyController : MonoBehaviour
 
     private bool canHold = true;
     private bool reloadingStamina;
+    private float lastDamageTime;
 
     private float runSpeed;
     private const float rollStaminaCost = 25f;
@@ -102,11 +103,10 @@ public class EnemyController : MonoBehaviour
                 audioSource.Play();
             }
 
-            if (canCatchBall && ballReference == null)
+            if (ballToFollow && ballReference == null)
             {
                 //movimenta até a bola
-                var bola = arcadeController.GetComponent<ArcadeController>().ball;
-                SeguirBola(bola);
+                SeguirBola();
             }
             else if (ballReference != null)
             {
@@ -167,7 +167,7 @@ public class EnemyController : MonoBehaviour
             boxCollider.enabled = true;
             capsuleCollider.enabled = true;
         }
-        else if(!isDead)
+        else if (!isDead)
         {
             //caso esteja rolando, ativa um collider menor
             sphereCollider.enabled = true;
@@ -215,10 +215,10 @@ public class EnemyController : MonoBehaviour
     /// olha para a bola e vai na direção de la
     /// </summary>
     /// <param name="bola"></param>
-    private void SeguirBola(GameObject bola)
+    private void SeguirBola()
     {
         // pegando a posição da bola
-        var refPosition = bola.transform.position;
+        var refPosition = ballToFollow.transform.position;
         //zerando y para o personagem não subir
         refPosition.y = 0;
         //olhando para a bola
@@ -264,7 +264,7 @@ public class EnemyController : MonoBehaviour
                 //diminuindo stamina
                 stamina -= (staminaDecay * Time.deltaTime);
                 animator.SetBool("correr", true);
-                transform.Translate(0,0,runSpeed * Time.deltaTime);
+                transform.Translate(0, 0, runSpeed * Time.deltaTime);
             }
             else
             {
@@ -273,7 +273,7 @@ public class EnemyController : MonoBehaviour
                     audioSource.pitch = 1f;
 
                 animator.SetBool("correr", false);
-                transform.Translate(0,0,Time.deltaTime* speed);
+                transform.Translate(0, 0, Time.deltaTime * speed);
             }
         }
         else
@@ -296,6 +296,24 @@ public class EnemyController : MonoBehaviour
             transform.Translate(0, 0, speed * 1.2f * Time.deltaTime);
             stamina -= rollStaminaCost;
         }
+    }
+    private void Morrer()
+    {
+        if (ballReference != null)
+            Arremessar();
+
+        audioSource.PlayOneShot(dyingClip);
+
+        //desativa colliders e ativa animação de morte
+        animator.SetTrigger("morte");
+        sphereCollider.enabled = false;
+        capsuleCollider.enabled = false;
+        boxCollider.enabled = false;
+        ballToFollow = null;
+        canHold = false;
+        //elimina as forças que exerciam influência no personagem
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        isDead = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -323,8 +341,9 @@ public class EnemyController : MonoBehaviour
             var ball = collision.transform.GetComponent<Bola>();
 
             //verificando se a bola pode causar dano e se não foi o próprio jogador que atirou
-            if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject)
+            if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject && (ballReference == null || ball.gameObject != ballReference.gameObject) && Time.timeSinceLevelLoad - lastDamageTime > 1f)
             {
+                lastDamageTime = Time.timeSinceLevelLoad;
                 health--;
                 audioSource.PlayOneShot(gettingHitClip);
 
@@ -336,17 +355,7 @@ public class EnemyController : MonoBehaviour
                 }
                 else
                 {
-                    audioSource.PlayOneShot(dyingClip);
-
-                    //desativa colliders e ativa animação de morte
-                    animator.SetTrigger("morte");
-                    sphereCollider.enabled = false;
-                    capsuleCollider.enabled = false;
-                    boxCollider.enabled = false;
-                    canHold = false;
-                    //elimina as forças que exerciam influência no personagem
-                    GetComponent<Rigidbody>().velocity = Vector3.zero;
-                    isDead = true;
+                    Morrer();
                 }
             }
             else if (canHold && ball.canHold)

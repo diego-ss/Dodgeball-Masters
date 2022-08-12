@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
             var ball = collision.transform.GetComponent<Bola>();
 
             //verificando se a bola pode causar dano e se não foi o próprio jogador que atirou e se o último dano foi a mais de 1 segundo
-            if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject && Time.timeSinceLevelLoad - lastDamageTime > 1f)
+            if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject && (ballReference == null || ball.gameObject != ballReference.gameObject) && Time.timeSinceLevelLoad - lastDamageTime > 1f)
             {
                 lastDamageTime = Time.timeSinceLevelLoad;
                 health--;
