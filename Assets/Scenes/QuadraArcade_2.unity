@@ -7281,6 +7281,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bryce
       objectReference: {fileID: 0}
+    - target: {fileID: 2738120461275169491, guid: 02eef00eed41496429fda9d76d8d4a5d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3365335308483254377, guid: 02eef00eed41496429fda9d76d8d4a5d,
         type: 3}
       propertyPath: m_RootOrder
