@@ -90,26 +90,36 @@ public class ArcadeController : MonoBehaviour
 
     public void OrientarInimigos(Transform bola, bool ballIsOnEnemyGround)
     {
-        //dizendo ao inimigo se ele pode ou não perseguir a bola.
-        //só vai atrás da bola o inimigo mais próximo
-        enemies.ForEach(x => {
-            x.GetComponent<EnemyController>().ballDistance = Vector3.Distance(x.transform.position, bola.position);
-            x.GetComponent<EnemyController>().canCatchBall = false;
-            }
-        );
+        var enemiesNotFollowing = enemies.Where(x => GetEnemyController(x).ballToFollow == null && !GetEnemyController(x).isDead).ToList();
+        var enemyFollowing = enemies.Where(x => GetEnemyController(x).ballToFollow == bola.gameObject).FirstOrDefault();
 
-        if (ballIsOnEnemyGround)
+        if (ballIsOnEnemyGround && enemyFollowing == null)
         {
-            var aliveEnemies = enemies.Where(x => !x.GetComponent<EnemyController>().isDead).ToList();
-            if(aliveEnemies != null && aliveEnemies.Count > 0)
-            {
-                var closest = aliveEnemies.OrderBy(x => x.GetComponent<EnemyController>().ballDistance).FirstOrDefault();
-                if (closest != null)
-                    closest.GetComponent<EnemyController>().canCatchBall = true;
-            }
+            var closestEnemy = InimigoMaisProximo(bola.position, enemiesNotFollowing);
+            
+            if(closestEnemy)
+                closestEnemy.GetComponent<EnemyController>().ballToFollow = bola.gameObject;
         }
-        else
-            enemies.ForEach(x => x.GetComponent<EnemyController>().canCatchBall = false);
+
+        if (!ballIsOnEnemyGround && enemyFollowing != null)
+            GetEnemyController(enemyFollowing).ballToFollow = null;
+    }
+
+    private EnemyController GetEnemyController(GameObject enemy)
+    {
+        return enemy.GetComponent<EnemyController>();
+    }
+
+    private GameObject InimigoMaisProximo(Vector3 ballPosition, List<GameObject> availableEnemies)
+    {
+        if(availableEnemies != null && availableEnemies.Count > 0)
+        {
+            //inimigo mais próximo da bola no momento do trigger
+            var closestEnemy = availableEnemies.OrderBy(x => Mathf.Abs(Vector3.Distance(x.transform.position, ballPosition))).FirstOrDefault();
+            return closestEnemy;
+        }
+
+        return null;
     }
 
     IEnumerator CarregarProximoNivel(int seconds)

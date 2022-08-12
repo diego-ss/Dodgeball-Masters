@@ -74,6 +74,8 @@ public class PlayerController : MonoBehaviour
         transform.GetComponent<Animator>().Play("Idle");
         sphereCollider.enabled = false;
         capsuleCollider.enabled = true;
+        canHold = true;
+        ballReference = null;
 
         transform.Find("Canvas").gameObject.SetActive(true);
     }
@@ -125,7 +127,7 @@ public class PlayerController : MonoBehaviour
             var ball = collision.transform.GetComponent<Bola>();
 
             //verificando se a bola pode causar dano e se não foi o próprio jogador que atirou e se o último dano foi a mais de 1 segundo
-            if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject && Time.timeSinceLevelLoad - lastDamageTime > 1f)
+            if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject && (ballReference == null || ball.gameObject != ballReference.gameObject) && Time.timeSinceLevelLoad - lastDamageTime > 1f)
             {
                 lastDamageTime = Time.timeSinceLevelLoad;
                 health--;
@@ -240,6 +242,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetMouseButton(0) && ballReference != null)
         {
+            //pegando um raio em direção ao mouse e adequando a força proporcional à altura
             var aimDirection = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
             aimDirection.y += (rightHand.transform.position.y * 0.2f);
             ballReference.Arremessar(aimDirection * throwForce);
