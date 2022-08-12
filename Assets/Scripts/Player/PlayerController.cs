@@ -74,6 +74,8 @@ public class PlayerController : MonoBehaviour
         transform.GetComponent<Animator>().Play("Idle");
         sphereCollider.enabled = false;
         capsuleCollider.enabled = true;
+        canHold = true;
+        ballReference = null;
 
         transform.Find("Canvas").gameObject.SetActive(true);
     }
@@ -240,6 +242,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetMouseButton(0) && ballReference != null)
         {
+            //pegando um raio em direção ao mouse e adequando a força proporcional à altura
             var aimDirection = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
             aimDirection.y += (rightHand.transform.position.y * 0.2f);
             ballReference.Arremessar(aimDirection * throwForce);

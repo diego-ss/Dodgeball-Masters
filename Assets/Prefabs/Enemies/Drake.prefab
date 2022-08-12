@@ -1328,7 +1328,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4128695949505191947}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -3.5886965, y: 5.9320715e-17, z: -6.144605}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 115587631610913905}
@@ -1424,13 +1424,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a7f41819070f8043ac34c17ebbff3e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3.8
-  throwForce: 3
-  staminaDecay: 30
-  canCatchBall: 0
+  speed: 3.9
+  throwForce: 4
+  staminaDecay: 37
+  ballToFollow: {fileID: 0}
   ballDistance: 0
   isDead: 0
-  totalHealth: 6
+  totalHealth: 7
   health: 0
   stamina: 0
   audioSource: {fileID: 0}

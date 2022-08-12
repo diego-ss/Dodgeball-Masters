@@ -233,11 +233,13 @@ public class EnemyController : MonoBehaviour
         //direção forward do personagem
         var direction = transform.forward;
         var sortedForce = throwForce + Random.value * 1.5f; // fator de imprevisibilidade
-        //melhorar isso
-        direction.y = Random.Range(0.0f, 0.5f);
+        // altura do arremesso considera a altura do personagem e a distância para o player
+        // proporcional à distância e inversamente proporcional à altura
+        direction.y = (Random.Range(0.02f, 0.06f) * Mathf.Abs(Vector3.Distance(playerRef.transform.position, transform.position))) / (rightHand.transform.position.y * 1.5f);
         direction.z *= sortedForce;
         direction.x *= sortedForce;
-        ballReference.Arremessar(direction);
+        //se o jogador morreu com a bola na mão, arremessa só para soltar e tornar a bola válida
+        ballReference.Arremessar(isDead ? direction * 0.01f : direction);
         timeTriggerThrow = null;
         //disponibilizando para pegar novas bolas
         canHold = true;
@@ -299,9 +301,6 @@ public class EnemyController : MonoBehaviour
     }
     private void Morrer()
     {
-        if (ballReference != null)
-            Arremessar();
-
         audioSource.PlayOneShot(dyingClip);
 
         //desativa colliders e ativa animação de morte
@@ -314,6 +313,9 @@ public class EnemyController : MonoBehaviour
         //elimina as forças que exerciam influência no personagem
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         isDead = true;
+
+        if (ballReference != null)
+            Arremessar();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -340,8 +342,8 @@ public class EnemyController : MonoBehaviour
 
             var ball = collision.transform.GetComponent<Bola>();
 
-            //verificando se a bola pode causar dano e se não foi o próprio jogador que atirou
-            if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject && (ballReference == null || ball.gameObject != ballReference.gameObject) && Time.timeSinceLevelLoad - lastDamageTime > 1f)
+            //verificando se a bola pode causar dano e se não foi o próprio jogador que atirou e se não foi um amigo ou se está no tempo de recuperação
+            if (ball.canDamage && ball.whoThrows != null && (ball.whoThrows.gameObject != this.gameObject && !ball.whoThrows.CompareTag("IAEnemy")) && (ballReference == null || ball.gameObject != ballReference.gameObject) && Time.timeSinceLevelLoad - lastDamageTime > 1f)
             {
                 lastDamageTime = Time.timeSinceLevelLoad;
                 health--;
