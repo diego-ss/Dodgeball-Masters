@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour
         capsuleCollider.enabled = true;
         canHold = true;
         ballReference = null;
+        lastDamageTime = 0;
 
         transform.Find("Canvas").gameObject.SetActive(true);
     }
