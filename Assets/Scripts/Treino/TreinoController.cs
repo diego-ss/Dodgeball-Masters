@@ -24,6 +24,10 @@ public class TreinoController : MonoBehaviour
         trainingRemainingGameTime = trainingTotalTime;
 
         objetivoTempoText.text = "SOBREVIVER POR " + trainingTotalTime + " SEGUNDOS";
+
+        var player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<PlayerController>().Reset();
+
     }
 
 
