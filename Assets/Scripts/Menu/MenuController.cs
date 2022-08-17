@@ -9,6 +9,9 @@ public class MenuController : MonoBehaviour
     [Header("Referências")]
     public TMP_Text titulo;
     public Image dodgeballLogo;
+    public GameObject Bryce;
+    public GameObject Sophie;
+    public GameObject James;
 
     private float refTime;
     Tweener tweener;
@@ -22,6 +25,14 @@ public class MenuController : MonoBehaviour
         tweener = dodgeballLogo.gameObject.transform.DOLocalMove(new Vector3(120f, -62f, 0), .8f)
             .SetLoops(-1, LoopType.Yoyo)
             .SetEase(Ease.InBounce);
+
+        Destroy(Bryce.GetComponent<PlayerController>());
+        Destroy(James.GetComponent<PlayerController>());
+        Destroy(Sophie.GetComponent<PlayerController>());
+
+        Bryce.GetComponent<Animator>().Play("Bouncing Fight Idle");
+        James.GetComponent<Animator>().Play("Ninja Idle");
+        Sophie.GetComponent<Animator>().Play("Sitting Idle");
     }
 
     // Update is called once per frame
