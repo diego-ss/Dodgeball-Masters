@@ -31,8 +31,8 @@ public class MenuController : MonoBehaviour
         Destroy(Sophie.GetComponent<PlayerController>());
 
         Bryce.GetComponent<Animator>().Play("Bouncing Fight Idle");
-        James.GetComponent<Animator>().Play("Ninja Idle");
-        Sophie.GetComponent<Animator>().Play("Sitting Idle");
+        Sophie.GetComponent<Animator>().Play("Ninja Idle");
+        James.GetComponent<Animator>().Play("Sitting Idle");
     }
 
     // Update is called once per frame
