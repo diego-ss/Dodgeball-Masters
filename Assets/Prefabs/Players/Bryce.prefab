@@ -951,6 +951,7 @@ GameObject:
   - component: {fileID: 2972001768289416078}
   - component: {fileID: 2972001768289416077}
   - component: {fileID: 7989967545336318168}
+  - component: {fileID: 7785305433134098327}
   m_Layer: 10
   m_Name: Bryce
   m_TagString: Player
@@ -1152,11 +1153,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5.2
   throwForce: 2
-  stamina: 0
   staminaDecay: 30
   cameraShakeDuration: 1
   cameraShakeForce: 2
-  dancingAnimation: {fileID: 0}
+  rollStaminaCost: 25
   audioSource: {fileID: 0}
   gettingHitClip: {fileID: 8300000, guid: f8eebfad72376834ea07f9aa7431ed08, type: 3}
   walkingClip: {fileID: 8300000, guid: 5e8e6e435e65fe146b588b8a9d2df461, type: 3}
@@ -1177,6 +1177,24 @@ MonoBehaviour:
   maxHealth: 5
   health: 0
   healthFill: {fileID: 0}
+--- !u!114 &7785305433134098327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2738120461275169491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c795fe12cf89f45920e2c9b021dcae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 100
+  stamina: 0
+  staminaDecay: 40
+  staminaRestore: 10
+  isReloading: 0
+  staminaFill: {fileID: 0}
 --- !u!1 &2743195298349579670
 GameObject:
   m_ObjectHideFlags: 0
