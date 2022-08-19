@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3212569583233967273}
   - component: {fileID: -6790621581645453898}
   - component: {fileID: -9120720399544206395}
+  - component: {fileID: 272783114375925233}
   m_Layer: 10
   m_Name: James
   m_TagString: Player
@@ -211,7 +212,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5.2
   throwForce: 2
-  health: 0
   stamina: 0
   staminaDecay: 30
   cameraShakeDuration: 1
@@ -222,6 +222,21 @@ MonoBehaviour:
   walkingClip: {fileID: 8300000, guid: 5e8e6e435e65fe146b588b8a9d2df461, type: 3}
   dyingClip: {fileID: 8300000, guid: afe60b685858a96438df8345036922f8, type: 3}
   rollClip: {fileID: 8300000, guid: a82249342f6597545a2b7f668bf46904, type: 3}
+--- !u!114 &272783114375925233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13104379624938978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8248d3248f3d8d4e98c4e8ab9cf45c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 5
+  health: 0
+  healthFill: {fileID: 0}
 --- !u!1 &28331352371911199
 GameObject:
   m_ObjectHideFlags: 0

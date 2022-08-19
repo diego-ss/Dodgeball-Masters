@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
     [Header("Parâmetros")]
     public float speed;
     public float throwForce;
-    public float health;
     public float stamina;
     public float staminaDecay;
     public float cameraShakeDuration;
@@ -15,7 +14,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Referências")]
     private Image staminaFill;
-    private Image healthFill;
     public Animation dancingAnimation;
 
     [Header("Config. de aúdio")]
@@ -29,16 +27,15 @@ public class PlayerController : MonoBehaviour
     private bool canHold = true;
     private float lastDamageTime;
     private bool reloadingStamina;
-    private const float totalHealth = 5f;
     private float runSpeed;
     private const float rollStaminaCost = 25f;
     private Color staminaFillColor;
-    private Color healthFillColor;
 
     private Animator animator;
     private CapsuleCollider capsuleCollider;
     private SphereCollider sphereCollider;
     private GameObject rightHand;
+    private Health health;
 
     private Bola ballReference;
     
@@ -47,11 +44,11 @@ public class PlayerController : MonoBehaviour
     {
         //capturando componentes
         animator = transform.GetComponent<Animator>();
+        health = GetComponent<Health>();
         capsuleCollider = transform.GetComponent<CapsuleCollider>();
         sphereCollider = transform.GetComponent<SphereCollider>();
         audioSource = transform.GetComponent<AudioSource>();
         staminaFill = transform.Find("Canvas").Find("staminaFill").GetComponent<Image>();
-        healthFill = transform.Find("Canvas").Find("healthFill").GetComponent<Image>();
 
         ProcurarReferenciaMao(gameObject.transform);
 
@@ -59,8 +56,7 @@ public class PlayerController : MonoBehaviour
 
         lastDamageTime = Time.timeSinceLevelLoad;
         staminaFillColor = staminaFill.color;
-        healthFillColor = healthFill.color;
-        health = totalHealth;
+
 
         transform.GetComponent<Animator>().Play("Idle");
         sphereCollider.enabled = false;
@@ -69,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
     public void Reset()
     {
-        health = totalHealth;
+        health.Resetar();
 
         transform.GetComponent<Animator>().Play("Idle");
         sphereCollider.enabled = false;
@@ -98,8 +94,8 @@ public class PlayerController : MonoBehaviour
     private void LateUpdate()
     {
         AtualizarStamina();
-        AtualizarHealth();
     }
+
     private void OnTriggerEnter(Collider other)
     {
         //verificando se é uma bola
@@ -131,11 +127,11 @@ public class PlayerController : MonoBehaviour
             if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject && (ballReference == null || ball.gameObject != ballReference.gameObject) && Time.timeSinceLevelLoad - lastDamageTime > 1f)
             {
                 lastDamageTime = Time.timeSinceLevelLoad;
-                health--;
+                health.CausarDano();
                 // aúdio do dano
                 audioSource.PlayOneShot(gettingHitClip);
 
-                if (health > 0)
+                if (health.health > 0)
                 {
                     //limpa as animações em execução
                     animator.Rebind();
@@ -204,20 +200,6 @@ public class PlayerController : MonoBehaviour
             staminaFill.color = Color.red;
         else
             staminaFill.color = staminaFillColor;
-    }
-
-    /// <summary>
-    /// Atualiza a UI da vida do player
-    /// </summary>
-    private void AtualizarHealth()
-    {
-        // ajustando o UI da imagem conforme a saúde
-        healthFill.fillAmount = health/totalHealth;
-
-        if (health <= 1)
-            healthFill.color = Color.red;
-        else
-            healthFill.color = healthFillColor;
     }
 
     /// <summary>
