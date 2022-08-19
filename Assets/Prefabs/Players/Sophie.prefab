@@ -1413,10 +1413,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5.2
   throwForce: 2
-  staminaDecay: 30
   cameraShakeDuration: 1
   cameraShakeForce: 2
-  rollStaminaCost: 0
+  rollStaminaCost: 25
   audioSource: {fileID: 0}
   gettingHitClip: {fileID: 8300000, guid: f8eebfad72376834ea07f9aa7431ed08, type: 3}
   walkingClip: {fileID: 8300000, guid: 5e8e6e435e65fe146b588b8a9d2df461, type: 3}
@@ -1434,7 +1433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8248d3248f3d8d4e98c4e8ab9cf45c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
+  maxHealth: 4
   health: 0
   healthFill: {fileID: 0}
 --- !u!114 &6719515610966141121
@@ -1449,10 +1448,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c795fe12cf89f45920e2c9b021dcae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxStamina: 120
+  maxStamina: 100
   stamina: 0
-  staminaDecay: 40
-  staminaRestore: 15
+  staminaDecay: 30
+  staminaRestore: 13
   isReloading: 0
   staminaFill: {fileID: 0}
 --- !u!82 &1451422132868383621

@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
     [Header("Parâmetros")]
     public float speed;
     public float throwForce;
-    public float staminaDecay;
     public float cameraShakeDuration;
     public float cameraShakeForce;
     public float rollStaminaCost;

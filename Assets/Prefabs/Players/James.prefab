@@ -212,8 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5.2
-  throwForce: 2
-  staminaDecay: 30
+  throwForce: 2.4
   cameraShakeDuration: 1
   cameraShakeForce: 2
   rollStaminaCost: 25
@@ -234,7 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8248d3248f3d8d4e98c4e8ab9cf45c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
+  maxHealth: 6
   health: 0
   healthFill: {fileID: 0}
 --- !u!114 &6311041789813450802
@@ -249,9 +248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c795fe12cf89f45920e2c9b021dcae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxStamina: 100
+  maxStamina: 110
   stamina: 0
-  staminaDecay: 45
+  staminaDecay: 40
   staminaRestore: 10
   isReloading: 0
   staminaFill: {fileID: 0}
