@@ -364,6 +364,7 @@ GameObject:
   - component: {fileID: 7460128061838267634}
   - component: {fileID: 2363701947570756859}
   - component: {fileID: 76760549828091140}
+  - component: {fileID: 3240734039896570836}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -452,6 +453,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3240734039896570836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656863266280274305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177e44ae01523b64482b4f15a083ca91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1677651008459020735
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,7 +660,7 @@ GameObject:
   - component: {fileID: 4596676179987909581}
   - component: {fileID: 6539656500467136750}
   m_Layer: 5
-  m_Name: healthImage
+  m_Name: healthFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1467,6 +1480,8 @@ GameObject:
   - component: {fileID: -1919075700968641851}
   - component: {fileID: 7427103358744693018}
   - component: {fileID: -1636223289191668350}
+  - component: {fileID: 6981337347549664875}
+  - component: {fileID: 2804113830157120269}
   m_Layer: 0
   m_Name: Maynard
   m_TagString: IAEnemy
@@ -1580,13 +1595,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4.8
   throwForce: 1.6
-  staminaDecay: 25
   ballToFollow: {fileID: 0}
   ballDistance: 0
   isDead: 0
-  totalHealth: 3
-  health: 0
-  stamina: 0
+  rollStaminaCost: 20
   audioSource: {fileID: 0}
   gettingHitClip: {fileID: 8300000, guid: f8eebfad72376834ea07f9aa7431ed08, type: 3}
   walkingClip: {fileID: 8300000, guid: 5e8e6e435e65fe146b588b8a9d2df461, type: 3}
@@ -1688,6 +1700,39 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6981337347549664875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6067126641368171372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8248d3248f3d8d4e98c4e8ab9cf45c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 3
+  health: 0
+  healthFill: {fileID: 0}
+--- !u!114 &2804113830157120269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6067126641368171372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c795fe12cf89f45920e2c9b021dcae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 130
+  stamina: 0
+  staminaDecay: 30
+  staminaRestore: 15
+  isReloading: 0
+  staminaFill: {fileID: 0}
 --- !u!1 &6241360855523006280
 GameObject:
   m_ObjectHideFlags: 0

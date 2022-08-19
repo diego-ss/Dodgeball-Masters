@@ -821,7 +821,7 @@ GameObject:
   - component: {fileID: 1544172065873563690}
   - component: {fileID: 5961666831355262832}
   m_Layer: 5
-  m_Name: healthImage
+  m_Name: healthFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1313,6 +1313,8 @@ GameObject:
   - component: {fileID: -7315129906622790793}
   - component: {fileID: 1727201902334247591}
   - component: {fileID: -1702773911274668299}
+  - component: {fileID: 4015190615171503442}
+  - component: {fileID: 51387456535840122}
   m_Layer: 0
   m_Name: Drake
   m_TagString: IAEnemy
@@ -1327,7 +1329,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4128695949505191947}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
@@ -1336,7 +1338,7 @@ Transform:
   - {fileID: 6949820491979398400}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7271043384508440779
 Animator:
   serializedVersion: 3
@@ -1426,13 +1428,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3.9
   throwForce: 4
-  staminaDecay: 37
   ballToFollow: {fileID: 0}
   ballDistance: 0
   isDead: 0
-  totalHealth: 7
-  health: 0
-  stamina: 0
+  rollStaminaCost: 30
   audioSource: {fileID: 0}
   gettingHitClip: {fileID: 8300000, guid: f8eebfad72376834ea07f9aa7431ed08, type: 3}
   walkingClip: {fileID: 8300000, guid: 5e8e6e435e65fe146b588b8a9d2df461, type: 3}
@@ -1534,6 +1533,39 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4015190615171503442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4128695949505191947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8248d3248f3d8d4e98c4e8ab9cf45c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 8
+  health: 0
+  healthFill: {fileID: 0}
+--- !u!114 &51387456535840122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4128695949505191947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c795fe12cf89f45920e2c9b021dcae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 100
+  stamina: 0
+  staminaDecay: 40
+  staminaRestore: 10
+  isReloading: 0
+  staminaFill: {fileID: 0}
 --- !u!1 &4217755578060505936
 GameObject:
   m_ObjectHideFlags: 0
@@ -2330,6 +2362,7 @@ GameObject:
   - component: {fileID: 4306539730306669073}
   - component: {fileID: 2398533568170624294}
   - component: {fileID: 2627429603428523584}
+  - component: {fileID: 6081070588031855688}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2418,6 +2451,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6081070588031855688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8009427085214639911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177e44ae01523b64482b4f15a083ca91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8064369540606811926
 GameObject:
   m_ObjectHideFlags: 0
