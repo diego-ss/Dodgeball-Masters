@@ -206,7 +206,12 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator SincronizarArremesso()
     {
-        yield return new WaitForSeconds(0.05f);
+        var waitTime = 0.05f;
+
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            waitTime = 0.12f;
+
+        yield return new WaitForSeconds(waitTime);
         ballReference.Arremessar(throwDirection);
         //disponibilizando para pegar novas bolas
         canHold = true;

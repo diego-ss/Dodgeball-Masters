@@ -184,7 +184,7 @@ public class EnemyController : MonoBehaviour
         var sortedForce = throwForce + Random.value * 1.5f; // fator de imprevisibilidade
         // altura do arremesso considera a altura do personagem e a distância para o player
         // proporcional à distância e inversamente proporcional à altura
-        direction.y = (Random.Range(0.02f, 0.06f) * Mathf.Abs(Vector3.Distance(playerRef.transform.position, transform.position))) / (rightHand.transform.position.y * 1.5f);
+        direction.y = (Random.Range(0.02f, 0.06f) * Mathf.Abs(Vector3.Distance(playerRef.transform.position, transform.position))) / (rightHand.transform.position.y * 1.5f) ;
         direction.z *= sortedForce;
         direction.x *= sortedForce;
         throwDirection = isDead ? direction * 0.01f : direction;

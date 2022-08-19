@@ -262,6 +262,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Drake
       objectReference: {fileID: 0}
+    - target: {fileID: 4128695949505191947, guid: cc0b22f8d477f3643bb0549d84fe2a2e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc0b22f8d477f3643bb0549d84fe2a2e, type: 3}
 --- !u!1 &307417908
