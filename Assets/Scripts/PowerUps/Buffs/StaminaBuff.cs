@@ -10,6 +10,6 @@ public class StaminaBuff : PowerUpEffect
     public override void Aplicar(GameObject target)
     {
         //criar um script separado para health e stamina ?
-        target.GetComponent<PlayerController>().stamina += amount;
+        target.GetComponent<Stamina>().AumentarStamina(amount);
     }
 }

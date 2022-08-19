@@ -7,16 +7,9 @@ public class PlayerController : MonoBehaviour
     [Header("Parâmetros")]
     public float speed;
     public float throwForce;
-    public float health;
-    public float stamina;
-    public float staminaDecay;
     public float cameraShakeDuration;
     public float cameraShakeForce;
-
-    [Header("Referências")]
-    private Image staminaFill;
-    private Image healthFill;
-    public Animation dancingAnimation;
+    public float rollStaminaCost;
 
     [Header("Config. de aúdio")]
     [SerializeField]
@@ -28,17 +21,14 @@ public class PlayerController : MonoBehaviour
 
     private bool canHold = true;
     private float lastDamageTime;
-    private bool reloadingStamina;
-    private const float totalHealth = 5f;
     private float runSpeed;
-    private const float rollStaminaCost = 25f;
-    private Color staminaFillColor;
-    private Color healthFillColor;
 
     private Animator animator;
     private CapsuleCollider capsuleCollider;
     private SphereCollider sphereCollider;
     private GameObject rightHand;
+    private Health health;
+    private Stamina stamina;
 
     private Bola ballReference;
     
@@ -47,38 +37,34 @@ public class PlayerController : MonoBehaviour
     {
         //capturando componentes
         animator = transform.GetComponent<Animator>();
+        health = GetComponent<Health>();
+        stamina = GetComponent<Stamina>();
         capsuleCollider = transform.GetComponent<CapsuleCollider>();
         sphereCollider = transform.GetComponent<SphereCollider>();
         audioSource = transform.GetComponent<AudioSource>();
-        staminaFill = transform.Find("Canvas").Find("staminaFill").GetComponent<Image>();
-        healthFill = transform.Find("Canvas").Find("healthFill").GetComponent<Image>();
 
         ProcurarReferenciaMao(gameObject.transform);
 
-        stamina = 100;
-
-        lastDamageTime = Time.timeSinceLevelLoad;
-        staminaFillColor = staminaFill.color;
-        healthFillColor = healthFill.color;
-        health = totalHealth;
-
-        transform.GetComponent<Animator>().Play("Idle");
-        sphereCollider.enabled = false;
-        capsuleCollider.enabled = true;
+        ConfiguracoesIniciais();
     }
-
-    public void Reset()
+    
+    private void ConfiguracoesIniciais()
     {
-        health = totalHealth;
-
-        transform.GetComponent<Animator>().Play("Idle");
         sphereCollider.enabled = false;
         capsuleCollider.enabled = true;
         canHold = true;
         ballReference = null;
-        lastDamageTime = 0;
+        lastDamageTime = Time.timeSinceLevelLoad;
 
+        transform.GetComponent<Animator>().Play("Idle");
+    }
+
+    public void Reset()
+    {
+        ConfiguracoesIniciais();
         transform.Find("Canvas").gameObject.SetActive(true);
+        health.Resetar();
+        stamina.Resetar();
     }
 
     // Update is called once per frame
@@ -95,11 +81,6 @@ public class PlayerController : MonoBehaviour
             VerificaArremesso();
     }
 
-    private void LateUpdate()
-    {
-        AtualizarStamina();
-        AtualizarHealth();
-    }
     private void OnTriggerEnter(Collider other)
     {
         //verificando se é uma bola
@@ -131,11 +112,11 @@ public class PlayerController : MonoBehaviour
             if (ball.canDamage && ball.whoThrows != null && ball.whoThrows.gameObject != this.gameObject && (ballReference == null || ball.gameObject != ballReference.gameObject) && Time.timeSinceLevelLoad - lastDamageTime > 1f)
             {
                 lastDamageTime = Time.timeSinceLevelLoad;
-                health--;
+                health.CausarDano();
                 // aúdio do dano
                 audioSource.PlayOneShot(gettingHitClip);
 
-                if (health > 0)
+                if (health.health > 0)
                 {
                     //limpa as animações em execução
                     animator.Rebind();
@@ -181,43 +162,6 @@ public class PlayerController : MonoBehaviour
             else
                 ProcurarReferenciaMao(child);
         }
-    }
-
-    /// <summary>
-    /// Atualiza a UI e os valores da Stamina
-    /// </summary>
-    private void AtualizarStamina()
-    {
-        // se a stamina chega a zero, não deixa correr até que recarregue pelo menos 15
-        if (stamina == 0)
-            reloadingStamina = true;
-
-        if (stamina > 15)
-            reloadingStamina = false;
-
-        // ajustando o UI da imagem conforme a stamina
-        stamina += Time.deltaTime * 10;
-        stamina = Mathf.Clamp(stamina, 0, 100);
-        staminaFill.fillAmount = stamina / 100.0f;
-
-        if (stamina <= 15)
-            staminaFill.color = Color.red;
-        else
-            staminaFill.color = staminaFillColor;
-    }
-
-    /// <summary>
-    /// Atualiza a UI da vida do player
-    /// </summary>
-    private void AtualizarHealth()
-    {
-        // ajustando o UI da imagem conforme a saúde
-        healthFill.fillAmount = health/totalHealth;
-
-        if (health <= 1)
-            healthFill.color = Color.red;
-        else
-            healthFill.color = healthFillColor;
     }
 
     /// <summary>
@@ -306,14 +250,14 @@ public class PlayerController : MonoBehaviour
         var inputShift = Input.GetKey(KeyCode.LeftShift);
 
         //corrida (acontece mesmo andando, por isso o translate está aqui
-        if (inputShift && stamina > 0 && !reloadingStamina)
+        if (inputShift && stamina.stamina > 0 && !stamina.isReloading)
         {
             // acelerando o audio clip para simular corrida
             if (audioSource.clip == walkingClip)
                 audioSource.pitch = 1.2f;
 
             //diminuindo stamina
-            stamina -= (staminaDecay * Time.deltaTime);
+            stamina.DiminuirStamina();
             transform.Translate(0, 0, runSpeed * Time.deltaTime);
             animator.SetBool("correr", true);
         }
@@ -337,13 +281,13 @@ public class PlayerController : MonoBehaviour
         var inputControl = Input.GetKeyDown(KeyCode.LeftControl);
 
         //rolagem
-        if (stamina >= rollStaminaCost && inputControl && (!animator.GetCurrentAnimatorStateInfo(0).IsName("RollForward")))
+        if (stamina.stamina >= rollStaminaCost && inputControl && (!animator.GetCurrentAnimatorStateInfo(0).IsName("RollForward")))
         {
             audioSource.PlayOneShot(rollClip);
 
             animator.SetTrigger("rolar");
             transform.Translate(0, 0, speed * 1.2f * Time.deltaTime);
-            stamina -= rollStaminaCost;
+            stamina.DiminuirStamina(rollStaminaCost);
         }
 
         //desativando ou ativando os colliders de acordo com a necessidade

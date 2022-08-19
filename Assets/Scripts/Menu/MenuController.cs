@@ -27,8 +27,14 @@ public class MenuController : MonoBehaviour
             .SetEase(Ease.InBounce);
 
         Destroy(Bryce.GetComponent<PlayerController>());
+        Destroy(Bryce.GetComponent<Health>());
+        Destroy(Bryce.GetComponent<Stamina>());
         Destroy(James.GetComponent<PlayerController>());
+        Destroy(James.GetComponent<Health>());
+        Destroy(James.GetComponent<Stamina>());
         Destroy(Sophie.GetComponent<PlayerController>());
+        Destroy(Sophie.GetComponent<Health>());
+        Destroy(Sophie.GetComponent<Stamina>());
 
         Bryce.GetComponent<Animator>().Play("Bouncing Fight Idle");
         Sophie.GetComponent<Animator>().Play("Ninja Idle");

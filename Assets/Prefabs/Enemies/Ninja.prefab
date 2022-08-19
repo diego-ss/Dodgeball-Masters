@@ -782,6 +782,7 @@ GameObject:
   - component: {fileID: 925679470540153162}
   - component: {fileID: 6576626414445832611}
   - component: {fileID: 7821395355061055944}
+  - component: {fileID: 7748229308820021299}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -870,6 +871,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7748229308820021299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3903535542810252240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177e44ae01523b64482b4f15a083ca91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3929445971424440052
 GameObject:
   m_ObjectHideFlags: 0
@@ -2243,7 +2256,7 @@ GameObject:
   - component: {fileID: 3986083004034405488}
   - component: {fileID: 130080029107176045}
   m_Layer: 5
-  m_Name: healthImage
+  m_Name: healthFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2383,6 +2396,8 @@ GameObject:
   - component: {fileID: 2587121476465107137}
   - component: {fileID: 6612286626433486969}
   - component: {fileID: -8542657565843242407}
+  - component: {fileID: 742674033463622779}
+  - component: {fileID: 3922640869442512529}
   m_Layer: 0
   m_Name: Ninja
   m_TagString: IAEnemy
@@ -2496,13 +2511,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   throwForce: 1.7
-  staminaDecay: 30
   ballToFollow: {fileID: 0}
   ballDistance: 0
   isDead: 0
-  totalHealth: 3
-  health: 0
-  stamina: 0
+  rollStaminaCost: 25
   audioSource: {fileID: 0}
   gettingHitClip: {fileID: 8300000, guid: f8eebfad72376834ea07f9aa7431ed08, type: 3}
   walkingClip: {fileID: 8300000, guid: 5e8e6e435e65fe146b588b8a9d2df461, type: 3}
@@ -2604,6 +2616,39 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &742674033463622779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8761323829976547053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8248d3248f3d8d4e98c4e8ab9cf45c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 4
+  health: 0
+  healthFill: {fileID: 0}
+--- !u!114 &3922640869442512529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8761323829976547053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c795fe12cf89f45920e2c9b021dcae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 120
+  stamina: 0
+  staminaDecay: 30
+  staminaRestore: 12
+  isReloading: 0
+  staminaFill: {fileID: 0}
 --- !u!1 &8814125939736403382
 GameObject:
   m_ObjectHideFlags: 0

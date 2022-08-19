@@ -319,6 +319,7 @@ GameObject:
   - component: {fileID: 6657398350480457819}
   - component: {fileID: 242972348496545402}
   - component: {fileID: 640677030153197314}
+  - component: {fileID: 8988868446617567002}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -407,6 +408,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8988868446617567002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083731298764277976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177e44ae01523b64482b4f15a083ca91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1118663994410888939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,6 +1135,8 @@ GameObject:
   - component: {fileID: 1282131532899877494}
   - component: {fileID: 7448362885890918896}
   - component: {fileID: 6370014287094757953}
+  - component: {fileID: 4064857470363097995}
+  - component: {fileID: 7572571202910342334}
   m_Layer: 0
   m_Name: Doozy
   m_TagString: IAEnemy
@@ -1235,13 +1250,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5.2
   throwForce: 1.9
-  staminaDecay: 25
   ballToFollow: {fileID: 0}
   ballDistance: 0
   isDead: 0
-  totalHealth: 3
-  health: 0
-  stamina: 0
+  rollStaminaCost: 25
   audioSource: {fileID: 0}
   gettingHitClip: {fileID: 8300000, guid: f8eebfad72376834ea07f9aa7431ed08, type: 3}
   walkingClip: {fileID: 8300000, guid: 5e8e6e435e65fe146b588b8a9d2df461, type: 3}
@@ -1343,6 +1355,39 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4064857470363097995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4728956059242777331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8248d3248f3d8d4e98c4e8ab9cf45c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 3
+  health: 0
+  healthFill: {fileID: 0}
+--- !u!114 &7572571202910342334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4728956059242777331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c795fe12cf89f45920e2c9b021dcae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 80
+  stamina: 0
+  staminaDecay: 20
+  staminaRestore: 12
+  isReloading: 0
+  staminaFill: {fileID: 0}
 --- !u!1 &4989196434164869420
 GameObject:
   m_ObjectHideFlags: 0
@@ -1882,7 +1927,7 @@ GameObject:
   - component: {fileID: 8746388798724353083}
   - component: {fileID: 5717337008106920067}
   m_Layer: 5
-  m_Name: healthImage
+  m_Name: healthFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

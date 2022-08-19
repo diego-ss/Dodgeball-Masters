@@ -1305,6 +1305,8 @@ GameObject:
   - component: {fileID: 3191066098661257977}
   - component: {fileID: -5019060142054646067}
   - component: {fileID: -2870299420270745742}
+  - component: {fileID: -1641939863013634493}
+  - component: {fileID: 6719515610966141121}
   - component: {fileID: 1451422132868383621}
   m_Layer: 10
   m_Name: Sophie
@@ -1409,19 +1411,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e215161bd7b947843a626eb97ac93bdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5.2
+  speed: 5.5
   throwForce: 2
-  health: 0
-  stamina: 0
-  staminaDecay: 30
   cameraShakeDuration: 1
   cameraShakeForce: 2
-  dancingAnimation: {fileID: 0}
+  rollStaminaCost: 25
   audioSource: {fileID: 0}
   gettingHitClip: {fileID: 8300000, guid: f8eebfad72376834ea07f9aa7431ed08, type: 3}
   walkingClip: {fileID: 8300000, guid: 5e8e6e435e65fe146b588b8a9d2df461, type: 3}
   dyingClip: {fileID: 8300000, guid: afe60b685858a96438df8345036922f8, type: 3}
   rollClip: {fileID: 8300000, guid: a82249342f6597545a2b7f668bf46904, type: 3}
+--- !u!114 &-1641939863013634493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3138950574901135780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8248d3248f3d8d4e98c4e8ab9cf45c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 4
+  health: 0
+  healthFill: {fileID: 0}
+--- !u!114 &6719515610966141121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3138950574901135780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c795fe12cf89f45920e2c9b021dcae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 100
+  stamina: 0
+  staminaDecay: 30
+  staminaRestore: 13
+  isReloading: 0
+  staminaFill: {fileID: 0}
 --- !u!82 &1451422132868383621
 AudioSource:
   m_ObjectHideFlags: 0
