@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5.3
-  throwForce: 2.5
+  throwForce: 2.7
   cameraShakeDuration: 1
   cameraShakeForce: 2
   rollStaminaCost: 25
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxStamina: 110
   stamina: 0
-  staminaDecay: 40
+  staminaDecay: 35
   staminaRestore: 10
   isReloading: 0
   staminaFill: {fileID: 0}

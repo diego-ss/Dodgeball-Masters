@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
     private Bola ballReference;
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //capturando componentes
         animator = transform.GetComponent<Animator>();
