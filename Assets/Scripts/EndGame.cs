@@ -46,10 +46,6 @@ public class EndGame : MonoBehaviour
 
     void ConfigurarPersonagens()
     {
-        player.transform.Find("Canvas").gameObject.SetActive(false);
-        player.GetComponent<Animator>().Play("Dancing");
-        player.GetComponent<PlayerController>().enabled = false;
-
         enemies.ForEach(p =>
         {
             p.transform.Find("Canvas").gameObject.SetActive(false);
@@ -58,6 +54,10 @@ public class EndGame : MonoBehaviour
             p.GetComponent<EnemyController>().enabled = false;
         });
 
+        player.transform.Find("Canvas").gameObject.SetActive(false);
+        player.GetComponent<Animator>().Rebind();
+        player.GetComponent<Animator>().Play("Dancing");
+        player.GetComponent<PlayerController>().enabled = false;
     }
 
     void PosicionarPersonagem(GameObject character, GameObject positionRef, bool instantiate = true)
