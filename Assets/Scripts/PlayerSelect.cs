@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Linq;
+using TMPro;
+using System.IO;
 
 public class PlayerSelect : MonoBehaviour
 {
@@ -16,6 +18,11 @@ public class PlayerSelect : MonoBehaviour
     public GameObject previousPlayerPosition;
     //posição do próximo personagem
     public GameObject nextPlayerPosition;
+    //texto do nome
+    public TMP_Text nomeText;
+    //texto da descricao
+    public TMP_Text descricaoText;
+
     public AudioSource soundEffects;
     public AudioClip nextPreviousSound;
     public AudioClip selectedSound;
@@ -42,6 +49,9 @@ public class PlayerSelect : MonoBehaviour
         if (selectedPlayer == null)
         {
             selectedPlayer = Instantiate(players[index], currentPlayerPositon.transform.position, defaultRotation);
+            var charName = selectedPlayer.name.Replace("(Clone)", "");
+            nomeText.text = charName;
+            descricaoText.text = BuscarDescricao(charName);
             nextPlayer = Instantiate(players[(index + 1) % players.Count], nextPlayerPosition.transform.position, defaultRotation);
             previousPlayer = Instantiate(players[index == 0 ? players.Count - 1 : (index - 1) % players.Count], previousPlayerPosition.transform.position, defaultRotation);
         }
@@ -83,5 +93,15 @@ public class PlayerSelect : MonoBehaviour
         DontDestroyOnLoad(selectedPlayer);
         //carrega a cena arcade
         SceneManager.LoadScene("QuadraArcade_0", LoadSceneMode.Single);
+    }
+
+    private string BuscarDescricao(string Nome)
+    {
+        string path = $"Assets/Resources/TextFiles/{Nome}.txt";
+        //Read the text from directly from the test.txt file
+        StreamReader reader = new StreamReader(path);
+        string descricao = reader.ReadToEnd();
+        reader.Close();
+        return descricao;
     }
 }

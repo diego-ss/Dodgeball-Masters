@@ -1411,7 +1411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e215161bd7b947843a626eb97ac93bdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5.5
+  speed: 5.6
   throwForce: 2
   cameraShakeDuration: 1
   cameraShakeForce: 2
@@ -1451,7 +1451,7 @@ MonoBehaviour:
   maxStamina: 100
   stamina: 0
   staminaDecay: 30
-  staminaRestore: 13
+  staminaRestore: 15
   isReloading: 0
   staminaFill: {fileID: 0}
 --- !u!82 &1451422132868383621
