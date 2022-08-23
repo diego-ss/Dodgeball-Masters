@@ -147,9 +147,9 @@ public class EnemyController : MonoBehaviour
         //desativando ou ativando os colliders de acordo com a necessidade
         if (!isDead && !animator.GetCurrentAnimatorStateInfo(0).IsName("RollForward"))
         {
+            capsuleCollider.enabled = true;
             sphereCollider.enabled = false;
             boxCollider.enabled = true;
-            capsuleCollider.enabled = true;
         }
         else if (!isDead)
         {

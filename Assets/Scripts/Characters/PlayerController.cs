@@ -314,8 +314,8 @@ public class PlayerController : MonoBehaviour
         //desativando ou ativando os colliders de acordo com a necessidade
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("RollForward"))
         {
-            sphereCollider.enabled = false;
             capsuleCollider.enabled = true;
+            sphereCollider.enabled = false;
         }
         else
         {
