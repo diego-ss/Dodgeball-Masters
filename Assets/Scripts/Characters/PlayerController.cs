@@ -206,7 +206,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator SincronizarArremesso()
     {
-        var waitTime = 0.05f;
+        var waitTime = 0.04f;
 
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
             waitTime = 0.12f;

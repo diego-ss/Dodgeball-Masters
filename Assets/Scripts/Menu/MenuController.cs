@@ -8,23 +8,19 @@ public class MenuController : MonoBehaviour
 {
     [Header("Referências")]
     public TMP_Text titulo;
+    public GameObject panelInstrucoes;
     public Image dodgeballLogo;
     public GameObject Bryce;
     public GameObject Sophie;
     public GameObject James;
 
     private float refTime;
-    Tweener tweener;
 
     // Start is called before the first frame update
     void Start()
     {
         Cursor.visible = true;
         refTime = 0;
-
-        tweener = dodgeballLogo.gameObject.transform.DOLocalMove(new Vector3(120f, -62f, 0), .8f)
-            .SetLoops(-1, LoopType.Yoyo)
-            .SetEase(Ease.InBounce);
 
         Destroy(Bryce.GetComponent<PlayerController>());
         Destroy(Bryce.GetComponent<Health>());
@@ -54,7 +50,6 @@ public class MenuController : MonoBehaviour
 
     public void ModoDeTreino()
     {
-        tweener.Pause();
         //carregando modo de treino
         GameManager.Instance.modoJogo = Assets.Scripts.Enums.ModoJogo.TREINO;
         GameManager.Instance.trainingScore = 0;
@@ -63,11 +58,21 @@ public class MenuController : MonoBehaviour
 
     public void ModoArcade()
     {
-        tweener.Pause();
         //carregando tela de seleção de personagem
         GameManager.Instance.modoJogo = Assets.Scripts.Enums.ModoJogo.ARCADE;
         GameManager.Instance.level = 0;
         SceneManager.LoadScene("01_SelecaoPersonagem", LoadSceneMode.Single);
+    }
+
+    public void Instrucoes()
+    {
+        panelInstrucoes.SetActive(true);
+    }
+
+    public void FecharInstrucoes()
+    {
+        panelInstrucoes.SetActive(false);
+
     }
 
     public void Sair()
