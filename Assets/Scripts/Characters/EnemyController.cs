@@ -25,9 +25,9 @@ public class EnemyController : MonoBehaviour
     public AudioClip dyingClip;
     public AudioClip rollClip;
 
-
     private bool canHold = true;
     private float lastDamageTime;
+    private Vector3 throwDirection;
 
     private float runSpeed;
     private Vector3 lookAtActual;
@@ -130,7 +130,7 @@ public class EnemyController : MonoBehaviour
 
             //verifica a distância para o player ou espera de 2 a 4 segundos desde o momento que pega a bola para arremessar
             if (((Mathf.Abs(Vector3.Distance(playerRef.transform.position, transform.position)) < 1f) && timeRef > 1f) || timeRef > Random.Range(1, 4))
-                Arremessar();
+                DefinirDirecaoArremesso();
         }
     }
 
@@ -147,9 +147,9 @@ public class EnemyController : MonoBehaviour
         //desativando ou ativando os colliders de acordo com a necessidade
         if (!isDead && !animator.GetCurrentAnimatorStateInfo(0).IsName("RollForward"))
         {
+            capsuleCollider.enabled = true;
             sphereCollider.enabled = false;
             boxCollider.enabled = true;
-            capsuleCollider.enabled = true;
         }
         else if (!isDead)
         {
@@ -175,24 +175,36 @@ public class EnemyController : MonoBehaviour
     }
 
     /// <summary>
-    /// arremessa a bola para frente
+    /// define a direção da bola antes de arremessar
     /// </summary>
-    private void Arremessar()
+    public void DefinirDirecaoArremesso()
     {
         //direção forward do personagem
         var direction = transform.forward;
         var sortedForce = throwForce + Random.value * 1.5f; // fator de imprevisibilidade
         // altura do arremesso considera a altura do personagem e a distância para o player
         // proporcional à distância e inversamente proporcional à altura
-        direction.y = (Random.Range(0.02f, 0.06f) * Mathf.Abs(Vector3.Distance(playerRef.transform.position, transform.position))) / (rightHand.transform.position.y * 1.5f);
+        direction.y = (Random.Range(0.02f, 0.06f) * Mathf.Abs(Vector3.Distance(playerRef.transform.position, transform.position))) / (rightHand.transform.position.y * 1.5f) ;
         direction.z *= sortedForce;
         direction.x *= sortedForce;
-        //se o jogador morreu com a bola na mão, arremessa só para soltar e tornar a bola válida
-        ballReference.Arremessar(isDead ? direction * 0.01f : direction);
+        throwDirection = isDead ? direction * 0.01f : direction;
+        animator.SetBool("arremessar", true);
+    }
+
+    public void Arremessar()
+    {
+        StartCoroutine(SincronizarArremesso());
+    }
+
+    IEnumerator SincronizarArremesso()
+    {
+        yield return new WaitForSeconds(0.1f);
+        ballReference.Arremessar(throwDirection);
         timeTriggerThrow = null;
         //disponibilizando para pegar novas bolas
         canHold = true;
         ballReference = null;
+        animator.SetBool("arremessar", false);
     }
 
     /// <summary>
@@ -264,7 +276,7 @@ public class EnemyController : MonoBehaviour
         isDead = true;
 
         if (ballReference != null)
-            Arremessar();
+            DefinirDirecaoArremesso();
     }
 
     private void OnTriggerEnter(Collider other)

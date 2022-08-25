@@ -1331,7 +1331,7 @@ Transform:
   m_GameObject: {fileID: 4128695949505191947}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_Children:
   - {fileID: 115587631610913905}
   - {fileID: 9103905114164812325}
@@ -1426,7 +1426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a7f41819070f8043ac34c17ebbff3e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3.9
+  speed: 6
   throwForce: 4
   ballToFollow: {fileID: 0}
   ballDistance: 0
@@ -1560,10 +1560,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74c795fe12cf89f45920e2c9b021dcae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxStamina: 100
+  maxStamina: 150
   stamina: 0
-  staminaDecay: 40
-  staminaRestore: 10
+  staminaDecay: 30
+  staminaRestore: 15
   isReloading: 0
   staminaFill: {fileID: 0}
 --- !u!1 &4217755578060505936

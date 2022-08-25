@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -11,10 +9,16 @@ public class NextLevelController : MonoBehaviour
     public Button btnMenu;
 
     private GameObject player;
+    private bool hasNextLevel;
+    private string nextLevelName;
 
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.Instance.level++;
+        nextLevelName = "QuadraArcade_" + GameManager.Instance.level;
+        hasNextLevel = SceneUtility.GetBuildIndexByScenePath(nextLevelName) != -1;
+
         Cursor.visible = true;
 
         player = GameObject.FindGameObjectWithTag("Player");
@@ -31,13 +35,17 @@ public class NextLevelController : MonoBehaviour
 
     public void Continuar()
     {
-        GameManager.Instance.level++;
-        SceneManager.LoadScene("QuadraArcade_" + GameManager.Instance.level, LoadSceneMode.Single);
+
+        if (hasNextLevel)
+            SceneManager.LoadScene("QuadraArcade_" + GameManager.Instance.level, LoadSceneMode.Single);
+        else
+            SceneManager.LoadScene("04_FimDeJogo");
     }
 
     public void MenuPrincipal()
     {
         Destroy(player);
+        GameManager.Instance.level = 0;
         SceneManager.LoadScene("00_Menu", LoadSceneMode.Single);
     }
 }

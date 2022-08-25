@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private bool canHold = true;
     private float lastDamageTime;
     private float runSpeed;
+    private Vector3 throwDirection;
 
     private Animator animator;
     private CapsuleCollider capsuleCollider;
@@ -33,7 +35,7 @@ public class PlayerController : MonoBehaviour
     private Bola ballReference;
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //capturando componentes
         animator = transform.GetComponent<Animator>();
@@ -180,21 +182,40 @@ public class PlayerController : MonoBehaviour
             direction.x *= throwForce;
             direction.y = 0.4f;
 
-            ballReference.Arremessar(direction);
-            //disponibilizando para pegar novas bolas
-            canHold = true;
-            ballReference = null;
+            animator.SetBool("arremessar", true);
+            throwDirection = direction;
         }
-        if (Input.GetMouseButton(0) && ballReference != null)
+        else if (Input.GetMouseButton(0) && ballReference != null)
         {
+            animator.SetBool("arremessar", true);
+
             //pegando um raio em direção ao mouse e adequando a força proporcional à altura
             var aimDirection = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
             aimDirection.y += (rightHand.transform.position.y * 0.2f);
-            ballReference.Arremessar(aimDirection * throwForce);
-            //disponibilizando para pegar novas bolas
-            canHold = true;
-            ballReference = null;
+            throwDirection = aimDirection * throwForce;
+        } else
+        {
+            animator.SetBool("arremessar", false);
         }
+    }
+
+    public void Arremessar()
+    {
+        StartCoroutine(SincronizarArremesso());
+    }
+
+    IEnumerator SincronizarArremesso()
+    {
+        var waitTime = 0.04f;
+
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            waitTime = 0.12f;
+
+        yield return new WaitForSeconds(waitTime);
+        ballReference.Arremessar(throwDirection);
+        //disponibilizando para pegar novas bolas
+        canHold = true;
+        ballReference = null;
     }
 
     /// <summary>
@@ -293,8 +314,8 @@ public class PlayerController : MonoBehaviour
         //desativando ou ativando os colliders de acordo com a necessidade
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("RollForward"))
         {
-            sphereCollider.enabled = false;
             capsuleCollider.enabled = true;
+            sphereCollider.enabled = false;
         }
         else
         {
