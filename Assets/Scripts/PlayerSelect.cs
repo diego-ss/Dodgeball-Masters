@@ -97,11 +97,8 @@ public class PlayerSelect : MonoBehaviour
 
     private string BuscarDescricao(string Nome)
     {
-        string path = $"Assets/Resources/TextFiles/{Nome}.txt";
-        //Read the text from directly from the test.txt file
-        StreamReader reader = new StreamReader(path);
-        string descricao = reader.ReadToEnd();
-        reader.Close();
-        return descricao;
+        //Read the text from directly from the txt file
+        TextAsset text = Resources.Load<TextAsset>($"TextFiles/{Nome}");
+        return text.text;
     }
 }

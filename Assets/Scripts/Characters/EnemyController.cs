@@ -187,8 +187,16 @@ public class EnemyController : MonoBehaviour
         direction.y = (Random.Range(0.02f, 0.06f) * Mathf.Abs(Vector3.Distance(playerRef.transform.position, transform.position))) / (rightHand.transform.position.y * 1.5f) ;
         direction.z *= sortedForce;
         direction.x *= sortedForce;
-        throwDirection = isDead ? direction * 0.01f : direction;
-        animator.SetBool("arremessar", true);
+
+        if (isDead)
+        {
+            throwDirection = direction * 0.01f;
+            Arremessar();
+        } else
+        {
+            throwDirection = direction;
+            animator.SetBool("arremessar", true);
+        }
     }
 
     public void Arremessar()
