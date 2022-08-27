@@ -59,15 +59,4 @@ public class EndGame : MonoBehaviour
         player.GetComponent<Animator>().Play("Dancing");
         player.GetComponent<PlayerController>().enabled = false;
     }
-
-    void PosicionarPersonagem(GameObject character, GameObject positionRef, bool instantiate = true)
-    {
-        if (instantiate)
-            Instantiate(character, positionRef.transform.position, defaultRotation);
-        else
-        {
-            character.transform.position = positionRef.transform.position;
-            character.transform.rotation = defaultRotation;
-        }
-    }
 }

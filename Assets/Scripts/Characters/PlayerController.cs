@@ -167,16 +167,14 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Verifica a possibilidade de arremessar a bola quando os botões forem precionados
+    /// Verifica a possibilidade de arremessar a bola quando os botões forem pressionados
     /// </summary>
     private void VerificaArremesso()
     {
-        //arremessa com o botão fire ou espaço
+        //arremessa com a barra de espaço
         if (Input.GetKeyDown(KeyCode.Space) && ballReference != null)
         {
             ////direção do mouse
-            //var direction = Camera.main.ScreenPointToRay(Input.mousePosition).direction;
-            //var y = direction.y * 2f;
             var direction = transform.forward;
             direction.z *= throwForce;
             direction.x *= throwForce;
@@ -185,6 +183,7 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("arremessar", true);
             throwDirection = direction;
         }
+        // arremessa com o botão esquerdo do mouse
         else if (Input.GetMouseButton(0) && ballReference != null)
         {
             animator.SetBool("arremessar", true);
